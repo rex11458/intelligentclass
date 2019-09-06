@@ -21,6 +21,7 @@
 		3D27B547232201EF00B9F46D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B546232201EF00B9F46D /* QuartzCore.framework */; };
 		3D27B549232201F800B9F46D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B548232201F800B9F46D /* VideoToolbox.framework */; };
 		3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B54D2322075A00B9F46D /* RootViewController.m */; };
+		3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */; };
 		3DEB00902321285A00110D0B /* dist in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB008F2321285A00110D0B /* dist */; };
 		3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFEF232121F300110D0B /* AppDelegate.m */; };
 		3DEBFFF6232121F300110D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF4232121F300110D0B /* Main.storyboard */; };
@@ -45,6 +46,8 @@
 		3D27B548232201F800B9F46D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		3D27B54C2322075A00B9F46D /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		3D27B54D2322075A00B9F46D /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
+		3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
 		3DEB008F2321285A00110D0B /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dist; sourceTree = "<group>"; };
 		3DEBFFEB232121F300110D0B /* intelligentclass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = intelligentclass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DEBFFEE232121F300110D0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 			children = (
 				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
+				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
+				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -223,6 +228,7 @@
 			files = (
 				3DEBFFFE232121F500110D0B /* main.m in Sources */,
 				3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */,
+				3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */,
 				3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
