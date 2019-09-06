@@ -9,7 +9,7 @@
 #import "RootViewController.h"
 #import <WebKit/WebKit.h>
 #import "MediaPlayerViewController.h"
-@interface RootViewController ()
+@interface RootViewController ()<WKNavigationDelegate,WKScriptMessageHandler>
 
 @property (nonatomic) WKWebView *webView;
 
@@ -25,14 +25,22 @@
 
 - (void)__configSubViews{
     
+    WKUserContentController *userContent = [[WKUserContentController alloc] init];
+    
+    //JS调用OC 添加处理脚本
+    [userContent addScriptMessageHandler:self name:@"showMobile"];
+    [userContent addScriptMessageHandler:self name:@"showName"];
+    [userContent addScriptMessageHandler:self name:@"showSendMsg"];
+    
     
     CGRect frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) );
 
     WKWebViewConfiguration *config = [WKWebViewConfiguration new];
-
+    config.userContentController = userContent;
+   
+    
     self.webView = [[WKWebView alloc] initWithFrame:frame configuration:config];
-
-
+    self.webView.navigationDelegate = self;
     NSString *root = [[NSBundle mainBundle] pathForResource:@"dist/index" ofType:@"html"];
 
     NSURL *url = [[NSURL alloc] initFileURLWithPath:root];
@@ -41,17 +49,11 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
     [ self.webView loadRequest:request];
-
+    
     [self.view addSubview:self.webView];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame =CGRectMake(0, 100, 100, 40);
-    [btn setTitle:@"播放按钮" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    [self.view bringSubviewToFront:btn];
 }
+
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -66,10 +68,71 @@
  
 }
 
+
 - (void)click{
     MediaPlayerViewController *playerViewController = [[MediaPlayerViewController alloc] init];
-    playerViewController.url = [NSURL URLWithString:@"rtsp://pb.fjrh.cn/0"];
+    playerViewController.url = @"rtsp://pb.fjrh.cn/0";
     [self presentViewController:playerViewController animated:NO completion:nil];
+}
+
+
+
+
+#pragma mark - 禁用旋转
+- (BOOL)shouldAutorotate{
+    
+    return NO;
+    
+}
+
+#pragma mark - WKScriptMessageHandler
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    NSLog(@"%@",NSStringFromSelector(_cmd));
+    NSLog(@"%@",message.body);
+    
+    if ([message.name isEqualToString:@"showMobile"]) {
+        [self showMsg:@"没有参数"];
+    }
+    
+    if ([message.name isEqualToString:@"showName"]) {
+        NSString *info = [NSString stringWithFormat:@"%@",message.body];
+        [self showMsg:info];
+    }
+    
+    if ([message.name isEqualToString:@"showSendMsg"]) {
+        NSArray *array = message.body;
+        NSString *info = [NSString stringWithFormat:@"有两个参数: %@, %@ !!",array.firstObject,array.lastObject];
+        [self showMsg:info];
+    }
+}
+
+- (void)showMsg:(NSString *)msg {
+    [[[UIAlertView alloc] initWithTitle:nil message:msg delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil] show];
+}
+
+#pragma mark - WKNavigationDelegate
+// 页面开始加载时调用
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
+    
+}
+// 当内容开始返回时调用
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
+    
+}
+
+// 页面加载完成之后调用
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    
+//    调用JS方法
+//    [self.webView evaluateJavaScript:@"getStudentName()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+//        //JS 返回结果
+//        NSLog(@"%@ %@",response,error);
+//    }];
+}
+
+// 页面加载失败时调用
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+    
 }
 
 @end

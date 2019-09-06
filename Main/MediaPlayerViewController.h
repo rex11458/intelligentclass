@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MediaPlayerViewController : UIViewController
 
-@property (nonatomic, strong) NSURL *url;
+@property (nonatomic, strong) NSString *url;
 
 @end
 
