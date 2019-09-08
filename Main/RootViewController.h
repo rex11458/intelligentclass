@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RootViewController : UIViewController
 
+- (void)updateImage:(UIImage *)image;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *url;
 
+- (void)close;
+
 @end
 
 NS_ASSUME_NONNULL_END

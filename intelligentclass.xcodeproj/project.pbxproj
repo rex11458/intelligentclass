@@ -22,6 +22,21 @@
 		3D27B549232201F800B9F46D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B548232201F800B9F46D /* VideoToolbox.framework */; };
 		3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B54D2322075A00B9F46D /* RootViewController.m */; };
 		3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */; };
+		3D9DEFCF2324B52900B652D6 /* sticker_resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */; };
+		3D9DEFD02324B52900B652D6 /* sticker_resize@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */; };
+		3D9DEFD12324B52900B652D6 /* sticker_resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC42324B52900B652D6 /* sticker_resize.png */; };
+		3D9DEFD22324B52900B652D6 /* sticker_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC52324B52900B652D6 /* sticker_close.png */; };
+		3D9DEFD32324B52900B652D6 /* sticker_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC62324B52900B652D6 /* sticker_close@3x.png */; };
+		3D9DEFD42324B52900B652D6 /* sticker_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC72324B52900B652D6 /* sticker_close@2x.png */; };
+		3D9DEFD52324B52900B652D6 /* ACEDrawingToolState.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC82324B52900B652D6 /* ACEDrawingToolState.m */; };
+		3D9DEFD62324B52900B652D6 /* ACEDrawingLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFCA2324B52900B652D6 /* ACEDrawingLabelView.m */; };
+		3D9DEFD72324B52900B652D6 /* ACEDrawingTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFCB2324B52900B652D6 /* ACEDrawingTools.m */; };
+		3D9DEFD82324B52900B652D6 /* ACEDrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFCD2324B52900B652D6 /* ACEDrawingView.m */; };
+		3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */; };
+		3D9DEFDD2324B93200B652D6 /* DrawingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */; };
+		3D9DEFE62324F44F00B652D6 /* DrawingManagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */; };
+		3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */; };
+		3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDF1EB4232384FD00B56FBA /* WMDragView.m */; };
 		3DEB00902321285A00110D0B /* dist in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB008F2321285A00110D0B /* dist */; };
 		3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFEF232121F300110D0B /* AppDelegate.m */; };
 		3DEBFFF6232121F300110D0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF4232121F300110D0B /* Main.storyboard */; };
@@ -48,6 +63,28 @@
 		3D27B54D2322075A00B9F46D /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
 		3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
+		3D9DEFC02324B52900B652D6 /* ACEDrawingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingTools.h; sourceTree = "<group>"; };
+		3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@2x.png"; sourceTree = "<group>"; };
+		3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@3x.png"; sourceTree = "<group>"; };
+		3D9DEFC42324B52900B652D6 /* sticker_resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticker_resize.png; sourceTree = "<group>"; };
+		3D9DEFC52324B52900B652D6 /* sticker_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sticker_close.png; sourceTree = "<group>"; };
+		3D9DEFC62324B52900B652D6 /* sticker_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_close@3x.png"; sourceTree = "<group>"; };
+		3D9DEFC72324B52900B652D6 /* sticker_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_close@2x.png"; sourceTree = "<group>"; };
+		3D9DEFC82324B52900B652D6 /* ACEDrawingToolState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEDrawingToolState.m; sourceTree = "<group>"; };
+		3D9DEFC92324B52900B652D6 /* ACEDrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingView.h; sourceTree = "<group>"; };
+		3D9DEFCA2324B52900B652D6 /* ACEDrawingLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEDrawingLabelView.m; sourceTree = "<group>"; };
+		3D9DEFCB2324B52900B652D6 /* ACEDrawingTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEDrawingTools.m; sourceTree = "<group>"; };
+		3D9DEFCC2324B52900B652D6 /* ACEDrawingToolState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingToolState.h; sourceTree = "<group>"; };
+		3D9DEFCD2324B52900B652D6 /* ACEDrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACEDrawingView.m; sourceTree = "<group>"; };
+		3D9DEFCE2324B52900B652D6 /* ACEDrawingLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingLabelView.h; sourceTree = "<group>"; };
+		3D9DEFD92324B93200B652D6 /* DrawingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
+		3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
+		3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawingViewController.xib; sourceTree = "<group>"; };
+		3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawingManagerView.xib; sourceTree = "<group>"; };
+		3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingManagerView.m; sourceTree = "<group>"; };
+		3D9DEFE82324F48E00B652D6 /* DrawingManagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingManagerView.h; sourceTree = "<group>"; };
+		3DDF1EB4232384FD00B56FBA /* WMDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMDragView.m; sourceTree = "<group>"; };
+		3DDF1EB5232384FD00B56FBA /* WMDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMDragView.h; sourceTree = "<group>"; };
 		3DEB008F2321285A00110D0B /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dist; sourceTree = "<group>"; };
 		3DEBFFEB232121F300110D0B /* intelligentclass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = intelligentclass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DEBFFEE232121F300110D0B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -110,6 +147,9 @@
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
 				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
 				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
+				3D9DEFD92324B93200B652D6 /* DrawingViewController.h */,
+				3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */,
+				3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -117,8 +157,59 @@
 		3D27B54B2322072D00B9F46D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3D9DEFDE2324F3D100B652D6 /* DrawingManagerView */,
+				3D9DEFBF2324B52900B652D6 /* ACEDrawingView */,
+				3DDF1EB3232384FD00B56FBA /* DragView */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		3D9DEFBF2324B52900B652D6 /* ACEDrawingView */ = {
+			isa = PBXGroup;
+			children = (
+				3D9DEFC12324B52900B652D6 /* ACEDraggableText */,
+				3D9DEFCC2324B52900B652D6 /* ACEDrawingToolState.h */,
+				3D9DEFC82324B52900B652D6 /* ACEDrawingToolState.m */,
+				3D9DEFCE2324B52900B652D6 /* ACEDrawingLabelView.h */,
+				3D9DEFCA2324B52900B652D6 /* ACEDrawingLabelView.m */,
+				3D9DEFC02324B52900B652D6 /* ACEDrawingTools.h */,
+				3D9DEFCB2324B52900B652D6 /* ACEDrawingTools.m */,
+				3D9DEFC92324B52900B652D6 /* ACEDrawingView.h */,
+				3D9DEFCD2324B52900B652D6 /* ACEDrawingView.m */,
+			);
+			path = ACEDrawingView;
+			sourceTree = "<group>";
+		};
+		3D9DEFC12324B52900B652D6 /* ACEDraggableText */ = {
+			isa = PBXGroup;
+			children = (
+				3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */,
+				3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */,
+				3D9DEFC42324B52900B652D6 /* sticker_resize.png */,
+				3D9DEFC52324B52900B652D6 /* sticker_close.png */,
+				3D9DEFC62324B52900B652D6 /* sticker_close@3x.png */,
+				3D9DEFC72324B52900B652D6 /* sticker_close@2x.png */,
+			);
+			path = ACEDraggableText;
+			sourceTree = "<group>";
+		};
+		3D9DEFDE2324F3D100B652D6 /* DrawingManagerView */ = {
+			isa = PBXGroup;
+			children = (
+				3D9DEFE82324F48E00B652D6 /* DrawingManagerView.h */,
+				3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */,
+				3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */,
+			);
+			path = DrawingManagerView;
+			sourceTree = "<group>";
+		};
+		3DDF1EB3232384FD00B56FBA /* DragView */ = {
+			isa = PBXGroup;
+			children = (
+				3DDF1EB5232384FD00B56FBA /* WMDragView.h */,
+				3DDF1EB4232384FD00B56FBA /* WMDragView.m */,
+			);
+			path = DragView;
 			sourceTree = "<group>";
 		};
 		3DEBFFE2232121F300110D0B = {
@@ -212,9 +303,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D9DEFCF2324B52900B652D6 /* sticker_resize@2x.png in Resources */,
+				3D9DEFD32324B52900B652D6 /* sticker_close@3x.png in Resources */,
 				3DEB00902321285A00110D0B /* dist in Resources */,
+				3D9DEFDD2324B93200B652D6 /* DrawingViewController.xib in Resources */,
+				3D9DEFD42324B52900B652D6 /* sticker_close@2x.png in Resources */,
 				3DEBFFFB232121F500110D0B /* LaunchScreen.storyboard in Resources */,
+				3D9DEFD12324B52900B652D6 /* sticker_resize.png in Resources */,
+				3D9DEFD02324B52900B652D6 /* sticker_resize@3x.png in Resources */,
 				3DEBFFF8232121F500110D0B /* Assets.xcassets in Resources */,
+				3D9DEFE62324F44F00B652D6 /* DrawingManagerView.xib in Resources */,
+				3D9DEFD22324B52900B652D6 /* sticker_close.png in Resources */,
 				3DEBFFF6232121F300110D0B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,8 +325,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D9DEFD62324B52900B652D6 /* ACEDrawingLabelView.m in Sources */,
 				3DEBFFFE232121F500110D0B /* main.m in Sources */,
+				3D9DEFD72324B52900B652D6 /* ACEDrawingTools.m in Sources */,
 				3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */,
+				3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */,
+				3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */,
+				3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */,
+				3D9DEFD52324B52900B652D6 /* ACEDrawingToolState.m in Sources */,
+				3D9DEFD82324B52900B652D6 /* ACEDrawingView.m in Sources */,
 				3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */,
 				3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */,
 			);
@@ -326,7 +432,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fjrh.intelligentclass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -348,7 +454,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fjrh.intelligentclass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

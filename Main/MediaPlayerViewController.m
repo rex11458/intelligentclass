@@ -197,6 +197,9 @@
     _backButton.hidden = !_backButton.isHidden;
 }
 
+- (void)close{
+    [self dismiss];
+}
 
 
 @end

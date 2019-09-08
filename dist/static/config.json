@@ -3,5 +3,6 @@
   "gatewaySeverPort": "50120",
   "mainSignalRPort": "50114",
   "gatewaySignalRPort": "50118",
-  "ShowLog": true
+  "errorLog": "development",
+  "showLog": true
 }
