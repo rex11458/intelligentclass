@@ -28,6 +28,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     DrawingViewController *_drawingViewController;
     UIView *_headView;
     WMDragView *_dragView;
+    
+    NSString *_broadcastType;
 }
 @property (nonatomic) WKWebView *webView;
 
@@ -44,6 +46,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     
     _drawingViewController = [DrawingViewController new];
     _drawingViewController.rootViewController = self;
+    
+    
 }
 
 
@@ -179,7 +183,7 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 
 //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
 - (BOOL)sendSystemInfo:(NSString *)ips{
-
+    _broadcastType = nil;
     self.ips =  [[self class] dictionaryWithJsonString:ips];
     
     return YES;
@@ -189,14 +193,20 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 - (BOOL)sendStartBroadcast:(NSString *)type{
     NSLog(@"self.ips:%@",self.ips);
     NSLog(@"type:%@",type);
+    _broadcastType = type;
 //    {"ViceScreenIP":"192.168.0.104","ViceBroadcast":"rtsp://183.250.202.41/0","MainBroadcast":"rtsp://192.168.0.108/0"}
     NSString *ip = nil;
     if([type isEqualToString:@"0"]){
+        _broadcastType = @"0";
         ip = self.ips[@"ViceBroadcast"];
     }else if([type isEqualToString:@"1"]){
         ip = self.ips[@"MainBroadcast"];
+        _broadcastType = @"1";
     }else if([type isEqualToString:@"10"]){
         ip = self.ips[@"MainBroadcast"];
+        if([_broadcastType isEqualToString:@"0"]){
+            ip = self.ips[@"ViceBroadcast"];
+        }
     }
 
     if(!ip) return NO;
@@ -228,6 +238,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     
     [self.webView evaluateJavaScript:[NSString stringWithFormat:@"uploadImage(`%@`)",encodedImageStr] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
         //JS 返回结果
+        NSLog(@"%@ %@",response,error);
+
     }];
 }
 
