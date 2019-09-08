@@ -222,12 +222,12 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     //    调用JS方法
     if(!image) return;
     NSData *data = UIImageJPEGRepresentation(image, 1.0f);
-    NSString *encodedImageStr = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    NSLog(@"%@",encodedImageStr);
+    NSString *base64String = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+
+    NSString *encodedImageStr = [NSString stringWithFormat:@"data:image/jpg;base64,%@",base64String];
     
     [self.webView evaluateJavaScript:[NSString stringWithFormat:@"uploadImage(`%@`)",encodedImageStr] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
         //JS 返回结果
-        NSLog(@"%@ %@",response,error);
     }];
 }
 
