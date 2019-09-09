@@ -147,7 +147,7 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     if([self respondsToSelector:sel]){
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self performSelector:sel withObject:message.body];
+        [self performSelector:sel withObject:[NSString stringWithFormat:@"%@",message.body]];
 #pragma clang diagnostic pop
 
     }
@@ -193,7 +193,9 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 - (BOOL)sendStartBroadcast:(NSString *)type{
     NSLog(@"self.ips:%@",self.ips);
     NSLog(@"type:%@",type);
-    _broadcastType = type;
+//    if ([type isMemberOfClass:[NSNumber class]]){
+//        type = [(NSNumber *)type stringValue];
+//    }
 //    {"ViceScreenIP":"192.168.0.104","ViceBroadcast":"rtsp://183.250.202.41/0","MainBroadcast":"rtsp://192.168.0.108/0"}
     NSString *ip = nil;
     if([type isEqualToString:@"0"]){
