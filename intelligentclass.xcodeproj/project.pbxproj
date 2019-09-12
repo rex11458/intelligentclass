@@ -36,6 +36,7 @@
 		3D9DEFDD2324B93200B652D6 /* DrawingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */; };
 		3D9DEFE62324F44F00B652D6 /* DrawingManagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */; };
 		3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */; };
+		3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */; };
 		3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDF1EB4232384FD00B56FBA /* WMDragView.m */; };
 		3DEB00902321285A00110D0B /* dist in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB008F2321285A00110D0B /* dist */; };
 		3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFEF232121F300110D0B /* AppDelegate.m */; };
@@ -83,6 +84,8 @@
 		3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawingManagerView.xib; sourceTree = "<group>"; };
 		3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingManagerView.m; sourceTree = "<group>"; };
 		3D9DEFE82324F48E00B652D6 /* DrawingManagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingManagerView.h; sourceTree = "<group>"; };
+		3DB91FCF232A33510095DA31 /* UIImage+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
+		3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
 		3DDF1EB4232384FD00B56FBA /* WMDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMDragView.m; sourceTree = "<group>"; };
 		3DDF1EB5232384FD00B56FBA /* WMDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMDragView.h; sourceTree = "<group>"; };
 		3DEB008F2321285A00110D0B /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dist; sourceTree = "<group>"; };
@@ -203,6 +206,15 @@
 			path = DrawingManagerView;
 			sourceTree = "<group>";
 		};
+		3DB91FCE232A33250095DA31 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3DB91FCF232A33510095DA31 /* UIImage+Extensions.h */,
+				3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		3DDF1EB3232384FD00B56FBA /* DragView */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				3DEB008F2321285A00110D0B /* dist */,
+				3DB91FCE232A33250095DA31 /* Extensions */,
 				3D27B54B2322072D00B9F46D /* Utils */,
 				3D27B54A232206D600B9F46D /* Main */,
 				3DEBFFED232121F300110D0B /* intelligentclass */,
@@ -332,6 +345,7 @@
 				3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */,
 				3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */,
 				3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */,
+				3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */,
 				3D9DEFD52324B52900B652D6 /* ACEDrawingToolState.m in Sources */,
 				3D9DEFD82324B52900B652D6 /* ACEDrawingView.m in Sources */,
 				3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */,

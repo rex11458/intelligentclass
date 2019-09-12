@@ -11,6 +11,9 @@
 #import "MediaPlayerViewController.h"
 #import "WMDragView.h"
 #import "DrawingViewController.h"
+#import "UIImage+Extensions.h"
+
+static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
 static NSString *OPEN_QRCODE = @"OpenQRcode";                      // 打开扫码识别界面
@@ -22,7 +25,7 @@ static NSString *SEND_SYS_INFO = @"sendSystemInfo";                //  发送屏
 static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当前学生的最新小组信息
 
 
-@interface RootViewController ()<WKNavigationDelegate,WKScriptMessageHandler>
+@interface RootViewController ()<WKNavigationDelegate,WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     MediaPlayerViewController *_playerViewController;
     DrawingViewController *_drawingViewController;
@@ -217,8 +220,10 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
         _playerViewController = [[MediaPlayerViewController alloc] init];
     }
     _playerViewController.url = ip;
-    [self presentViewController:_playerViewController animated:NO completion:nil];
-
+    
+    if (self.presentedViewController == nil) {
+        [self presentViewController:_playerViewController animated:NO completion:nil];
+    }
     return YES;
 }
 
@@ -229,11 +234,27 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 }
 
 
+//选择相册
+- (void)openPick:(id)sender{
+    
+    [self openPhotoLibrary: UIImagePickerControllerSourceTypePhotoLibrary];
+  
+}
+
+//打开相机
+- (void)OpenCamera:(id)sender{
+    [self openPhotoLibrary: UIImagePickerControllerSourceTypeCamera];
+
+}
+
 #pragma mark - 调用JS事件
 - (void)updateImage:(UIImage *)image{
     //    调用JS方法
     if(!image) return;
-    NSData *data = UIImageJPEGRepresentation(image, 1.0f);
+    
+    int max_size = 1024 * 1024 * 2;
+
+    NSData *data =  [image compressQualityWithMaxLength:max_size];
     NSString *base64String = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 
     NSString *encodedImageStr = [NSString stringWithFormat:@"data:image/jpg;base64,%@",base64String];
@@ -296,6 +317,44 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     UIGraphicsEndImageContext();
       _dragView.hidden = NO;
     return image;
+}
+
+
+
+#pragma mark - 打开相机、相册
+- (void)openPhotoLibrary:(UIImagePickerControllerSourceType)sourceType{
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+        // 实例化UIImagePickerController控制器
+        UIImagePickerController * imagePickerVC = [[UIImagePickerController alloc] init];
+        // 设置资源来源（相册、相机、图库之一）
+        imagePickerVC.sourceType = sourceType;
+        imagePickerVC.delegate = self;
+        // 是否允许编辑（YES：图片选择完成进入编辑模式）
+        imagePickerVC.allowsEditing = false;
+        // model出控制器
+        [self presentViewController:imagePickerVC animated:YES completion:nil];
+    }
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+// 选择图片成功调用此方法
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    // dismiss UIImagePickerController
+    [self dismissViewControllerAnimated:YES completion:nil];
+    // 选择的图片信息存储于info字典中
+    NSLog(@"%@", info);
+    UIImage *image = info[@"UIImagePickerControllerOriginalImage"];
+    [self updateImage:image];
+}
+
+
+// 取消图片选择调用此方法
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    // dismiss UIImagePickerController
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
