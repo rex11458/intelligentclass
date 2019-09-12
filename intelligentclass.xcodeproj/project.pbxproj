@@ -37,6 +37,8 @@
 		3D9DEFE62324F44F00B652D6 /* DrawingManagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */; };
 		3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */; };
 		3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */; };
+		3DB91FD4232A3CC70095DA31 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB91FD3232A3CC70095DA31 /* ScanViewController.m */; };
+		3DB91FD8232A3D110095DA31 /* CDZQRScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB91FD6232A3D110095DA31 /* CDZQRScanView.m */; };
 		3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDF1EB4232384FD00B56FBA /* WMDragView.m */; };
 		3DEB00902321285A00110D0B /* dist in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB008F2321285A00110D0B /* dist */; };
 		3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFEF232121F300110D0B /* AppDelegate.m */; };
@@ -86,6 +88,10 @@
 		3D9DEFE82324F48E00B652D6 /* DrawingManagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingManagerView.h; sourceTree = "<group>"; };
 		3DB91FCF232A33510095DA31 /* UIImage+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
 		3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extensions.m"; sourceTree = "<group>"; };
+		3DB91FD2232A3CC70095DA31 /* ScanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		3DB91FD3232A3CC70095DA31 /* ScanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		3DB91FD6232A3D110095DA31 /* CDZQRScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZQRScanView.m; sourceTree = "<group>"; };
+		3DB91FD7232A3D110095DA31 /* CDZQRScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZQRScanView.h; sourceTree = "<group>"; };
 		3DDF1EB4232384FD00B56FBA /* WMDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMDragView.m; sourceTree = "<group>"; };
 		3DDF1EB5232384FD00B56FBA /* WMDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMDragView.h; sourceTree = "<group>"; };
 		3DEB008F2321285A00110D0B /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dist; sourceTree = "<group>"; };
@@ -152,6 +158,8 @@
 				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
 				3D9DEFD92324B93200B652D6 /* DrawingViewController.h */,
 				3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */,
+				3DB91FD2232A3CC70095DA31 /* ScanViewController.h */,
+				3DB91FD3232A3CC70095DA31 /* ScanViewController.m */,
 				3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */,
 			);
 			path = Main;
@@ -160,6 +168,7 @@
 		3D27B54B2322072D00B9F46D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3DB91FD5232A3D110095DA31 /* CDZQRScanView */,
 				3D9DEFDE2324F3D100B652D6 /* DrawingManagerView */,
 				3D9DEFBF2324B52900B652D6 /* ACEDrawingView */,
 				3DDF1EB3232384FD00B56FBA /* DragView */,
@@ -213,6 +222,15 @@
 				3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3DB91FD5232A3D110095DA31 /* CDZQRScanView */ = {
+			isa = PBXGroup;
+			children = (
+				3DB91FD7232A3D110095DA31 /* CDZQRScanView.h */,
+				3DB91FD6232A3D110095DA31 /* CDZQRScanView.m */,
+			);
+			path = CDZQRScanView;
 			sourceTree = "<group>";
 		};
 		3DDF1EB3232384FD00B56FBA /* DragView */ = {
@@ -342,7 +360,9 @@
 				3DEBFFFE232121F500110D0B /* main.m in Sources */,
 				3D9DEFD72324B52900B652D6 /* ACEDrawingTools.m in Sources */,
 				3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */,
+				3DB91FD4232A3CC70095DA31 /* ScanViewController.m in Sources */,
 				3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */,
+				3DB91FD8232A3D110095DA31 /* CDZQRScanView.m in Sources */,
 				3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */,
 				3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */,
 				3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */,

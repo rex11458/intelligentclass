@@ -12,7 +12,7 @@
 #import "WMDragView.h"
 #import "DrawingViewController.h"
 #import "UIImage+Extensions.h"
-
+#import "ScanViewController.h"
 static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
@@ -244,7 +244,22 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 //打开相机
 - (void)OpenCamera:(id)sender{
     [self openPhotoLibrary: UIImagePickerControllerSourceTypeCamera];
+}
 
+// 扫码签到
+-(void)OpenQRcode:(id)sender{
+    ScanViewController *vc = [[ScanViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
+    
+    typeof(self) weakSelf = self;
+    vc.callback = ^(NSString * qrcode){
+        [weakSelf.webView evaluateJavaScript:[NSString stringWithFormat:@"acceptQRcode(`%@`)",qrcode] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+            //JS 返回结果
+            NSLog(@"%@ %@",response,error);
+            
+        }];
+    
+    };
 }
 
 #pragma mark - 调用JS事件
