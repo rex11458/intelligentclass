@@ -126,7 +126,7 @@
 
 
 - (void)play{
-    
+    NSLog(@"\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n RTSP播放地址:%@\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n",self.url);
     [self.playView insertSubview:self.player.view atIndex:0];
     
     if(_player){
@@ -134,6 +134,14 @@
         [self.player prepareToPlay];
     }
 }
+
+- (void)relpay{
+    if([self.player isPlaying]){
+        [self.player stop];
+    }
+    [self play];
+}
+
 
 // when the playback state changes, either programatically or by the user
 - (void)moviePlayBackStateDidChange:(NSNotification *)notification{

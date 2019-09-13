@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)close;
 
+- (void)relpay;
+
 @end
 
 NS_ASSUME_NONNULL_END

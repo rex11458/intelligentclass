@@ -141,9 +141,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    NSLog(@"%@",NSStringFromSelector(_cmd));
-    NSLog(@"%@",message.name);
-    NSLog(@"%@",message.body);
+
+    NSLog(@"    \n%@:%@\n",message.name,message.body);
     
     NSString *selName = [NSString stringWithFormat:@"%@:",message.name];
     SEL sel =  NSSelectorFromString(selName);
@@ -186,7 +185,6 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 
 //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
 - (BOOL)sendSystemInfo:(NSString *)ips{
-    _broadcastType = nil;
     self.ips =  [[self class] dictionaryWithJsonString:ips];
     
     return YES;
@@ -207,6 +205,7 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     }else if([type isEqualToString:@"1"]){
         ip = self.ips[@"MainBroadcast"];
         _broadcastType = @"1";
+        
     }else if([type isEqualToString:@"10"]){
         ip = self.ips[@"MainBroadcast"];
         if([_broadcastType isEqualToString:@"0"]){
@@ -214,7 +213,7 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
         }
     }
 
-    if(!ip) return NO;
+//    if(!ip) return NO;
     
     if(!_playerViewController){
         _playerViewController = [[MediaPlayerViewController alloc] init];
@@ -223,6 +222,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     
     if (self.presentedViewController == nil) {
         [self presentViewController:_playerViewController animated:NO completion:nil];
+    }else if ( [self.presentedViewController isEqual: _playerViewController]){
+        [_playerViewController relpay];
     }
     return YES;
 }
