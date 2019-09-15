@@ -7,7 +7,7 @@
 //
 
 #import "ScreeningViewController.h"
-
+#import "ScanViewController.h"
 @interface ScreeningViewController ()<UITextFieldDelegate>
 {
     NSString *_code;
@@ -48,12 +48,19 @@
 */
 
 - (IBAction)openScanning:(id)sender {
+    ScanViewController *vc = [[ScanViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
     
+    typeof(self) weakSelf = self;
+    vc.callback = ^(NSString * qrcode){
+        [weakSelf connect:qrcode];
+    };
 }
 
 - (IBAction)startTouping:(id)sender {
-    
+    [self connect:self.textField.text];
 }
+
 
 - (IBAction)saoyisaoAction:(UIButton *)sender {
     _saoyisaoButton.selected = YES;
@@ -76,7 +83,7 @@
 }
 
 - (void)changeText{
-    self.startToupingAction.enabled = [self.textField.text length] == 4;
+    self.startToupingAction.enabled = [self.textField.text length];
     [self.textLabel enumerateObjectsUsingBlock:^(UILabel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.text = @"";
     }];
@@ -102,6 +109,13 @@
     }
     
     return YES;
+}
+
+
+// 请求投屏。。。
+- (void)connect:(NSString *)code{
+    
+    
 }
 
 @end
