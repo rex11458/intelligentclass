@@ -158,6 +158,7 @@
 		3D27B54A232206D600B9F46D /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
 				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
 				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
@@ -253,7 +254,6 @@
 		3DDF1EB3232384FD00B56FBA /* DragView */ = {
 			isa = PBXGroup;
 			children = (
-				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3DDF1EB5232384FD00B56FBA /* WMDragView.h */,
 				3DDF1EB4232384FD00B56FBA /* WMDragView.m */,
 			);

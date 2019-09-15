@@ -27,6 +27,8 @@
     [super awakeFromNib];
     self.contentView.layer.borderColor = [UIColor grayColor].CGColor;
     self.adButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.backgroundColor = [UIColor colorWithRed:1 green:236/255.0 blue:182/255.0 alpha:1];
+
 }
 
 - (void)setImage:(UIImage *)image{

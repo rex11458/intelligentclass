@@ -49,7 +49,7 @@
     self.bgImageView.image = _backgroundImage;
     self.addButton.hidden = YES;
     self.add_button_height.constant = 0;
-    self.pureDrawingView.backgroundColor= [UIColor colorWithRed:1 green:236/255.0 blue:182/255.0 alpha:1];
+    self.pureDrawingView.backgroundColor = [UIColor colorWithRed:1 green:236/255.0 blue:182/255.0 alpha:1];
     
     self.toolsView.layer.cornerRadius = 3;
     self.toolsView.layer.masksToBounds = YES;
@@ -58,7 +58,7 @@
     self.extendButton.layer.masksToBounds = YES;
     
     self.drawingManagerView.delegate = self;
-    
+    self.drawingManagerView.backgroundColor = [UIColor colorWithRed:1 green:236/255.0 blue:182/255.0 alpha:1];
     self.drawingViews = [NSMutableArray array];
     [self.drawingViews addObject:self.pureDrawingView];
 }
