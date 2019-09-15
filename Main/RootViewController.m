@@ -11,6 +11,8 @@
 #import "WMDragView.h"
 #import "UIImage+Extensions.h"
 #import "ScanViewController.h"
+#import "ScreeningViewController.h"
+#import "Utils.h"
 static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
@@ -30,10 +32,15 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     WMDragView *_dragView;
     
     NSString *_broadcastType;
+    
 }
 @property (nonatomic) WKWebView *webView;
 
 @property(nonatomic) NSDictionary *ips;
+
+@property (nonatomic) NSString *currentUserName;
+
+@property (nonatomic) NSDictionary *groupInfo;
 
 @end
 
@@ -206,9 +213,40 @@ static RootViewController  *g_rootViewController = nil;
     return dic;
 }
 
+
+// 登录后触发
+- (BOOL)login:(id)sender{
+    //获取登录用户信息
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getStudentName()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+        self.currentUserName = response;
+        NSLog(@"\ncurrentUserName=%@\n",self.currentUserName);
+    }];
+    
+    return YES;
+}
+
+
+// 获取用户IP
+- (NSString *)GetIPAdress:(id)sender{
+    NSString *ip = [Utils getIPAddress];
+    NSLog(@"\nlocal ip=%@\n",ip);
+
+    return ip;
+}
+
+
 //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
 - (BOOL)sendSystemInfo:(NSString *)ips{
     self.ips =  [[self class] dictionaryWithJsonString:ips];
+    
+    return YES;
+}
+
+
+//最新小组信息
+- (BOOL)sendGroupMsg:(NSString *)groupMsg{
+    
+    self.groupInfo = [[self class] dictionaryWithJsonString:groupMsg];
     
     return YES;
 }
@@ -285,6 +323,17 @@ static RootViewController  *g_rootViewController = nil;
     
     };
 }
+
+
+// 打开投屏界面
+- (BOOL)openPrjScreen:(id)sender{
+    ScreeningViewController *vc = [ScreeningViewController new];
+    vc.groupInfo = self.groupInfo;
+    [self presentViewController:vc animated:NO completion:nil];
+    
+    return YES;
+}
+
 
 #pragma mark - 调用JS事件
 - (void)updateImage:(UIImage *)image{
