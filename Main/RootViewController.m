@@ -8,9 +8,7 @@
 
 #import "RootViewController.h"
 #import <WebKit/WebKit.h>
-#import "MediaPlayerViewController.h"
 #import "WMDragView.h"
-#import "DrawingViewController.h"
 #import "UIImage+Extensions.h"
 #import "ScanViewController.h"
 static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
@@ -27,8 +25,7 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 
 @interface RootViewController ()<WKNavigationDelegate,WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
-    MediaPlayerViewController *_playerViewController;
-    DrawingViewController *_drawingViewController;
+  
     UIView *_headView;
     WMDragView *_dragView;
     
@@ -42,13 +39,32 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 
 @implementation RootViewController
 
+static RootViewController  *g_rootViewController = nil;
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    
+    g_rootViewController = self;
+}
+
+- (instancetype)init{
+    if(self = [super init]){
+        g_rootViewController = self;
+    }
+    
+    return self;
+}
+
+
++ (RootViewController *)sharedRootViewController{
+    return g_rootViewController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self __configSubViews];
     
     _drawingViewController = [DrawingViewController new];
-    _drawingViewController.rootViewController = self;
     
     
 }
@@ -105,7 +121,7 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     
     UIColor *mainColor = [UIColor colorWithRed:0 green:203/255.0 blue:171/255.0 alpha:1];
     UIEdgeInsets insets = self.view.window.safeAreaInsets;
-    
+    ;
     if(!_headView){
         _headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), insets.top)];
         _headView.backgroundColor= mainColor;

@@ -149,7 +149,7 @@
 - (void)send{
     [self dismiss];
     [self clear];
-    [self.rootViewController updateImage:[self takeSnapshot]];
+    [[RootViewController sharedRootViewController] updateImage:[self takeSnapshot]];
 }
 
 - (void)dismiss {

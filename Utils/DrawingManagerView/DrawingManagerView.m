@@ -9,8 +9,11 @@
 #import "DrawingManagerView.h"
 #import "DarwingManagerItemView.h"
 #import "ACEDrawingView.h"
-#define screen_width (CGRectGetWidth([UIScreen mainScreen].bounds))
-#define screen_height (CGRectGetHeight([UIScreen mainScreen].bounds))
+
+#define kSafeAreaInsets [[UIApplication sharedApplication] keyWindow].safeAreaInsets
+
+#define screen_width ((CGRectGetWidth([UIScreen mainScreen].bounds)) - kSafeAreaInsets.left - kSafeAreaInsets.right)
+#define screen_height (CGRectGetHeight([UIScreen mainScreen].bounds) - kSafeAreaInsets.top - kSafeAreaInsets.bottom)
 
 #define ratio  (screen_height / screen_width)
 

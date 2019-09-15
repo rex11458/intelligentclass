@@ -8,10 +8,14 @@
 
 #import "MediaPlayerViewController.h"
 #import <IJKMediaFramework/IJKMediaFramework.h>
+#import "WMDragView.h"
+#import "RootViewController.h"
 @interface MediaPlayerViewController ()
 {
     UIActivityIndicatorView *_indicatorView;
     UIButton *_backButton;
+    WMDragView *_dragView;
+    DrawingViewController * _drawingViewController;
 }
 
 @property (nonatomic , strong) IJKFFMoviePlayerController *player;
@@ -84,6 +88,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _drawingViewController = [DrawingViewController new];
 
 }
 
@@ -93,37 +99,61 @@
 
     [self __configSubViews];
 //
+    UIColor *mainColor = [UIColor colorWithRed:0 green:203/255.0 blue:171/255.0 alpha:1];
+
+    if(!_dragView){
+        UIEdgeInsets insets = self.view.window.safeAreaInsets;
+
+        _dragView = [[WMDragView alloc]initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds) - 40) * 0.5,CGRectGetHeight(self.view.bounds)-40-insets.bottom , 40, 40)];
+        _dragView.freeRect = CGRectMake(0, insets.top, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-insets.top-insets.bottom);
+        _dragView.backgroundColor = mainColor;
+        _dragView.layer.cornerRadius = 20;
+        _dragView.imageView.image = [UIImage imageNamed:@"icon_pencil"];
+        _dragView.imageView.contentMode = UIViewContentModeCenter;
+        __weak typeof(self) weakSelf = self;
+        _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
+            [weakSelf openCanvas];
+        };
+        
+        [self.view addSubview:_dragView];
+    }
+    
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self play];
     });
 }
 
+
+
 - (void)__configSubViews{
-    //    //播放区域
-    UIEdgeInsets insets = self.view.window.safeAreaInsets;
-    self.playView = [[UIView alloc] initWithFrame:CGRectMake(insets.left, insets.top, CGRectGetWidth(self.view.bounds) - insets.left-insets.right, CGRectGetHeight(self.view.bounds) - insets.top)];
-    self.playView.backgroundColor = [UIColor blackColor];
-    self.playView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:self.playView];
-    
+    if(!self.playView){
+        //    //播放区域
+        UIEdgeInsets insets = self.view.window.safeAreaInsets;
 
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [backButton setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-    [self.playView addSubview:backButton];
-    [backButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    backButton.tintColor = [UIColor whiteColor];
-    backButton.frame = CGRectMake(0, 0, 40, 40);
-    _backButton = backButton;
-    
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    indicatorView.center = CGPointMake(CGRectGetWidth(self.playView.bounds) * 0.5, CGRectGetHeight(self.playView.bounds) * 0.5);
-    [indicatorView hidesWhenStopped];
-    [self.playView addSubview:indicatorView];
-    _indicatorView = indicatorView;
-    
-    UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
-    [self.playView addGestureRecognizer:ges];
-
+        self.playView = [[UIView alloc] initWithFrame:CGRectMake(insets.left, insets.top, CGRectGetWidth(self.view.bounds) - insets.left-insets.right, CGRectGetHeight(self.view.bounds) - insets.top)];
+        self.playView.backgroundColor = [UIColor blackColor];
+        self.playView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:self.playView];
+        
+        
+        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [backButton setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+        [self.playView addSubview:backButton];
+        [backButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        backButton.tintColor = [UIColor whiteColor];
+        backButton.frame = CGRectMake(0, 0, 40, 40);
+        _backButton = backButton;
+        
+        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        indicatorView.center = CGPointMake(CGRectGetWidth(self.playView.bounds) * 0.5, CGRectGetHeight(self.playView.bounds) * 0.5);
+        [indicatorView hidesWhenStopped];
+        [self.playView addSubview:indicatorView];
+        _indicatorView = indicatorView;
+        
+        UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+        [self.playView addGestureRecognizer:ges];
+    }
 }
 
 
@@ -176,6 +206,37 @@
     
 }
 
+
+#pragma mark - 打开画布
+- (void)openCanvas {
+    
+    _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
+    [self presentViewController:_drawingViewController animated:NO completion:nil];
+
+}
+
+
+- (UIImage *)snapshotCurrentFullScreen{
+    _dragView.hidden = YES;
+    // 判断是否为retina屏, 即retina屏绘图时有放大因子
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]){
+        
+        UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, [UIScreen mainScreen].scale);
+        
+    } else {
+        
+        UIGraphicsBeginImageContext(self.view.window.bounds.size);
+        
+    }
+    
+    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    _dragView.hidden = NO;
+    return image;
+}
 
 //支持设备自动旋转
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class RootViewController;
+
 NS_ASSUME_NONNULL_BEGIN
 
 
@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIImage *backgroundImage;
 
-@property (nonatomic, weak) RootViewController *rootViewController;
 
 @end
 
