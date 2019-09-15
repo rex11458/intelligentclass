@@ -16,8 +16,10 @@
                 <outlet property="add_button_height" destination="Yf9-DE-FhO" id="r7q-p0-MYS"/>
                 <outlet property="bgImageView" destination="hPD-8f-VlR" id="X8R-pP-NOg"/>
                 <outlet property="clearButton" destination="fKN-BT-jNb" id="BHh-Uq-YIh"/>
+                <outlet property="drawingManagerView" destination="iXZ-aC-D8B" id="jha-lW-bS6"/>
                 <outlet property="drawingView" destination="fdX-TD-hmc" id="Oa0-jN-0AG"/>
-                <outlet property="pureDrawingView" destination="0mI-gH-IsL" id="Oaf-ki-Hcz"/>
+                <outlet property="extendButton" destination="quJ-eH-izO" id="sjS-2O-iI3"/>
+                <outlet property="pureDrawingView" destination="KoC-WE-gZl" id="UFK-dJ-bt2"/>
                 <outlet property="sketchPadButton" destination="1Nw-eS-DcS" id="bRm-UL-sS7"/>
                 <outlet property="toolsView" destination="sii-O3-aNg" id="DQc-Tt-aHY"/>
                 <outlet property="undoButton" destination="UaZ-L9-Rlv" id="GE2-IU-hAW"/>
@@ -36,91 +38,107 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0mI-gH-IsL" userLabel="PureDrawing View" customClass="ACEDrawingView">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KoC-WE-gZl" customClass="ACEDrawingView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" red="0.99607843139999996" green="0.92549019610000005" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iXZ-aC-D8B" customClass="DrawingManagerView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" red="0.99607843139999996" green="0.92549019610000005" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sii-O3-aNg" userLabel="ToolsView">
-                    <rect key="frame" x="364" y="457" width="50" height="350"/>
+                    <rect key="frame" x="374" y="511" width="40" height="316"/>
                     <subviews>
-                        <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xa7-2D-XiT" userLabel="新增">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xa7-2D-XiT" userLabel="新增" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="8" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="Yf9-DE-FhO"/>
+                                <constraint firstAttribute="height" constant="40" id="Yf9-DE-FhO"/>
                             </constraints>
-                            <state key="normal" title="新增">
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="新增" image="icon_xinzeng">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
                                 <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="nBb-k1-xNz"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Nw-eS-DcS">
-                            <rect key="frame" x="0.0" y="50" width="50" height="50"/>
+                        <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Nw-eS-DcS" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="48" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="ma1-Te-jWB"/>
+                                <constraint firstAttribute="height" constant="40" id="ma1-Te-jWB"/>
                             </constraints>
-                            <state key="normal" title="画板">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="画板" image="icon_tiaoseban">
+                                <color key="titleColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
                                 <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="Kfo-eY-Cxh"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="5" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLV-dF-inw">
-                            <rect key="frame" x="0.0" y="100" width="50" height="50"/>
+                        <button opaque="NO" tag="5" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLV-dF-inw" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="88" width="40" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="oZv-qX-USZ"/>
                             </constraints>
-                            <state key="normal" title="画笔">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="画笔" image="icon_huabi">
+                                <color key="titleColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <state key="selected" image="icon_huabi"/>
                             <connections>
                                 <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="gal-rb-X87"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaZ-L9-Rlv">
-                            <rect key="frame" x="0.0" y="150" width="50" height="50"/>
+                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaZ-L9-Rlv" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="138" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="1m2-we-Lsp"/>
+                                <constraint firstAttribute="height" constant="40" id="1m2-we-Lsp"/>
                             </constraints>
-                            <state key="normal" title="撤销">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="撤销" image="icon_fanhui"/>
                             <connections>
                                 <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="LoX-cY-fdW"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKN-BT-jNb">
-                            <rect key="frame" x="0.0" y="200" width="50" height="50"/>
+                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKN-BT-jNb" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="178" width="40" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Pno-L5-VpZ"/>
                             </constraints>
-                            <state key="normal" title="清空">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="清空" image="icon_saoba"/>
                             <connections>
                                 <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="rvy-20-YCE"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rsr-Zh-x4m">
-                            <rect key="frame" x="0.0" y="250" width="50" height="50"/>
+                        <button opaque="NO" tag="2" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Rsr-Zh-x4m" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="228" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="t5B-cx-Fb4"/>
+                                <constraint firstAttribute="height" constant="40" id="t5B-cx-Fb4"/>
                             </constraints>
-                            <state key="normal" title="发送">
+                            <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="发送" image="icon_tupian">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
                                 <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="9yV-ws-fWz"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3L-gz-8yn" userLabel="选择">
-                            <rect key="frame" x="0.0" y="300" width="50" height="50"/>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3L-gz-8yn" userLabel="选择" customClass="UUButton">
+                            <rect key="frame" x="0.0" y="268" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="adt-cu-DXR"/>
+                                <constraint firstAttribute="height" constant="40" id="adt-cu-DXR"/>
                             </constraints>
-                            <state key="normal" title="选择">
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="tintColor" red="0.94901960780000005" green="0.95686274510000002" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="选择" image="icon_arrow">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
                             <connections>
@@ -134,9 +152,9 @@
                         <constraint firstItem="Rsr-Zh-x4m" firstAttribute="top" secondItem="fKN-BT-jNb" secondAttribute="bottom" id="7Kx-9H-ORO"/>
                         <constraint firstAttribute="trailing" secondItem="Rsr-Zh-x4m" secondAttribute="trailing" id="AW7-9g-M07"/>
                         <constraint firstAttribute="trailing" secondItem="1Nw-eS-DcS" secondAttribute="trailing" id="Ddb-zd-9Oh"/>
-                        <constraint firstAttribute="width" constant="50" id="GwO-2X-M2l"/>
-                        <constraint firstItem="xa7-2D-XiT" firstAttribute="top" secondItem="sii-O3-aNg" secondAttribute="top" id="I8D-2P-NIQ"/>
-                        <constraint firstAttribute="bottom" secondItem="u3L-gz-8yn" secondAttribute="bottom" id="QrU-zd-OeZ"/>
+                        <constraint firstAttribute="width" constant="40" id="GwO-2X-M2l"/>
+                        <constraint firstItem="xa7-2D-XiT" firstAttribute="top" secondItem="sii-O3-aNg" secondAttribute="top" constant="8" id="I8D-2P-NIQ"/>
+                        <constraint firstAttribute="bottom" secondItem="u3L-gz-8yn" secondAttribute="bottom" constant="8" id="QrU-zd-OeZ"/>
                         <constraint firstItem="OLV-dF-inw" firstAttribute="leading" secondItem="sii-O3-aNg" secondAttribute="leading" id="U8s-Qv-z6R"/>
                         <constraint firstItem="UaZ-L9-Rlv" firstAttribute="top" secondItem="OLV-dF-inw" secondAttribute="bottom" id="Zos-XB-UWc"/>
                         <constraint firstAttribute="trailing" secondItem="fKN-BT-jNb" secondAttribute="trailing" id="cGP-v4-qHS"/>
@@ -155,16 +173,17 @@
                         <constraint firstItem="Rsr-Zh-x4m" firstAttribute="leading" secondItem="sii-O3-aNg" secondAttribute="leading" id="zgU-6I-zTm"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quJ-eH-izO">
-                    <rect key="frame" x="364" y="812" width="50" height="50"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quJ-eH-izO">
+                    <rect key="frame" x="374" y="832" width="40" height="30"/>
                     <color key="backgroundColor" red="0.0" green="0.79607843140000001" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="78d-o8-qPQ"/>
-                        <constraint firstAttribute="height" constant="50" id="7vu-XZ-4qI"/>
+                        <constraint firstAttribute="width" constant="40" id="78d-o8-qPQ"/>
+                        <constraint firstAttribute="height" constant="30" id="7vu-XZ-4qI"/>
                     </constraints>
-                    <state key="normal" title="切换">
+                    <state key="normal" image="down">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <state key="selected" image="up"/>
                     <connections>
                         <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="UMR-SH-bbB"/>
                     </connections>
@@ -172,25 +191,40 @@
             </subviews>
             <color key="backgroundColor" red="0.99607843139999996" green="0.92549019610000005" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="iXZ-aC-D8B" firstAttribute="leading" secondItem="vxT-G1-Kvu" secondAttribute="leading" id="1H3-gM-8lF"/>
                 <constraint firstAttribute="bottom" secondItem="fdX-TD-hmc" secondAttribute="bottom" id="5M9-bH-6Br"/>
-                <constraint firstItem="0mI-gH-IsL" firstAttribute="leading" secondItem="fdX-TD-hmc" secondAttribute="leading" id="8rg-iE-fYB"/>
-                <constraint firstItem="0mI-gH-IsL" firstAttribute="top" secondItem="fdX-TD-hmc" secondAttribute="top" id="98M-A9-A59"/>
-                <constraint firstItem="0mI-gH-IsL" firstAttribute="bottom" secondItem="fdX-TD-hmc" secondAttribute="bottom" id="Iap-9g-ulp"/>
-                <constraint firstItem="vxT-G1-Kvu" firstAttribute="trailing" secondItem="quJ-eH-izO" secondAttribute="trailing" id="Ibf-kK-BPU"/>
+                <constraint firstItem="iXZ-aC-D8B" firstAttribute="top" secondItem="vxT-G1-Kvu" secondAttribute="top" id="97X-tc-sbn"/>
+                <constraint firstAttribute="trailing" secondItem="quJ-eH-izO" secondAttribute="trailing" id="Ibf-kK-BPU"/>
                 <constraint firstAttribute="trailing" secondItem="fdX-TD-hmc" secondAttribute="trailing" id="KQC-QW-q6X"/>
                 <constraint firstItem="hPD-8f-VlR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Luc-VR-HGc"/>
                 <constraint firstItem="vxT-G1-Kvu" firstAttribute="bottom" secondItem="quJ-eH-izO" secondAttribute="bottom" id="PXA-0H-xeg"/>
+                <constraint firstAttribute="trailing" secondItem="KoC-WE-gZl" secondAttribute="trailing" id="PhZ-6d-Qrm"/>
                 <constraint firstAttribute="bottom" secondItem="hPD-8f-VlR" secondAttribute="bottom" id="SGw-Hc-E2K"/>
+                <constraint firstItem="KoC-WE-gZl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="WLI-DN-gpr"/>
                 <constraint firstAttribute="trailing" secondItem="sii-O3-aNg" secondAttribute="trailing" id="Wpg-lq-62T"/>
-                <constraint firstItem="0mI-gH-IsL" firstAttribute="trailing" secondItem="fdX-TD-hmc" secondAttribute="trailing" id="YLu-BD-a60"/>
+                <constraint firstAttribute="bottom" secondItem="KoC-WE-gZl" secondAttribute="bottom" id="ZFT-a0-LKp"/>
                 <constraint firstAttribute="trailing" secondItem="hPD-8f-VlR" secondAttribute="trailing" id="ZqA-Zt-CAs"/>
                 <constraint firstItem="fdX-TD-hmc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="en8-mK-VYt"/>
+                <constraint firstItem="vxT-G1-Kvu" firstAttribute="trailing" secondItem="iXZ-aC-D8B" secondAttribute="trailing" id="gMY-Mg-kfU"/>
+                <constraint firstItem="KoC-WE-gZl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hjl-PX-pSZ"/>
                 <constraint firstItem="quJ-eH-izO" firstAttribute="top" secondItem="sii-O3-aNg" secondAttribute="bottom" constant="5" id="mMz-sQ-Re3"/>
                 <constraint firstItem="hPD-8f-VlR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qyK-vN-ZAb"/>
                 <constraint firstItem="fdX-TD-hmc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="sJx-F2-tJN"/>
+                <constraint firstItem="vxT-G1-Kvu" firstAttribute="bottom" secondItem="iXZ-aC-D8B" secondAttribute="bottom" id="sjR-A4-Ud7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vxT-G1-Kvu"/>
             <point key="canvasLocation" x="47.826086956521742" y="35.491071428571423"/>
         </view>
     </objects>
+    <resources>
+        <image name="down" width="30" height="15"/>
+        <image name="icon_arrow" width="10" height="12"/>
+        <image name="icon_fanhui" width="16" height="13.5"/>
+        <image name="icon_huabi" width="14.5" height="14.5"/>
+        <image name="icon_saoba" width="16" height="16"/>
+        <image name="icon_tiaoseban" width="15" height="14"/>
+        <image name="icon_tupian" width="16" height="15.5"/>
+        <image name="icon_xinzeng" width="14.5" height="15"/>
+        <image name="up" width="30" height="15"/>
+    </resources>
 </document>

@@ -116,7 +116,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
         _dragView.freeRect = CGRectMake(0, insets.top, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-insets.top-insets.bottom);
         _dragView.backgroundColor = mainColor;
         _dragView.layer.cornerRadius = 20;
-        
+        _dragView.imageView.image = [UIImage imageNamed:@"icon_pencil"];
+        _dragView.imageView.contentMode = UIViewContentModeCenter;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
             [weakSelf openCanvas];
@@ -136,6 +137,12 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
 - (BOOL)shouldAutorotate{
     
     return NO;
+
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    
+    return UIInterfaceOrientationMaskPortrait;
     
 }
 

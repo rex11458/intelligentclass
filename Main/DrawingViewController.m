@@ -10,7 +10,8 @@
 #import "ACEDrawingView.h"
 #import "RootViewController.h"
 #import "DrawingManagerView.h"
-@interface DrawingViewController ()
+#import "DarwingManagerItemView.h"
+@interface DrawingViewController ()<ACEDrawingViewDelegate,DrawingManagerViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *toolsView;
 @property (strong, nonatomic) IBOutlet UIButton *clearButton;
 @property (strong, nonatomic) IBOutlet UIButton *undoButton;
@@ -22,23 +23,44 @@
 @property (strong, nonatomic) IBOutlet ACEDrawingView *drawingView;
 @property (strong, nonatomic) IBOutlet ACEDrawingView *pureDrawingView;
 
-@property (strong, nonatomic) NSMutableArray<UIImage *> * drawingImageArray;
+@property (strong, nonatomic) IBOutlet DrawingManagerView *drawingManagerView;
+@property (strong, nonatomic) NSMutableArray<ACEDrawingView *> * drawingViews;
+@property (strong, nonatomic) IBOutlet UIButton *extendButton;
 
 @end
 
 @implementation DrawingViewController
 
+- (ACEDrawingView *)currentDrawingView{
+    if(self.sketchPadButton.selected){
+        return self.pureDrawingView;
+    }
+    
+    return self.drawingView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.drawingView.lineWidth = 5;
+    self.drawingView.delegate = self;
     self.pureDrawingView.lineWidth = 5;
+    self.pureDrawingView.delegate = self;
 
     self.bgImageView.image = _backgroundImage;
     self.addButton.hidden = YES;
     self.add_button_height.constant = 0;
     self.pureDrawingView.backgroundColor= [UIColor colorWithRed:1 green:236/255.0 blue:182/255.0 alpha:1];
-    self.drawingImageArray = [NSMutableArray array];
+    
+    self.toolsView.layer.cornerRadius = 3;
+    self.toolsView.layer.masksToBounds = YES;
+    
+    self.extendButton.layer.cornerRadius = 3;
+    self.extendButton.layer.masksToBounds = YES;
+    
+    self.drawingManagerView.delegate = self;
+    
+    self.drawingViews = [NSMutableArray array];
+    [self.drawingViews addObject:self.pureDrawingView];
 }
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage{
@@ -89,9 +111,14 @@
 
 }
 
+
 - (void)add{
     
-    
+    self.addButton.selected = !self.addButton.isSelected;
+    self.drawingManagerView.hidden = !(self.addButton.isSelected && self.sketchPadButton.isSelected);
+    if(self.addButton.isSelected){
+        self.drawingManagerView.drawingViews = self.drawingViews;
+    }
 }
 
 - (void)sketchpad{
@@ -100,6 +127,9 @@
     _add_button_height.constant = self.sketchPadButton.isSelected ? 50 : 0;
     
     self.pureDrawingView.hidden = !self.sketchPadButton.isSelected;
+    self.drawingManagerView.hidden = !(self.addButton.isSelected && self.sketchPadButton.isSelected);
+
+    [ self updateButtonStatus];
 }
 
 - (void)pan{
@@ -107,14 +137,13 @@
 }
 
 - (void)undo{
-    [self.drawingView undoLatestStep];
+    [self.currentDrawingView undoLatestStep];
     [self updateButtonStatus];
 }
 
 - (void)clear{
-    [self.drawingView clear];
+    [self.currentDrawingView clear];
     [self updateButtonStatus];
-
 }
 
 - (void)send{
@@ -130,15 +159,22 @@
 - (void)switching{
     
     _toolsView.hidden = !_toolsView.isHidden;
+    _extendButton.selected  = !_extendButton.isSelected;
 }
 
 - (void)updateButtonStatus{
-    self.undoButton.enabled = [self.drawingView canUndo];
+    self.undoButton.enabled = [self.currentDrawingView canUndo];
+    self.clearButton.enabled = [self.currentDrawingView canRedo];
 }
 
+- (void)changeViewStatus{
+    self.drawingManagerView.hidden = !(self.addButton.isSelected && self.sketchPadButton.isSelected);
+}
 
 - (UIImage *)takeSnapshot
 {
+    self.toolsView.hidden = YES;
+    self.extendButton.hidden = YES;
     // 判断是否为retina屏, 即retina屏绘图时有放大因子
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]){
         
@@ -156,7 +192,58 @@
     
     UIGraphicsEndImageContext();
 
+    self.toolsView.hidden = NO;
+    self.extendButton.hidden = NO;
     return image;
+}
+
+#pragma mark - DrawingManagerViewDelegate
+- (void)drawingManagerView:(DrawingManagerView *)view del:(NSInteger)index{
+    ACEDrawingView *v = [self.drawingViews objectAtIndex:index];
+    [v removeFromSuperview];
+    [self.drawingViews removeObjectAtIndex:index];
+    self.drawingManagerView.drawingViews = self.drawingViews;
+}
+
+- (void)drawingManagerViewAdd:(DrawingManagerView *)view{
+    if(self.drawingViews.count >= 10){
+        return;
+    }
+    ACEDrawingView *v = [[ACEDrawingView alloc] initWithFrame:self.view.bounds];
+    v.backgroundColor = [UIColor colorWithRed:1 green:236/255.0 blue:182/255.0 alpha:1];
+    v.lineWidth = 5;
+    v.delegate = self;
+    [self.drawingViews addObject:v];
+    
+    [self changeDrawingViewStatusWithIndex:(self.drawingViews.count-1)];
+    
+}
+
+- (void)drawingMangerView:(DrawingManagerView *)view selectedIndex:(NSInteger)index{
+    
+    [self changeDrawingViewStatusWithIndex:index];
+
+}
+
+- (void)changeDrawingViewStatusWithIndex:(NSInteger)index {
+    
+    for (UIView *v in self.drawingViews) {
+        [self.view insertSubview:v belowSubview:self.bgImageView];
+    }
+    
+    ACEDrawingView *v = [self.drawingViews objectAtIndex:index];
+    [self.view insertSubview:v belowSubview:self.drawingManagerView];
+    self.pureDrawingView = v;
+    self.addButton.selected = NO;
+    [self updateButtonStatus];
+    [self changeViewStatus];
+
+}
+
+
+#pragma mark - ACEDrawingViewDelegate
+- (void)drawingView:(ACEDrawingView *)view didEndDrawUsingTool:(id<ACEDrawingTool>)tool{
+    [self updateButtonStatus];
 }
 
 #pragma mark - 禁用旋转

@@ -22,6 +22,9 @@
 		3D27B549232201F800B9F46D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B548232201F800B9F46D /* VideoToolbox.framework */; };
 		3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B54D2322075A00B9F46D /* RootViewController.m */; };
 		3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */; };
+		3D2AFC58232B7AC9006F0958 /* UUButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AFC57232B7AC9006F0958 /* UUButton.m */; };
+		3D2AFC5B232B978A006F0958 /* DarwingManagerItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AFC5A232B978A006F0958 /* DarwingManagerItemView.m */; };
+		3D2AFC5D232B97B7006F0958 /* DarwingManagerItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AFC5C232B97B7006F0958 /* DarwingManagerItemView.xib */; };
 		3D9DEFCF2324B52900B652D6 /* sticker_resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */; };
 		3D9DEFD02324B52900B652D6 /* sticker_resize@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */; };
 		3D9DEFD12324B52900B652D6 /* sticker_resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC42324B52900B652D6 /* sticker_resize.png */; };
@@ -34,7 +37,6 @@
 		3D9DEFD82324B52900B652D6 /* ACEDrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFCD2324B52900B652D6 /* ACEDrawingView.m */; };
 		3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */; };
 		3D9DEFDD2324B93200B652D6 /* DrawingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */; };
-		3D9DEFE62324F44F00B652D6 /* DrawingManagerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */; };
 		3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */; };
 		3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB91FD0232A33510095DA31 /* UIImage+Extensions.m */; };
 		3DB91FD4232A3CC70095DA31 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB91FD3232A3CC70095DA31 /* ScanViewController.m */; };
@@ -66,6 +68,11 @@
 		3D27B54D2322075A00B9F46D /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
 		3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
+		3D2AFC56232B7AC9006F0958 /* UUButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUButton.h; sourceTree = "<group>"; };
+		3D2AFC57232B7AC9006F0958 /* UUButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUButton.m; sourceTree = "<group>"; };
+		3D2AFC59232B978A006F0958 /* DarwingManagerItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DarwingManagerItemView.h; sourceTree = "<group>"; };
+		3D2AFC5A232B978A006F0958 /* DarwingManagerItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DarwingManagerItemView.m; sourceTree = "<group>"; };
+		3D2AFC5C232B97B7006F0958 /* DarwingManagerItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DarwingManagerItemView.xib; sourceTree = "<group>"; };
 		3D9DEFC02324B52900B652D6 /* ACEDrawingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingTools.h; sourceTree = "<group>"; };
 		3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@2x.png"; sourceTree = "<group>"; };
 		3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@3x.png"; sourceTree = "<group>"; };
@@ -83,7 +90,6 @@
 		3D9DEFD92324B93200B652D6 /* DrawingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawingViewController.h; sourceTree = "<group>"; };
 		3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawingViewController.m; sourceTree = "<group>"; };
 		3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawingViewController.xib; sourceTree = "<group>"; };
-		3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawingManagerView.xib; sourceTree = "<group>"; };
 		3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingManagerView.m; sourceTree = "<group>"; };
 		3D9DEFE82324F48E00B652D6 /* DrawingManagerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingManagerView.h; sourceTree = "<group>"; };
 		3DB91FCF232A33510095DA31 /* UIImage+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extensions.h"; sourceTree = "<group>"; };
@@ -152,14 +158,13 @@
 		3D27B54A232206D600B9F46D /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
 				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
 				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
-				3D9DEFD92324B93200B652D6 /* DrawingViewController.h */,
-				3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */,
 				3DB91FD2232A3CC70095DA31 /* ScanViewController.h */,
 				3DB91FD3232A3CC70095DA31 /* ScanViewController.m */,
+				3D9DEFD92324B93200B652D6 /* DrawingViewController.h */,
+				3D9DEFDA2324B93200B652D6 /* DrawingViewController.m */,
 				3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */,
 			);
 			path = Main;
@@ -168,12 +173,22 @@
 		3D27B54B2322072D00B9F46D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3D2AFC55232B7AB2006F0958 /* UUButton */,
 				3DB91FD5232A3D110095DA31 /* CDZQRScanView */,
 				3D9DEFDE2324F3D100B652D6 /* DrawingManagerView */,
 				3D9DEFBF2324B52900B652D6 /* ACEDrawingView */,
 				3DDF1EB3232384FD00B56FBA /* DragView */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		3D2AFC55232B7AB2006F0958 /* UUButton */ = {
+			isa = PBXGroup;
+			children = (
+				3D2AFC56232B7AC9006F0958 /* UUButton.h */,
+				3D2AFC57232B7AC9006F0958 /* UUButton.m */,
+			);
+			path = UUButton;
 			sourceTree = "<group>";
 		};
 		3D9DEFBF2324B52900B652D6 /* ACEDrawingView */ = {
@@ -210,7 +225,9 @@
 			children = (
 				3D9DEFE82324F48E00B652D6 /* DrawingManagerView.h */,
 				3D9DEFE72324F48E00B652D6 /* DrawingManagerView.m */,
-				3D9DEFE52324F44F00B652D6 /* DrawingManagerView.xib */,
+				3D2AFC59232B978A006F0958 /* DarwingManagerItemView.h */,
+				3D2AFC5A232B978A006F0958 /* DarwingManagerItemView.m */,
+				3D2AFC5C232B97B7006F0958 /* DarwingManagerItemView.xib */,
 			);
 			path = DrawingManagerView;
 			sourceTree = "<group>";
@@ -236,6 +253,7 @@
 		3DDF1EB3232384FD00B56FBA /* DragView */ = {
 			isa = PBXGroup;
 			children = (
+				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3DDF1EB5232384FD00B56FBA /* WMDragView.h */,
 				3DDF1EB4232384FD00B56FBA /* WMDragView.m */,
 			);
@@ -343,7 +361,7 @@
 				3D9DEFD12324B52900B652D6 /* sticker_resize.png in Resources */,
 				3D9DEFD02324B52900B652D6 /* sticker_resize@3x.png in Resources */,
 				3DEBFFF8232121F500110D0B /* Assets.xcassets in Resources */,
-				3D9DEFE62324F44F00B652D6 /* DrawingManagerView.xib in Resources */,
+				3D2AFC5D232B97B7006F0958 /* DarwingManagerItemView.xib in Resources */,
 				3D9DEFD22324B52900B652D6 /* sticker_close.png in Resources */,
 				3DEBFFF6232121F300110D0B /* Main.storyboard in Resources */,
 			);
@@ -357,8 +375,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9DEFD62324B52900B652D6 /* ACEDrawingLabelView.m in Sources */,
+				3D2AFC58232B7AC9006F0958 /* UUButton.m in Sources */,
 				3DEBFFFE232121F500110D0B /* main.m in Sources */,
 				3D9DEFD72324B52900B652D6 /* ACEDrawingTools.m in Sources */,
+				3D2AFC5B232B978A006F0958 /* DarwingManagerItemView.m in Sources */,
 				3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */,
 				3DB91FD4232A3CC70095DA31 /* ScanViewController.m in Sources */,
 				3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */,

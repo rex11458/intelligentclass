@@ -7,17 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ACEDrawingView;
+@class DarwingManagerItemView;
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol DrawingManagerViewDelegate;
 
 @interface DrawingManagerView : UIView
 
-@end
+@property (nonatomic, strong) NSMutableArray<ACEDrawingView *> *drawingViews;
 
-@interface DarwingManagerItemView : UIView
-
-@property (nonatomic, strong) UIImage *image;
-
+@property (nonatomic, assign) id<DrawingManagerViewDelegate> delegate;
 
 @end
+
+
+@protocol DrawingManagerViewDelegate <NSObject>
+
+@optional
+- (void)drawingMangerView:(DrawingManagerView *)view selectedIndex:(NSInteger)index;
+
+- (void)drawingManagerView:(DrawingManagerView *)view del:(NSInteger)index;
+
+-(void) drawingManagerViewAdd:(DrawingManagerView *)view;
+
+
+@end
+
 NS_ASSUME_NONNULL_END
