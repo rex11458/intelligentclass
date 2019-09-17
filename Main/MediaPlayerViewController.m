@@ -159,6 +159,7 @@
 
 - (void)play{
     NSLog(@"\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n RTSP播放地址:%@\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n",self.url);
+    self.player.view.frame = self.playView.bounds;
     [self.playView insertSubview:self.player.view atIndex:0];
     
     if(_player){
@@ -263,6 +264,9 @@
     }];
 }
 
+- (void)dealloc{
+    NSLog(@"MediaPlayerViewController dealloc");
+}
 
 - (void)tapAction{
     _backButton.hidden = !_backButton.isHidden;

@@ -8,7 +8,8 @@
 
 #import "ScreeningViewController.h"
 #import "ScanViewController.h"
-@interface ScreeningViewController ()<UITextFieldDelegate>
+#import <ReplayKit/ReplayKit.h>
+@interface ScreeningViewController ()<UITextFieldDelegate,RPBroadcastActivityViewControllerDelegate, RPBroadcastControllerDelegate>
 {
     NSString *_code;
 }
@@ -19,6 +20,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *startToupingAction;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray<UILabel *> *textLabel;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
+
+@property (nonatomic, strong) RPBroadcastActivityViewController *boradcastViewController;
+@property (nonatomic, strong) RPBroadcastController *broadcastController;
 
 @end
 
@@ -114,8 +118,42 @@
 
 // 请求投屏。。。
 - (void)connect:(NSString *)code{
+//    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetup" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+//        //
+//                self.boradcastViewController = broadcastActivityViewController;
+//                self.boradcastViewController.delegate = self;
+//                [self presentViewController:self.boradcastViewController animated:YES completion:nil];
+//    }];
+    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+
+        self.boradcastViewController = broadcastActivityViewController;
+        self.boradcastViewController.delegate = self;
+        [self presentViewController:self.boradcastViewController animated:YES completion:nil];
+    }];
+
+}
+
+- (void)broadcastActivityViewController:(RPBroadcastActivityViewController *)broadcastActivityViewController didFinishWithBroadcastController:(nullable RPBroadcastController *)broadcastController error:(nullable NSError *)error {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [broadcastActivityViewController dismissViewControllerAnimated:YES completion:nil];
+    });
     
-    
+    if (error) {
+        NSLog(@"BAC: %@ didFinishWBC: %@, err: %@",
+              broadcastActivityViewController,
+              broadcastController,
+              error);
+    }
+    self.broadcastController = broadcastController;
+    [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"--fshfka----success");
+        }
+        else {
+            NSLog(@"startBroadcast %@",error.localizedDescription);
+        }
+    }];
+
 }
 
 @end

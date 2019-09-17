@@ -28,6 +28,18 @@
 		3D3006FF232E12090058D230 /* ScreeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3006FD232E12090058D230 /* ScreeningViewController.m */; };
 		3D300700232E12090058D230 /* ScreeningViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D3006FE232E12090058D230 /* ScreeningViewController.xib */; };
 		3D300703232E176F0058D230 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D300702232E176F0058D230 /* Utils.m */; };
+		3D96CCA2232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
+		3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCA5232FA91C003CB59F /* SampleHandler.m */; };
+		3D96CCAD232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
+		3D96CCAE232FA91C003CB59F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B538232201B000B9F46D /* UIKit.framework */; };
+		3D96CCB2232FA91C003CB59F /* BroadcastSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCB1232FA91C003CB59F /* BroadcastSetupViewController.m */; };
+		3D96CCB6232FA91C003CB59F /* intelligentclassSetupSetupUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D96CCAC232FA91C003CB59F /* intelligentclassSetupSetupUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3D96CCB9232FA91C003CB59F /* intelligentclassSetup.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3D96CCCB232FAD9E003CB59F /* Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC2232FAD9D003CB59F /* Encoder.m */; };
+		3D96CCCC232FAD9E003CB59F /* TimeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC6232FAD9D003CB59F /* TimeManager.m */; };
+		3D96CCCD232FAD9E003CB59F /* Streamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC7232FAD9D003CB59F /* Streamer.m */; };
+		3D96CCCE232FAD9E003CB59F /* SenderBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC8232FAD9E003CB59F /* SenderBuffer.m */; };
+		3D96CCCF232FAD9E003CB59F /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC9232FAD9E003CB59F /* Frame.m */; };
 		3D9DEFCF2324B52900B652D6 /* sticker_resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */; };
 		3D9DEFD02324B52900B652D6 /* sticker_resize@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */; };
 		3D9DEFD12324B52900B652D6 /* sticker_resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC42324B52900B652D6 /* sticker_resize.png */; };
@@ -52,6 +64,38 @@
 		3DEBFFFB232121F500110D0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF9232121F500110D0B /* LaunchScreen.storyboard */; };
 		3DEBFFFE232121F500110D0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFFD232121F500110D0B /* main.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3D96CCB4232FA91C003CB59F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3DEBFFE3232121F300110D0B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D96CCAB232FA91C003CB59F;
+			remoteInfo = intelligentclassSetupSetupUI;
+		};
+		3D96CCB7232FA91C003CB59F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3DEBFFE3232121F300110D0B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D96CC9F232FA91C003CB59F;
+			remoteInfo = intelligentclassSetup;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3D96CCC0232FA91C003CB59F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3D96CCB6232FA91C003CB59F /* intelligentclassSetupSetupUI.appex in Embed App Extensions */,
+				3D96CCB9232FA91C003CB59F /* intelligentclassSetup.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3D27B5302322016400B9F46D /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IJKMediaFramework.framework; sourceTree = "<group>"; };
@@ -81,6 +125,25 @@
 		3D3006FE232E12090058D230 /* ScreeningViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScreeningViewController.xib; sourceTree = "<group>"; };
 		3D300701232E176F0058D230 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		3D300702232E176F0058D230 /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = intelligentclassSetup.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D96CCA1232FA91C003CB59F /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
+		3D96CCA4232FA91C003CB59F /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
+		3D96CCA5232FA91C003CB59F /* SampleHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SampleHandler.m; sourceTree = "<group>"; };
+		3D96CCA7232FA91C003CB59F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D96CCAC232FA91C003CB59F /* intelligentclassSetupSetupUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = intelligentclassSetupSetupUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D96CCB0232FA91C003CB59F /* BroadcastSetupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastSetupViewController.h; sourceTree = "<group>"; };
+		3D96CCB1232FA91C003CB59F /* BroadcastSetupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastSetupViewController.m; sourceTree = "<group>"; };
+		3D96CCB3232FA91C003CB59F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D96CCC1232FAD9D003CB59F /* Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encoder.h; sourceTree = "<group>"; };
+		3D96CCC2232FAD9D003CB59F /* Encoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encoder.m; sourceTree = "<group>"; };
+		3D96CCC3232FAD9D003CB59F /* TimeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeManager.h; sourceTree = "<group>"; };
+		3D96CCC4232FAD9D003CB59F /* Streamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Streamer.h; sourceTree = "<group>"; };
+		3D96CCC5232FAD9D003CB59F /* SenderBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SenderBuffer.h; sourceTree = "<group>"; };
+		3D96CCC6232FAD9D003CB59F /* TimeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeManager.m; sourceTree = "<group>"; };
+		3D96CCC7232FAD9D003CB59F /* Streamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Streamer.m; sourceTree = "<group>"; };
+		3D96CCC8232FAD9E003CB59F /* SenderBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SenderBuffer.m; sourceTree = "<group>"; };
+		3D96CCC9232FAD9E003CB59F /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
+		3D96CCCA232FAD9E003CB59F /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		3D9DEFC02324B52900B652D6 /* ACEDrawingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingTools.h; sourceTree = "<group>"; };
 		3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@2x.png"; sourceTree = "<group>"; };
 		3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@3x.png"; sourceTree = "<group>"; };
@@ -120,6 +183,23 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3D96CC9D232FA91C003CB59F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D96CCA2232FA91C003CB59F /* ReplayKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D96CCA9232FA91C003CB59F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D96CCAD232FA91C003CB59F /* ReplayKit.framework in Frameworks */,
+				3D96CCAE232FA91C003CB59F /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3DEBFFE8232121F300110D0B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,6 +239,7 @@
 				3D27B5342322019900B9F46D /* libz.tbd */,
 				3D27B5322322019300B9F46D /* libc++.tbd */,
 				3D27B5302322016400B9F46D /* IJKMediaFramework.framework */,
+				3D96CCA1232FA91C003CB59F /* ReplayKit.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -203,6 +284,36 @@
 				3D2AFC57232B7AC9006F0958 /* UUButton.m */,
 			);
 			path = UUButton;
+			sourceTree = "<group>";
+		};
+		3D96CCA3232FA91C003CB59F /* intelligentclassSetup */ = {
+			isa = PBXGroup;
+			children = (
+				3D96CCA4232FA91C003CB59F /* SampleHandler.h */,
+				3D96CCA5232FA91C003CB59F /* SampleHandler.m */,
+				3D96CCC1232FAD9D003CB59F /* Encoder.h */,
+				3D96CCC2232FAD9D003CB59F /* Encoder.m */,
+				3D96CCCA232FAD9E003CB59F /* Frame.h */,
+				3D96CCC9232FAD9E003CB59F /* Frame.m */,
+				3D96CCC5232FAD9D003CB59F /* SenderBuffer.h */,
+				3D96CCC8232FAD9E003CB59F /* SenderBuffer.m */,
+				3D96CCC4232FAD9D003CB59F /* Streamer.h */,
+				3D96CCC7232FAD9D003CB59F /* Streamer.m */,
+				3D96CCC3232FAD9D003CB59F /* TimeManager.h */,
+				3D96CCC6232FAD9D003CB59F /* TimeManager.m */,
+				3D96CCA7232FA91C003CB59F /* Info.plist */,
+			);
+			path = intelligentclassSetup;
+			sourceTree = "<group>";
+		};
+		3D96CCAF232FA91C003CB59F /* intelligentclassSetupSetupUI */ = {
+			isa = PBXGroup;
+			children = (
+				3D96CCB0232FA91C003CB59F /* BroadcastSetupViewController.h */,
+				3D96CCB1232FA91C003CB59F /* BroadcastSetupViewController.m */,
+				3D96CCB3232FA91C003CB59F /* Info.plist */,
+			);
+			path = intelligentclassSetupSetupUI;
 			sourceTree = "<group>";
 		};
 		3D9DEFBF2324B52900B652D6 /* ACEDrawingView */ = {
@@ -281,6 +392,8 @@
 				3D27B54B2322072D00B9F46D /* Utils */,
 				3D27B54A232206D600B9F46D /* Main */,
 				3DEBFFED232121F300110D0B /* intelligentclass */,
+				3D96CCA3232FA91C003CB59F /* intelligentclassSetup */,
+				3D96CCAF232FA91C003CB59F /* intelligentclassSetupSetupUI */,
 				3D27B52F2322016400B9F46D /* Frameworks */,
 				3DEBFFEC232121F300110D0B /* Products */,
 			);
@@ -290,6 +403,8 @@
 			isa = PBXGroup;
 			children = (
 				3DEBFFEB232121F300110D0B /* intelligentclass.app */,
+				3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */,
+				3D96CCAC232FA91C003CB59F /* intelligentclassSetupSetupUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -311,6 +426,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3D96CC9F232FA91C003CB59F /* intelligentclassSetup */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D96CCBF232FA91C003CB59F /* Build configuration list for PBXNativeTarget "intelligentclassSetup" */;
+			buildPhases = (
+				3D96CC9C232FA91C003CB59F /* Sources */,
+				3D96CC9D232FA91C003CB59F /* Frameworks */,
+				3D96CC9E232FA91C003CB59F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = intelligentclassSetup;
+			productName = intelligentclassSetup;
+			productReference = 3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		3D96CCAB232FA91C003CB59F /* intelligentclassSetupSetupUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D96CCBE232FA91C003CB59F /* Build configuration list for PBXNativeTarget "intelligentclassSetupSetupUI" */;
+			buildPhases = (
+				3D96CCA8232FA91C003CB59F /* Sources */,
+				3D96CCA9232FA91C003CB59F /* Frameworks */,
+				3D96CCAA232FA91C003CB59F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = intelligentclassSetupSetupUI;
+			productName = intelligentclassSetupSetupUI;
+			productReference = 3D96CCAC232FA91C003CB59F /* intelligentclassSetupSetupUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		3DEBFFEA232121F300110D0B /* intelligentclass */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3DEB0001232121F500110D0B /* Build configuration list for PBXNativeTarget "intelligentclass" */;
@@ -318,10 +467,13 @@
 				3DEBFFE7232121F300110D0B /* Sources */,
 				3DEBFFE8232121F300110D0B /* Frameworks */,
 				3DEBFFE9232121F300110D0B /* Resources */,
+				3D96CCC0232FA91C003CB59F /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3D96CCB5232FA91C003CB59F /* PBXTargetDependency */,
+				3D96CCB8232FA91C003CB59F /* PBXTargetDependency */,
 			);
 			name = intelligentclass;
 			productName = intelligentclass;
@@ -337,6 +489,12 @@
 				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = RexLiu;
 				TargetAttributes = {
+					3D96CC9F232FA91C003CB59F = {
+						CreatedOnToolsVersion = 10.3;
+					};
+					3D96CCAB232FA91C003CB59F = {
+						CreatedOnToolsVersion = 10.3;
+					};
 					3DEBFFEA232121F300110D0B = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -356,11 +514,27 @@
 			projectRoot = "";
 			targets = (
 				3DEBFFEA232121F300110D0B /* intelligentclass */,
+				3D96CC9F232FA91C003CB59F /* intelligentclassSetup */,
+				3D96CCAB232FA91C003CB59F /* intelligentclassSetupSetupUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3D96CC9E232FA91C003CB59F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D96CCAA232FA91C003CB59F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3DEBFFE9232121F300110D0B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +558,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3D96CC9C232FA91C003CB59F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D96CCCD232FAD9E003CB59F /* Streamer.m in Sources */,
+				3D96CCCB232FAD9E003CB59F /* Encoder.m in Sources */,
+				3D96CCCC232FAD9E003CB59F /* TimeManager.m in Sources */,
+				3D96CCCF232FAD9E003CB59F /* Frame.m in Sources */,
+				3D96CCCE232FAD9E003CB59F /* SenderBuffer.m in Sources */,
+				3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D96CCA8232FA91C003CB59F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D96CCB2232FA91C003CB59F /* BroadcastSetupViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3DEBFFE7232121F300110D0B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -411,6 +606,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		3D96CCB5232FA91C003CB59F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D96CCAB232FA91C003CB59F /* intelligentclassSetupSetupUI */;
+			targetProxy = 3D96CCB4232FA91C003CB59F /* PBXContainerItemProxy */;
+		};
+		3D96CCB8232FA91C003CB59F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D96CC9F232FA91C003CB59F /* intelligentclassSetup */;
+			targetProxy = 3D96CCB7232FA91C003CB59F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		3DEBFFF4232121F300110D0B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -431,6 +639,78 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3D96CCBA232FA91C003CB59F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D6AA2HP7B2;
+				INFOPLIST_FILE = intelligentclassSetup/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fjrh.intelligentclass.intelligentclassSetup;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D96CCBB232FA91C003CB59F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D6AA2HP7B2;
+				INFOPLIST_FILE = intelligentclassSetup/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fjrh.intelligentclass.intelligentclassSetup;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3D96CCBC232FA91C003CB59F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D6AA2HP7B2;
+				INFOPLIST_FILE = intelligentclassSetupSetupUI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fjrh.intelligentclass.intelligentclassSetupSetupUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3D96CCBD232FA91C003CB59F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D6AA2HP7B2;
+				INFOPLIST_FILE = intelligentclassSetupSetupUI/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fjrh.intelligentclass.intelligentclassSetupSetupUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		3DEB0000232121F500110D0B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -592,6 +872,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3D96CCBE232FA91C003CB59F /* Build configuration list for PBXNativeTarget "intelligentclassSetupSetupUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D96CCBC232FA91C003CB59F /* Debug */,
+				3D96CCBD232FA91C003CB59F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D96CCBF232FA91C003CB59F /* Build configuration list for PBXNativeTarget "intelligentclassSetup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D96CCBA232FA91C003CB59F /* Debug */,
+				3D96CCBB232FA91C003CB59F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3DEB0001232121F500110D0B /* Build configuration list for PBXNativeTarget "intelligentclass" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

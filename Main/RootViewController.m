@@ -148,6 +148,9 @@ static RootViewController  *g_rootViewController = nil;
         
         [self.view addSubview:_dragView];
     }
+    
+//    //TODO:
+//    [self presentViewController:[ScreeningViewController new] animated:NO completion:nil];
 }
 
 #pragma mark - 打开画布
