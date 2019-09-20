@@ -118,19 +118,20 @@
 
 // 请求投屏。。。
 - (void)connect:(NSString *)code{
-//    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetup" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-//        //
-//                self.boradcastViewController = broadcastActivityViewController;
-//                self.boradcastViewController.delegate = self;
-//                [self presentViewController:self.boradcastViewController animated:YES completion:nil];
-//    }];
-    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-
-        self.boradcastViewController = broadcastActivityViewController;
-        self.boradcastViewController.delegate = self;
-        [self presentViewController:self.boradcastViewController animated:YES completion:nil];
+    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetupSetupUI" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+        //
+                self.boradcastViewController = broadcastActivityViewController;
+                self.boradcastViewController.delegate = self;
+                [self presentViewController:self.boradcastViewController animated:YES completion:nil];
     }];
-
+//    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+//
+//        self.boradcastViewController = broadcastActivityViewController;
+//        self.boradcastViewController.delegate = self;
+//        [self presentViewController:self.boradcastViewController animated:YES completion:nil];
+//    }];
+   
+    
 }
 
 - (void)broadcastActivityViewController:(RPBroadcastActivityViewController *)broadcastActivityViewController didFinishWithBroadcastController:(nullable RPBroadcastController *)broadcastController error:(nullable NSError *)error {
@@ -153,7 +154,6 @@
             NSLog(@"startBroadcast %@",error.localizedDescription);
         }
     }];
-
 }
 
 @end

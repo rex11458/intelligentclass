@@ -3,6 +3,9 @@
   "gatewaySeverPort": "50120",
   "mainSignalRPort": "50114",
   "gatewaySignalRPort": "50118",
+  "mediaServerIP":"192.168.0.158",
+  "mediaServerPort": "8010",
   "errorLog": "development",
-  "showLog": true
+  "showLog": true,
+  "isTest": false
 }
