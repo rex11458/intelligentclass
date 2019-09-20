@@ -39,6 +39,10 @@
     return self.drawingView;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self updateButtonStatus];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.drawingView.lineWidth = 5;
@@ -67,6 +71,7 @@
     _backgroundImage = backgroundImage;
     self.bgImageView.image = _backgroundImage;
 }
+
 
 /*
 #pragma mark - Navigation
@@ -147,9 +152,8 @@
 }
 
 - (void)send{
-    [self dismiss];
-    [self clear];
     [[RootViewController sharedRootViewController] updateImage:[self takeSnapshot]];
+    [self dismiss];
 }
 
 - (void)dismiss {
@@ -168,7 +172,7 @@
 
 - (void)updateButtonStatus{
     self.undoButton.enabled = [self.currentDrawingView canUndo];
-    self.clearButton.enabled = [self.currentDrawingView canRedo];
+//    self.clearButton.enabled = [self.currentDrawingView canRedo];
 }
 
 - (void)changeViewStatus{

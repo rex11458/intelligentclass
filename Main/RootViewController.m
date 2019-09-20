@@ -215,11 +215,11 @@ static RootViewController  *g_rootViewController = nil;
 
     
     if(!ip) return NO;
-//    
+//
 //    if([_playerViewController.url isEqualToString:ip] && _playerViewController.isPlaying){
 //        return YES;
 //    }
-//    
+//
     [self rotation:UIInterfaceOrientationLandscapeRight];
     
     _playerViewController.url = ip;
