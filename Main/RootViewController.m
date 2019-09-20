@@ -119,7 +119,8 @@ static RootViewController  *g_rootViewController = nil;
 #pragma mark - 打开画布
 - (void)openCanvas {
     _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
-    [self presentViewController:_drawingViewController animated:NO completion:nil];
+    [self addChildViewController:_drawingViewController];
+    [self.view addSubview:_drawingViewController.view];
 }
 
 
@@ -213,11 +214,20 @@ static RootViewController  *g_rootViewController = nil;
     }
 
     
+    if(!ip) return NO;
+//    
+//    if([_playerViewController.url isEqualToString:ip] && _playerViewController.isPlaying){
+//        return YES;
+//    }
+//    
     [self rotation:UIInterfaceOrientationLandscapeRight];
+    
     _playerViewController.url = ip;
+    
     [self addChildViewController:_playerViewController];
-//    _playerViewController.view.frame = [UIScreen mainScreen].bounds;
     [self.view addSubview:_playerViewController.view];
+    
+    
     [_playerViewController play];
     
     return YES;
@@ -245,7 +255,8 @@ static RootViewController  *g_rootViewController = nil;
 // 扫码签到
 -(void)OpenQRcode:(id)sender{
     ScanViewController *vc = [[ScanViewController alloc] init];
-    [self presentViewController:vc animated:YES completion:nil];
+    [self addChildViewController:vc];
+    [self.view addSubview:vc.view];
     
     typeof(self) weakSelf = self;
     vc.callback = ^(NSString * qrcode){
@@ -263,7 +274,11 @@ static RootViewController  *g_rootViewController = nil;
 - (BOOL)openPrjScreen:(id)sender{
     ScreeningViewController *vc = [ScreeningViewController new];
     vc.groupInfo = self.groupInfo;
-    [self presentViewController:vc animated:NO completion:nil];
+    
+    [self addChildViewController:vc];
+    vc.view.frame = self.view.bounds;
+    [self.view addSubview:vc.view];
+    
     
     return YES;
 }
@@ -325,7 +340,9 @@ static RootViewController  *g_rootViewController = nil;
         // 是否允许编辑（YES：图片选择完成进入编辑模式）
         imagePickerVC.allowsEditing = false;
         // model出控制器
-        [self presentViewController:imagePickerVC animated:YES completion:nil];
+        
+        [self addChildViewController:imagePickerVC];
+        [self.view addSubview:imagePickerVC.view];
     }
 }
 
@@ -336,6 +353,11 @@ static RootViewController  *g_rootViewController = nil;
     
     // dismiss UIImagePickerController
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [picker.view removeFromSuperview];
+    [picker removeFromParentViewController];
+    
+    
     // 选择的图片信息存储于info字典中
     NSLog(@"%@", info);
     UIImage *image = info[@"UIImagePickerControllerOriginalImage"];

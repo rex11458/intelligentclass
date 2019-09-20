@@ -53,7 +53,8 @@
 
 - (IBAction)openScanning:(id)sender {
     ScanViewController *vc = [[ScanViewController alloc] init];
-    [self presentViewController:vc animated:YES completion:nil];
+    [self addChildViewController:vc];
+    [self.view addSubview:vc.view];
     
     typeof(self) weakSelf = self;
     vc.callback = ^(NSString * qrcode){
@@ -83,7 +84,10 @@
 }
 
 - (IBAction)back:(id)sender {
-    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    [self removeFromParentViewController];
+    [self.view removeFromSuperview];
+//    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)changeText{

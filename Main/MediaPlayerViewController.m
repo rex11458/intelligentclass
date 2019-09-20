@@ -217,10 +217,15 @@
 - (void)openCanvas {
     
     _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
-    [self presentViewController:_drawingViewController animated:NO completion:nil];
-
+    [self addChildViewController:_drawingViewController];
+    [self.view addSubview:_drawingViewController.view];
+    
 }
 
+
+- (BOOL)isPlaying{
+    return [_player isPlaying];
+}
 
 - (UIImage *)snapshotCurrentFullScreen{
     _dragView.hidden = YES;
@@ -247,8 +252,9 @@
 
 - (void)dismiss{
     [self shutdown];
-    [self removeFromParentViewController];
+    
     [self.view removeFromSuperview];
+    [self removeFromParentViewController];
 
     [[RootViewController sharedRootViewController] rotation:UIInterfaceOrientationPortrait];
 }
