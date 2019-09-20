@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7EW-fk-1Y6">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Rotate Navigation Controller-->
+        <scene sceneID="VUg-Xm-xP9">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="7EW-fk-1Y6" customClass="RotateNavigationController" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OnH-3m-6h2">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="OAh-Rp-sp5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FsQ-dc-qfw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1254" y="67"/>
+        </scene>
         <!--Root View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -17,12 +33,41 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NXr-D9-I1J" userLabel="headerView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.79607843137254897" blue="0.6705882352941176" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rBR-hc-S5a" customClass="UUWebView">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="rBR-hc-S5a" firstAttribute="bottom" secondItem="GZR-ON-BDr" secondAttribute="bottom" id="06Q-W5-krm"/>
+                            <constraint firstAttribute="trailing" secondItem="NXr-D9-I1J" secondAttribute="trailing" id="Brb-2F-RSO"/>
+                            <constraint firstItem="GZR-ON-BDr" firstAttribute="top" secondItem="NXr-D9-I1J" secondAttribute="bottom" id="bhj-eI-Bm8"/>
+                            <constraint firstItem="NXr-D9-I1J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="e8e-Wq-jo6"/>
+                            <constraint firstItem="rBR-hc-S5a" firstAttribute="top" secondItem="NXr-D9-I1J" secondAttribute="bottom" id="iDD-PX-kA3"/>
+                            <constraint firstItem="rBR-hc-S5a" firstAttribute="leading" secondItem="GZR-ON-BDr" secondAttribute="leading" id="jnO-pR-j3b"/>
+                            <constraint firstItem="NXr-D9-I1J" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="lEq-d2-C5z"/>
+                            <constraint firstItem="rBR-hc-S5a" firstAttribute="trailing" secondItem="GZR-ON-BDr" secondAttribute="trailing" id="ntd-L7-jKc"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="GZR-ON-BDr"/>
                     </view>
+                    <navigationItem key="navigationItem" id="dIc-Ba-oWU"/>
+                    <connections>
+                        <outlet property="webView" destination="rBR-hc-S5a" id="Sfo-QU-gpa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-478" y="67"/>
         </scene>
     </scenes>
 </document>

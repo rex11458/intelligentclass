@@ -12,7 +12,9 @@
 #import "UIImage+Extensions.h"
 #import "ScanViewController.h"
 #import "ScreeningViewController.h"
+#import "UUWebView.h"
 #import "Utils.h"
+#import "RotateNavigationController.h"
 static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
@@ -25,7 +27,7 @@ static NSString *SEND_SYS_INFO = @"sendSystemInfo";                //  发送屏
 static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当前学生的最新小组信息
 
 
-@interface RootViewController ()<WKNavigationDelegate,WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface RootViewController ()<WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
   
     UIView *_headView;
@@ -34,7 +36,8 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     NSString *_broadcastType;
     
 }
-@property (nonatomic) WKWebView *webView;
+
+@property (strong, nonatomic) IBOutlet UUWebView *webView;
 
 @property(nonatomic) NSDictionary *ips;
 
@@ -50,7 +53,7 @@ static RootViewController  *g_rootViewController = nil;
 
 - (void)awakeFromNib{
     [super awakeFromNib];
-    
+
     g_rootViewController = self;
 }
 
@@ -72,47 +75,15 @@ static RootViewController  *g_rootViewController = nil;
     [self __configSubViews];
     
     _drawingViewController = [DrawingViewController new];
-    
+    _playerViewController = [MediaPlayerViewController new];
     
 }
 
 
 - (void)__configSubViews{
-    
-    WKUserContentController *userContent = [[WKUserContentController alloc] init];
-    
-    //JS调用OC 添加处理脚本
-    // 开启拍照，并上传图片，单张
-    [userContent addScriptMessageHandler:self name:OPEN_CAMERA];
-    //打开相册，并选择 1 张图片上传
-    [userContent addScriptMessageHandler:self name:OPEN_PICK];
-    // 打开扫码识别界面
-    [userContent addScriptMessageHandler:self name:OPEN_QRCODE];
-    //  发送查询到的网关 IP，调用 window.getScreenIP(code)触发
-    [userContent addScriptMessageHandler:self name:SEND_PRJ_SCREEN_IP];
-//    发送开始广播
-    [userContent addScriptMessageHandler:self name:SEND_START_BROADCAST];
-    // 发送停止广播
-    [userContent addScriptMessageHandler:self name:SEND_STOP_BRODCAST];
-    //打开投屏界面
-    [userContent addScriptMessageHandler:self name:OPEN_PRJ_SCREEN];
-    //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
-    [userContent addScriptMessageHandler:self name:SEND_SYS_INFO];
-    // 发送当前学生的最新小组信息
-    [userContent addScriptMessageHandler:self name:SEND_GROUP_MESSAGE];
-
-    
-    CGRect frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) );
-
-    WKWebViewConfiguration *config = [WKWebViewConfiguration new];
-    config.userContentController = userContent;
-    
-    self.webView = [[WKWebView alloc] initWithFrame:frame configuration:config];
-    self.webView.navigationDelegate = self;
     NSString *root = [[NSBundle mainBundle] pathForResource:@"dist/index" ofType:@"html"];
-
     NSURL *url = [[NSURL alloc] initFileURLWithPath:root];
-    //    NSURL *url = [NSURL URLWithString:@"http://pb.fjrh.cn:85/h5/index.html"];
+//  NSURL *url = [NSURL URLWithString:@"http://pb.fjrh.cn:85/h5/index.html"];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
@@ -125,16 +96,11 @@ static RootViewController  *g_rootViewController = nil;
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    UIColor *mainColor = [UIColor colorWithRed:0 green:203/255.0 blue:171/255.0 alpha:1];
-    UIEdgeInsets insets = self.view.window.safeAreaInsets;
-    ;
-    if(!_headView){
-        _headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), insets.top)];
-        _headView.backgroundColor= mainColor;
-        [self.view addSubview:_headView];
-    }
+
     if(!_dragView){
+    
+        UIColor *mainColor = [UIColor colorWithRed:0 green:203/255.0 blue:171/255.0 alpha:1];
+        UIEdgeInsets insets = self.view.window.safeAreaInsets;
         _dragView = [[WMDragView alloc]initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds) - 40,CGRectGetHeight(self.view.bounds)-40-insets.bottom , 40, 40)];
         _dragView.freeRect = CGRectMake(0, insets.top, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-insets.top-insets.bottom);
         _dragView.backgroundColor = mainColor;
@@ -145,12 +111,9 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
             [weakSelf openCanvas];
         };
-        
+
         [self.view addSubview:_dragView];
     }
-    
-//    //TODO:
-//    [self presentViewController:[ScreeningViewController new] animated:NO completion:nil];
 }
 
 #pragma mark - 打开画布
@@ -159,18 +122,6 @@ static RootViewController  *g_rootViewController = nil;
     [self presentViewController:_drawingViewController animated:NO completion:nil];
 }
 
-#pragma mark - 禁用旋转
-- (BOOL)shouldAutorotate{
-    
-    return NO;
-
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
-    
-    return UIInterfaceOrientationMaskPortrait;
-    
-}
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
@@ -187,18 +138,6 @@ static RootViewController  *g_rootViewController = nil;
 
     }
 }
-
-
-
-//static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
-//static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
-//static NSString *OPEN_QRCODE = @"OpenQRcode";                      // 打开扫码识别界面
-//static NSString *SEND_PRJ_SCREEN_IP = @"sendPrjScreenIP";           //  发送查询到的网关 IP，调用 window.getScreenIP(code)触发
-//static NSString *SEND_START_BROADCAST = @"sendStartBroadcast";     //    发送开始广播
-//static NSString *SEND_STOP_BRODCAST = @"sendStopBroadcast";          // 发送停止广播
-//static NSString *OPEN_PRJ_SCREEN = @"openPrjScreen";                 //打开投屏界面
-//static NSString *SEND_SYS_INFO = @"sendSystemInfo";                //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
-//static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当前学生的最新小组信息
 
 + (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
     if (jsonString == nil) {
@@ -258,10 +197,6 @@ static RootViewController  *g_rootViewController = nil;
 - (BOOL)sendStartBroadcast:(NSString *)type{
     NSLog(@"self.ips:%@",self.ips);
     NSLog(@"type:%@",type);
-//    if ([type isMemberOfClass:[NSNumber class]]){
-//        type = [(NSNumber *)type stringValue];
-//    }
-//    {"ViceScreenIP":"192.168.0.104","ViceBroadcast":"rtsp://183.250.202.41/0","MainBroadcast":"rtsp://192.168.0.108/0"}
     NSString *ip = nil;
     if([type isEqualToString:@"0"]){
         _broadcastType = @"0";
@@ -277,18 +212,14 @@ static RootViewController  *g_rootViewController = nil;
         }
     }
 
-//    if(!ip) return NO;
     
-    if(!_playerViewController){
-        _playerViewController = [[MediaPlayerViewController alloc] init];
-    }
+    [self rotation:UIInterfaceOrientationLandscapeRight];
     _playerViewController.url = ip;
+    [self addChildViewController:_playerViewController];
+//    _playerViewController.view.frame = [UIScreen mainScreen].bounds;
+    [self.view addSubview:_playerViewController.view];
+    [_playerViewController play];
     
-    if (self.presentedViewController == nil) {
-        [self presentViewController:_playerViewController animated:NO completion:nil];
-    }else if ( [self.presentedViewController isEqual: _playerViewController]){
-        [_playerViewController relpay];
-    }
     return YES;
 }
 
@@ -358,35 +289,6 @@ static RootViewController  *g_rootViewController = nil;
 }
 
 
-
-
-
-#pragma mark - WKNavigationDelegate
-// 页面开始加载时调用
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
-    
-}
-// 当内容开始返回时调用
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
-    
-}
-
-// 页面加载完成之后调用
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    
-//    调用JS方法
-//    [self.webView evaluateJavaScript:@"getStudentName()" completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-//        //JS 返回结果
-//        NSLog(@"%@ %@",response,error);
-//    }];
-}
-
-// 页面加载失败时调用
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
-    
-}
-
-
 #pragma mark  -----截取当前屏幕全屏-----
 - (UIImage *)snapshotCurrentFullScreen{
     _dragView.hidden = YES;
@@ -447,5 +349,38 @@ static RootViewController  *g_rootViewController = nil;
     // dismiss UIImagePickerController
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+- (void)rotation:(UIInterfaceOrientation)orientation{
+    RotateNavigationController *navigationController = (RotateNavigationController *)self.navigationController;
+    if(orientation == UIInterfaceOrientationPortrait){
+        navigationController.interfaceOrientation = UIInterfaceOrientationPortrait;
+        navigationController.interfaceOrientationMask = UIInterfaceOrientationMaskPortrait;
+        //设置屏幕的转向为竖屏
+        [[UIDevice currentDevice] setValue:@(UIDeviceOrientationPortrait) forKey:@"orientation"];
+
+    }else{
+        navigationController.interfaceOrientation = UIInterfaceOrientationLandscapeRight;
+        navigationController.interfaceOrientationMask = UIInterfaceOrientationMaskLandscapeRight;
+        //设置屏幕的转向为横屏
+        [[UIDevice currentDevice] setValue:@(UIDeviceOrientationLandscapeRight) forKey:@"orientation"];
+    }
+    [UIViewController attemptRotationToDeviceOrientation];
+}
+
+
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait ;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
 
 @end

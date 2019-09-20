@@ -88,7 +88,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor blackColor];
     _drawingViewController = [DrawingViewController new];
 
 }
@@ -157,7 +157,19 @@
 }
 
 
+- (void)shutdown{
+    if([_player isPlaying]){
+        [self.player stop];
+        [self.player shutdown];
+        [self.player didShutdown];
+    }
+    [self.player.view removeFromSuperview];
+    _player = nil;
+    
+}
+
 - (void)play{
+    [self shutdown];
     NSLog(@"\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n RTSP播放地址:%@\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n",self.url);
     self.player.view.frame = self.playView.bounds;
     [self.playView insertSubview:self.player.view atIndex:0];
@@ -166,13 +178,6 @@
         [_indicatorView startAnimating];
         [self.player prepareToPlay];
     }
-}
-
-- (void)relpay{
-    if([self.player isPlaying]){
-        [self.player stop];
-    }
-    [self play];
 }
 
 
@@ -239,29 +244,13 @@
     return image;
 }
 
-//支持设备自动旋转
-
-- (BOOL)shouldAutorotate{
-    
-    return YES;
-    
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
-    
-    return UIInterfaceOrientationMaskLandscape;
-    
-}
-
 
 - (void)dismiss{
-    [self dismissViewControllerAnimated:NO completion:^{
-        if([self.player isPlaying]){
-            [self.player stop];
-        }
-        [self.player.view removeFromSuperview];
-        self.player = nil;
-    }];
+    [self shutdown];
+    [self removeFromParentViewController];
+    [self.view removeFromSuperview];
+
+    [[RootViewController sharedRootViewController] rotation:UIInterfaceOrientationPortrait];
 }
 
 - (void)dealloc{
@@ -275,6 +264,5 @@
 - (void)close{
     [self dismiss];
 }
-
 
 @end

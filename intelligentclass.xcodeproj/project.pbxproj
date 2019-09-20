@@ -28,6 +28,8 @@
 		3D3006FF232E12090058D230 /* ScreeningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D3006FD232E12090058D230 /* ScreeningViewController.m */; };
 		3D300700232E12090058D230 /* ScreeningViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D3006FE232E12090058D230 /* ScreeningViewController.xib */; };
 		3D300703232E176F0058D230 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D300702232E176F0058D230 /* Utils.m */; };
+		3D6573F82334777D008E4902 /* RotateNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6573F72334777D008E4902 /* RotateNavigationController.m */; };
+		3D6573FF23347EE5008E4902 /* UUWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6573FE23347EE5008E4902 /* UUWebView.m */; };
 		3D96CCA2232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
 		3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCA5232FA91C003CB59F /* SampleHandler.m */; };
 		3D96CCAD232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
@@ -125,6 +127,10 @@
 		3D3006FE232E12090058D230 /* ScreeningViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScreeningViewController.xib; sourceTree = "<group>"; };
 		3D300701232E176F0058D230 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		3D300702232E176F0058D230 /* Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		3D6573F62334777D008E4902 /* RotateNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RotateNavigationController.h; sourceTree = "<group>"; };
+		3D6573F72334777D008E4902 /* RotateNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RotateNavigationController.m; sourceTree = "<group>"; };
+		3D6573FD23347EE5008E4902 /* UUWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUWebView.h; sourceTree = "<group>"; };
+		3D6573FE23347EE5008E4902 /* UUWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUWebView.m; sourceTree = "<group>"; };
 		3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = intelligentclassSetup.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D96CCA1232FA91C003CB59F /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		3D96CCA4232FA91C003CB59F /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
@@ -247,6 +253,8 @@
 		3D27B54A232206D600B9F46D /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				3D6573F62334777D008E4902 /* RotateNavigationController.h */,
+				3D6573F72334777D008E4902 /* RotateNavigationController.m */,
 				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
 				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
@@ -266,6 +274,7 @@
 		3D27B54B2322072D00B9F46D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3D6573FC23347ED9008E4902 /* UUWebView */,
 				3D2AFC55232B7AB2006F0958 /* UUButton */,
 				3DB91FD5232A3D110095DA31 /* CDZQRScanView */,
 				3D9DEFDE2324F3D100B652D6 /* DrawingManagerView */,
@@ -284,6 +293,15 @@
 				3D2AFC57232B7AC9006F0958 /* UUButton.m */,
 			);
 			path = UUButton;
+			sourceTree = "<group>";
+		};
+		3D6573FC23347ED9008E4902 /* UUWebView */ = {
+			isa = PBXGroup;
+			children = (
+				3D6573FD23347EE5008E4902 /* UUWebView.h */,
+				3D6573FE23347EE5008E4902 /* UUWebView.m */,
+			);
+			path = UUWebView;
 			sourceTree = "<group>";
 		};
 		3D96CCA3232FA91C003CB59F /* intelligentclassSetup */ = {
@@ -588,6 +606,8 @@
 				3DEBFFFE232121F500110D0B /* main.m in Sources */,
 				3D9DEFD72324B52900B652D6 /* ACEDrawingTools.m in Sources */,
 				3D2AFC5B232B978A006F0958 /* DarwingManagerItemView.m in Sources */,
+				3D6573FF23347EE5008E4902 /* UUWebView.m in Sources */,
+				3D6573F82334777D008E4902 /* RotateNavigationController.m in Sources */,
 				3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */,
 				3DB91FD4232A3CC70095DA31 /* ScanViewController.m in Sources */,
 				3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */,

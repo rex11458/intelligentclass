@@ -14,9 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSString *url;
 
-- (void)close;
 
-- (void)relpay;
+- (void)play;
+
+- (void)close;
 
 @end
 
