@@ -65,6 +65,7 @@
 		3DEBFFF8232121F500110D0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF7232121F500110D0B /* Assets.xcassets */; };
 		3DEBFFFB232121F500110D0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF9232121F500110D0B /* LaunchScreen.storyboard */; };
 		3DEBFFFE232121F500110D0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFFD232121F500110D0B /* main.m */; };
+		3DEF3E5E2335AEEE00612376 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF3E5D2335AEEE00612376 /* DataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,8 @@
 		3DEBFFFA232121F500110D0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3DEBFFFC232121F500110D0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DEBFFFD232121F500110D0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3DEF3E5C2335AEEE00612376 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		3DEF3E5D2335AEEE00612376 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +277,7 @@
 		3D27B54B2322072D00B9F46D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3DEF3E5B2335AEEE00612376 /* DataManager */,
 				3D6573FC23347ED9008E4902 /* UUWebView */,
 				3D2AFC55232B7AB2006F0958 /* UUButton */,
 				3DB91FD5232A3D110095DA31 /* CDZQRScanView */,
@@ -439,6 +443,15 @@
 				3DEBFFFD232121F500110D0B /* main.m */,
 			);
 			path = intelligentclass;
+			sourceTree = "<group>";
+		};
+		3DEF3E5B2335AEEE00612376 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				3DEF3E5C2335AEEE00612376 /* DataManager.h */,
+				3DEF3E5D2335AEEE00612376 /* DataManager.m */,
+			);
+			path = DataManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -617,6 +630,7 @@
 				3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */,
 				3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */,
 				3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */,
+				3DEF3E5E2335AEEE00612376 /* DataManager.m in Sources */,
 				3D9DEFD52324B52900B652D6 /* ACEDrawingToolState.m in Sources */,
 				3D9DEFD82324B52900B652D6 /* ACEDrawingView.m in Sources */,
 				3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */,

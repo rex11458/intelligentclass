@@ -83,9 +83,7 @@
     
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-    }];
+   
 }
 
 @end

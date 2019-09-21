@@ -161,7 +161,6 @@
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
     
-    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)switching{

@@ -19,6 +19,8 @@ static NSString *OPEN_PRJ_SCREEN = @"openPrjScreen";                 //打开投
 static NSString *SEND_SYS_INFO = @"sendSystemInfo";                //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
 static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当前学生的最新小组信息
 
+static NSString *DOWNLOAD_FILE = @"downloadFile";           // 文件下载
+
 
 @implementation UUWebView
 
@@ -61,7 +63,10 @@ static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当�
     [userContent addScriptMessageHandler:delegate name:SEND_SYS_INFO];
     // 发送当前学生的最新小组信息
     [userContent addScriptMessageHandler:delegate name:SEND_GROUP_MESSAGE];
+    //文件下载
     
+    [userContent addScriptMessageHandler:delegate name:DOWNLOAD_FILE];
+
     return userContent;
 }
 

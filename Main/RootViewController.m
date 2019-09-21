@@ -15,18 +15,6 @@
 #import "UUWebView.h"
 #import "Utils.h"
 #import "RotateNavigationController.h"
-static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
-static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
-static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
-static NSString *OPEN_QRCODE = @"OpenQRcode";                      // 打开扫码识别界面
-static NSString *SEND_PRJ_SCREEN_IP = @"sendPrjScreenIP";           //  发送查询到的网关 IP，调用 window.getScreenIP(code)触发
-static NSString *SEND_START_BROADCAST = @"sendStartBroadcast";     //    发送开始广播
-static NSString *SEND_STOP_BRODCAST = @"sendStopBroadcast";          // 发送停止广播
-static NSString *OPEN_PRJ_SCREEN = @"openPrjScreen";                 //打开投屏界面
-static NSString *SEND_SYS_INFO = @"sendSystemInfo";                //  发送屏幕广播配置信息(登录后会下发,副屏 ip 地址是当前用户投屏到副屏时， 判断不接收副屏广播)
-static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当前学生的最新小组信息
-
-
 @interface RootViewController ()<WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
   
@@ -109,7 +97,7 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.imageView.contentMode = UIViewContentModeCenter;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
-            [weakSelf openCanvas];
+            [weakSelf OpenCamera:nil];
         };
 
         [self.view addSubview:_dragView];
@@ -269,6 +257,40 @@ static RootViewController  *g_rootViewController = nil;
     };
 }
 
+#pragma mark - 文件下载
+- (BOOL)downloadFile:(NSString *)urlString{
+    
+    NSLog(@"fileURL:%@",urlString);
+    
+    NSURLSession *session=[NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error){
+        NSHTTPURLResponse *res = (NSHTTPURLResponse *) response;
+        
+        NSDictionary *headerFiles = res.allHeaderFields;
+        NSString *disposition = headerFiles[@"Content-Disposition"];
+        
+//        NSLog(@"fileName=%@",fileName);
+        NSString *fileName = nil;
+        NSRange range = [disposition rangeOfString:@"\"(.+)\"" options:NSRegularExpressionSearch];
+        if (range.location != NSNotFound) {
+           fileName = [disposition substringWithRange:NSMakeRange(range.location + 1, range.length - 2)];
+        }
+        
+        NSString *filePath = [ [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[fileName stringByRemovingPercentEncoding]];
+        [data writeToFile:filePath atomically:YES];
+        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
+        
+        UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[fileURL] applicationActivities:nil];
+    
+        [self presentViewController:vc animated:YES completion:nil];
+    
+    }];
+    
+    //4.执行任务
+    [dataTask resume];
+    
+    return YES;
+}
 
 // 打开投屏界面
 - (BOOL)openPrjScreen:(id)sender{
@@ -351,9 +373,6 @@ static RootViewController  *g_rootViewController = nil;
 // 选择图片成功调用此方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    // dismiss UIImagePickerController
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
     [picker.view removeFromSuperview];
     [picker removeFromParentViewController];
     
@@ -369,7 +388,10 @@ static RootViewController  *g_rootViewController = nil;
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
     // dismiss UIImagePickerController
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+    [picker.view removeFromSuperview];
+    [picker removeFromParentViewController];
+    
 }
 
 

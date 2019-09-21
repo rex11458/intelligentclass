@@ -87,7 +87,6 @@
     
     [self removeFromParentViewController];
     [self.view removeFromSuperview];
-//    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)changeText{
