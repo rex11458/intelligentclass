@@ -65,6 +65,12 @@
 		3DEBFFF8232121F500110D0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF7232121F500110D0B /* Assets.xcassets */; };
 		3DEBFFFB232121F500110D0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF9232121F500110D0B /* LaunchScreen.storyboard */; };
 		3DEBFFFE232121F500110D0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFFD232121F500110D0B /* main.m */; };
+		3DEF3E602335E22F00612376 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E5F2335E22F00612376 /* MobileVLCKit.framework */; };
+		3DEF3E622335E29200612376 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E612335E29200612376 /* CoreAudio.framework */; };
+		3DEF3E682335E33700612376 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E672335E33700612376 /* libiconv.tbd */; };
+		3DEF3E6A2335E35400612376 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E692335E35400612376 /* libbz2.tbd */; };
+		3DEF3E6E2335F93300612376 /* VLCMediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEF3E6C2335F93300612376 /* VLCMediaPlayerViewController.m */; };
+		3DEF3E6F2335F93300612376 /* VLCMediaPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DEF3E6D2335F93300612376 /* VLCMediaPlayerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +192,15 @@
 		3DEBFFFA232121F500110D0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3DEBFFFC232121F500110D0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DEBFFFD232121F500110D0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3DEF3E5F2335E22F00612376 /* MobileVLCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = "<group>"; };
+		3DEF3E612335E29200612376 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		3DEF3E632335E31A00612376 /* libiconv.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.tbd; path = usr/lib/libiconv.2.tbd; sourceTree = SDKROOT; };
+		3DEF3E652335E32500612376 /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
+		3DEF3E672335E33700612376 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		3DEF3E692335E35400612376 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		3DEF3E6B2335F93300612376 /* VLCMediaPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCMediaPlayerViewController.h; sourceTree = "<group>"; };
+		3DEF3E6C2335F93300612376 /* VLCMediaPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCMediaPlayerViewController.m; sourceTree = "<group>"; };
+		3DEF3E6D2335F93300612376 /* VLCMediaPlayerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VLCMediaPlayerViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,18 +225,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DEF3E6A2335E35400612376 /* libbz2.tbd in Frameworks */,
+				3D27B5352322019900B9F46D /* libz.tbd in Frameworks */,
+				3D27B5332322019300B9F46D /* libc++.tbd in Frameworks */,
+				3DEF3E682335E33700612376 /* libiconv.tbd in Frameworks */,
+				3D27B541232201D300B9F46D /* MediaPlayer.framework in Frameworks */,
+				3D27B53D232201C100B9F46D /* AVFoundation.framework in Frameworks */,
+				3DEF3E622335E29200612376 /* CoreAudio.framework in Frameworks */,
+				3D27B537232201A500B9F46D /* AudioToolbox.framework in Frameworks */,
+				3D27B53F232201CA00B9F46D /* CoreMedia.framework in Frameworks */,
 				3D27B549232201F800B9F46D /* VideoToolbox.framework in Frameworks */,
+				3DEF3E602335E22F00612376 /* MobileVLCKit.framework in Frameworks */,
 				3D27B547232201EF00B9F46D /* QuartzCore.framework in Frameworks */,
 				3D27B545232201E500B9F46D /* OpenGLES.framework in Frameworks */,
 				3D27B543232201DC00B9F46D /* MobileCoreServices.framework in Frameworks */,
-				3D27B541232201D300B9F46D /* MediaPlayer.framework in Frameworks */,
-				3D27B53F232201CA00B9F46D /* CoreMedia.framework in Frameworks */,
-				3D27B53D232201C100B9F46D /* AVFoundation.framework in Frameworks */,
 				3D27B53B232201B800B9F46D /* CoreGraphics.framework in Frameworks */,
 				3D27B539232201B000B9F46D /* UIKit.framework in Frameworks */,
-				3D27B537232201A500B9F46D /* AudioToolbox.framework in Frameworks */,
-				3D27B5352322019900B9F46D /* libz.tbd in Frameworks */,
-				3D27B5332322019300B9F46D /* libc++.tbd in Frameworks */,
 				3D27B5312322016400B9F46D /* IJKMediaFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +251,12 @@
 		3D27B52F2322016400B9F46D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3DEF3E692335E35400612376 /* libbz2.tbd */,
+				3DEF3E672335E33700612376 /* libiconv.tbd */,
+				3DEF3E652335E32500612376 /* libc++.1.tbd */,
+				3DEF3E632335E31A00612376 /* libiconv.2.tbd */,
+				3DEF3E612335E29200612376 /* CoreAudio.framework */,
+				3DEF3E5F2335E22F00612376 /* MobileVLCKit.framework */,
 				3D27B548232201F800B9F46D /* VideoToolbox.framework */,
 				3D27B546232201EF00B9F46D /* QuartzCore.framework */,
 				3D27B544232201E500B9F46D /* OpenGLES.framework */,
@@ -259,6 +284,9 @@
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
 				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
 				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
+				3DEF3E6B2335F93300612376 /* VLCMediaPlayerViewController.h */,
+				3DEF3E6C2335F93300612376 /* VLCMediaPlayerViewController.m */,
+				3DEF3E6D2335F93300612376 /* VLCMediaPlayerViewController.xib */,
 				3DB91FD2232A3CC70095DA31 /* ScanViewController.h */,
 				3DB91FD3232A3CC70095DA31 /* ScanViewController.m */,
 				3D9DEFD92324B93200B652D6 /* DrawingViewController.h */,
@@ -569,6 +597,7 @@
 				3DEBFFF8232121F500110D0B /* Assets.xcassets in Resources */,
 				3D2AFC5D232B97B7006F0958 /* DarwingManagerItemView.xib in Resources */,
 				3D9DEFD22324B52900B652D6 /* sticker_close.png in Resources */,
+				3DEF3E6F2335F93300612376 /* VLCMediaPlayerViewController.xib in Resources */,
 				3DEBFFF6232121F300110D0B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,6 +634,7 @@
 				3D2AFC58232B7AC9006F0958 /* UUButton.m in Sources */,
 				3DEBFFFE232121F500110D0B /* main.m in Sources */,
 				3D9DEFD72324B52900B652D6 /* ACEDrawingTools.m in Sources */,
+				3DEF3E6E2335F93300612376 /* VLCMediaPlayerViewController.m in Sources */,
 				3D2AFC5B232B978A006F0958 /* DarwingManagerItemView.m in Sources */,
 				3D6573FF23347EE5008E4902 /* UUWebView.m in Sources */,
 				3D6573F82334777D008E4902 /* RotateNavigationController.m in Sources */,

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VLCMediaPlayerViewController">
+            <connections>
+                <outlet property="backButton" destination="t1W-Td-13c" id="oVe-bG-xgo"/>
+                <outlet property="indicatorView" destination="Fvl-OJ-Srz" id="ZeC-Xz-Zy4"/>
+                <outlet property="playView" destination="6KH-81-ZoC" id="ZB4-5f-3bU"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6KH-81-ZoC">
+                    <rect key="frame" x="44" y="0.0" width="808" height="414"/>
+                    <subviews>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Fvl-OJ-Srz">
+                            <rect key="frame" x="394" y="197" width="20" height="20"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Fvl-OJ-Srz" firstAttribute="centerY" secondItem="6KH-81-ZoC" secondAttribute="centerY" id="Tfk-cm-5KC"/>
+                        <constraint firstItem="Fvl-OJ-Srz" firstAttribute="centerX" secondItem="6KH-81-ZoC" secondAttribute="centerX" id="Ybc-fp-JDN"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ynm-LQ-UIl" userLabel="Modal">
+                    <rect key="frame" x="44" y="0.0" width="808" height="414"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal">
+                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="tapAction:" destination="-1" eventType="touchUpInside" id="XRv-CE-7iy"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1W-Td-13c">
+                    <rect key="frame" x="44" y="0.0" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="apy-iY-Vlb"/>
+                        <constraint firstAttribute="height" constant="40" id="sSo-Ou-iwV"/>
+                    </constraints>
+                    <state key="normal" image="nav_back"/>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="DcF-z3-GsI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="6KH-81-ZoC" secondAttribute="trailing" id="0YR-u1-sg2"/>
+                <constraint firstAttribute="bottom" secondItem="Ynm-LQ-UIl" secondAttribute="bottom" id="3ri-vV-9kF"/>
+                <constraint firstAttribute="bottom" secondItem="6KH-81-ZoC" secondAttribute="bottom" id="7P9-fG-tYk"/>
+                <constraint firstItem="t1W-Td-13c" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="EPB-Df-Kcm"/>
+                <constraint firstItem="t1W-Td-13c" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="GKI-qY-hm3"/>
+                <constraint firstItem="6KH-81-ZoC" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="KpO-s5-l3h"/>
+                <constraint firstItem="Ynm-LQ-UIl" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="bsc-0b-gdy"/>
+                <constraint firstItem="6KH-81-ZoC" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="gei-fs-PPq"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Ynm-LQ-UIl" secondAttribute="trailing" id="gy1-BJ-Jmo"/>
+                <constraint firstItem="Ynm-LQ-UIl" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="owL-uU-WIf"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="51.5625" y="76.811594202898561"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="nav_back" width="24" height="24"/>
+    </resources>
+</document>

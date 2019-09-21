@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MediaPlayerViewController.h"
+#import "VLCMediaPlayerViewController.h"
 #import "DrawingViewController.h"
 #import <WebKit/WebKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RootViewController : UIViewController<WKScriptMessageHandler>
 
-@property (nonatomic, strong) MediaPlayerViewController *playerViewController;
+@property (nonatomic, strong) VLCMediaPlayerViewController *playerViewController;
 @property (nonatomic, strong) DrawingViewController *drawingViewController;
 
 @property (nonatomic, assign) BOOL isPlaying;

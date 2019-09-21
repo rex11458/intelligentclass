@@ -63,7 +63,7 @@ static RootViewController  *g_rootViewController = nil;
     [self __configSubViews];
     
     _drawingViewController = [DrawingViewController new];
-    _playerViewController = [MediaPlayerViewController new];
+    _playerViewController = [VLCMediaPlayerViewController new];
     
 }
 
@@ -97,7 +97,7 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.imageView.contentMode = UIViewContentModeCenter;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
-            [weakSelf OpenCamera:nil];
+            [weakSelf openCanvas];
         };
 
         [self.view addSubview:_dragView];
@@ -203,18 +203,13 @@ static RootViewController  *g_rootViewController = nil;
 
     
     if(!ip) return NO;
-//
-//    if([_playerViewController.url isEqualToString:ip] && _playerViewController.isPlaying){
-//        return YES;
-//    }
-//
+    
     [self rotation:UIInterfaceOrientationLandscapeRight];
     
     _playerViewController.url = ip;
     
     [self addChildViewController:_playerViewController];
     [self.view addSubview:_playerViewController.view];
-    
     
     [_playerViewController play];
     
@@ -294,16 +289,45 @@ static RootViewController  *g_rootViewController = nil;
 
 // 打开投屏界面
 - (BOOL)openPrjScreen:(id)sender{
-    ScreeningViewController *vc = [ScreeningViewController new];
-    vc.groupInfo = self.groupInfo;
-    
-    [self addChildViewController:vc];
-    vc.view.frame = self.view.bounds;
-    [self.view addSubview:vc.view];
-    
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getScreenStatus()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+        //JS 返回结果
+        
+        if([response boolValue]){
+            [self openSendScreen];
+        }
+        
+    }];
+ 
     
     return YES;
 }
+
+
+- (void)openSendScreen{
+    
+    ScreeningViewController *vc = [ScreeningViewController new];
+    vc.groupInfo = self.groupInfo;
+
+    [self addChildViewController:vc];
+    vc.view.frame = self.view.bounds;
+    [self.view addSubview:vc.view];
+}
+
+
+- (void)getScreenIP{
+    
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getScreenIP()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+        //JS 返回结果
+
+        if(!!response){
+//            [self openSendScreen];
+        }
+
+        NSLog(@"%@ %@",response,error);
+
+    }];
+}
+
 
 
 #pragma mark - 调用JS事件
