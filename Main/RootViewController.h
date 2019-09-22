@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)openCanvas;
 
+- (void)getScreenIP:(NSString *)code;
+
 - (void)rotation:(UIInterfaceOrientation)orientation;
 
 @end

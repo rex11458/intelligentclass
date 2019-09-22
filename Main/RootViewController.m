@@ -306,29 +306,37 @@ static RootViewController  *g_rootViewController = nil;
 - (void)openSendScreen{
     
     ScreeningViewController *vc = [ScreeningViewController new];
-    vc.groupInfo = self.groupInfo;
-
     [self addChildViewController:vc];
     vc.view.frame = self.view.bounds;
     [self.view addSubview:vc.view];
+    
+    if(self.groupInfo){
+        vc.groupInfo = self.groupInfo;
+    }
 }
 
 
-- (void)getScreenIP{
+- (void)getScreenIP:(NSString *)code{
     
-    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getScreenIP()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getScreenIP(`%@`)",code] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
         //JS 返回结果
-
-        if(!!response){
-//            [self openSendScreen];
-        }
 
         NSLog(@"%@ %@",response,error);
 
     }];
 }
 
+- (void)sendPrjScreenIP:(NSString *)ip{
+    NSLog(@"%@,%@",NSStringFromSelector(_cmd) , ip);
+}
 
+- (void)openMultiPointPrj:(NSString *)ips{
+    
+}
+
+- (void)closeMultiPointPrj:(NSString *)ips{
+    
+}
 
 #pragma mark - 调用JS事件
 - (void)updateImage:(UIImage *)image{

@@ -9,6 +9,7 @@
 #import "ScreeningViewController.h"
 #import "ScanViewController.h"
 #import <ReplayKit/ReplayKit.h>
+#import "RootViewController.h"
 @interface ScreeningViewController ()<UITextFieldDelegate,RPBroadcastActivityViewControllerDelegate, RPBroadcastControllerDelegate>
 {
     NSString *_code;
@@ -18,11 +19,16 @@
 @property (strong, nonatomic) IBOutlet UIButton *saoyisaoButton;
 @property (strong, nonatomic) IBOutlet UIButton *toupingmaButton;
 @property (strong, nonatomic) IBOutlet UIButton *startToupingAction;
+
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray<UILabel *> *textLabel;
+
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 
 @property (nonatomic, strong) RPBroadcastActivityViewController *boradcastViewController;
 @property (nonatomic, strong) RPBroadcastController *broadcastController;
+@property (strong, nonatomic) IBOutlet UILabel *groupNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *memberLabel;
+@property (strong, nonatomic) IBOutlet UIView *groupView;
 
 @end
 
@@ -34,12 +40,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.groupView.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         [self changeText];
     }];
 }
 
+- (void)setGroupInfo:(NSDictionary *)groupInfo{
+    _groupInfo = groupInfo;
+    _groupView.hidden = NO;
+//    "isJoin":true,"groupIp":"192.168.0.13","groupName":"1","maxUser":2,"connectUser":1
+    _groupNameLabel.text = groupInfo[@"groupName"];
+    _memberLabel.text = [NSString stringWithFormat:@"成员：%@/%@",groupInfo[@"connectUser"],groupInfo[@"maxUser"]];
+}
 
 /*
 #pragma mark - Navigation
@@ -66,8 +80,12 @@
     [self connect:self.textField.text];
 }
 
+- (IBAction)groupSendToupingAction:(id)sender {
+    //小组投屏
+}
 
 - (IBAction)saoyisaoAction:(UIButton *)sender {
+    [self.textField resignFirstResponder];
     _saoyisaoButton.selected = YES;
     _toupingmaButton.selected = NO;
     
@@ -121,6 +139,9 @@
 
 // 请求投屏。。。
 - (void)connect:(NSString *)code{
+    
+    [[RootViewController sharedRootViewController] getScreenIP:code];
+    
     [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetupSetupUI" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
         //
                 self.boradcastViewController = broadcastActivityViewController;

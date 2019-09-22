@@ -7,5 +7,5 @@
   "mediaServerPort": "8010",
   "errorLog": "development",
   "showLog": true,
-  "isTest": false
+  "isTest": true
 }
