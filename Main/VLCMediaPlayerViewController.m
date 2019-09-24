@@ -122,6 +122,7 @@
 - (UIImage *)snapshotCurrentFullScreen{
     _dragView.hidden = YES;
     // 判断是否为retina屏, 即retina屏绘图时有放大因子
+    
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]){
         
         UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, [UIScreen mainScreen].scale);
@@ -132,7 +133,9 @@
         
     }
     
-    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+    [self.playView drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:NO];
+
+//    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     
