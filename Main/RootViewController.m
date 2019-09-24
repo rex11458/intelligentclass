@@ -76,9 +76,6 @@ static RootViewController  *g_rootViewController = nil;
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
 
     [ self.webView loadRequest:request];
-    
-    [self.view addSubview:self.webView];
-    
 }
 
 
@@ -108,6 +105,7 @@ static RootViewController  *g_rootViewController = nil;
 - (void)openCanvas {
     _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
     [self addChildViewController:_drawingViewController];
+    _drawingViewController.view.frame = self.view.bounds;
     [self.view addSubview:_drawingViewController.view];
 }
 
@@ -209,6 +207,7 @@ static RootViewController  *g_rootViewController = nil;
     _playerViewController.url = ip;
     
     [self addChildViewController:_playerViewController];
+    _playerViewController.view.frame = self.view.bounds;
     [self.view addSubview:_playerViewController.view];
     
     [_playerViewController play];
@@ -239,6 +238,7 @@ static RootViewController  *g_rootViewController = nil;
 -(void)OpenQRcode:(id)sender{
     ScanViewController *vc = [[ScanViewController alloc] init];
     [self addChildViewController:vc];
+    vc.view.frame = self.view.bounds;
     [self.view addSubview:vc.view];
     
     typeof(self) weakSelf = self;
@@ -396,6 +396,7 @@ static RootViewController  *g_rootViewController = nil;
         // model出控制器
         
         [self addChildViewController:imagePickerVC];
+        imagePickerVC.view.frame = self.view.bounds;
         [self.view addSubview:imagePickerVC.view];
     }
 }
