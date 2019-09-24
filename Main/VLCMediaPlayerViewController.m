@@ -77,6 +77,7 @@
 }
 
 - (void)play{
+
     [self shutdown];
     self.player.drawable = self.playView;
     self.player.media = [VLCMedia mediaWithURL:[NSURL URLWithString:self.url]];
@@ -106,8 +107,9 @@
 
 #pragma mark - 打开画布
 - (void)openCanvas {
-    
+    _dragView.hidden = YES;
     _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
+    _dragView.hidden = NO;
     [self addChildViewController:_drawingViewController];
     _drawingViewController.view.frame = [UIScreen mainScreen].bounds;
     [self.view addSubview:_drawingViewController.view];
@@ -120,7 +122,6 @@
 }
 
 - (UIImage *)snapshotCurrentFullScreen{
-    _dragView.hidden = YES;
     // 判断是否为retina屏, 即retina屏绘图时有放大因子
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]){
@@ -133,14 +134,13 @@
         
     }
     
-    [self.playView drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:NO];
+    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
 
 //    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     
     UIGraphicsEndImageContext();
-    _dragView.hidden = NO;
     return image;
 }
 
