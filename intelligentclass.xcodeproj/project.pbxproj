@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D27B5312322016400B9F46D /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B5302322016400B9F46D /* IJKMediaFramework.framework */; };
 		3D27B5332322019300B9F46D /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B5322322019300B9F46D /* libc++.tbd */; };
 		3D27B5352322019900B9F46D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B5342322019900B9F46D /* libz.tbd */; };
 		3D27B537232201A500B9F46D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B536232201A500B9F46D /* AudioToolbox.framework */; };
@@ -21,7 +20,6 @@
 		3D27B547232201EF00B9F46D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B546232201EF00B9F46D /* QuartzCore.framework */; };
 		3D27B549232201F800B9F46D /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D27B548232201F800B9F46D /* VideoToolbox.framework */; };
 		3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B54D2322075A00B9F46D /* RootViewController.m */; };
-		3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */; };
 		3D2AFC58232B7AC9006F0958 /* UUButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AFC57232B7AC9006F0958 /* UUButton.m */; };
 		3D2AFC5B232B978A006F0958 /* DarwingManagerItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AFC5A232B978A006F0958 /* DarwingManagerItemView.m */; };
 		3D2AFC5D232B97B7006F0958 /* DarwingManagerItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AFC5C232B97B7006F0958 /* DarwingManagerItemView.xib */; };
@@ -106,7 +104,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3D27B5302322016400B9F46D /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IJKMediaFramework.framework; sourceTree = "<group>"; };
 		3D27B5322322019300B9F46D /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		3D27B5342322019900B9F46D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		3D27B536232201A500B9F46D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -121,8 +118,6 @@
 		3D27B548232201F800B9F46D /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		3D27B54C2322075A00B9F46D /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		3D27B54D2322075A00B9F46D /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
-		3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
 		3D2AFC56232B7AC9006F0958 /* UUButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUButton.h; sourceTree = "<group>"; };
 		3D2AFC57232B7AC9006F0958 /* UUButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUButton.m; sourceTree = "<group>"; };
 		3D2AFC59232B978A006F0958 /* DarwingManagerItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DarwingManagerItemView.h; sourceTree = "<group>"; };
@@ -241,7 +236,6 @@
 				3D27B543232201DC00B9F46D /* MobileCoreServices.framework in Frameworks */,
 				3D27B53B232201B800B9F46D /* CoreGraphics.framework in Frameworks */,
 				3D27B539232201B000B9F46D /* UIKit.framework in Frameworks */,
-				3D27B5312322016400B9F46D /* IJKMediaFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +263,6 @@
 				3D27B536232201A500B9F46D /* AudioToolbox.framework */,
 				3D27B5342322019900B9F46D /* libz.tbd */,
 				3D27B5322322019300B9F46D /* libc++.tbd */,
-				3D27B5302322016400B9F46D /* IJKMediaFramework.framework */,
 				3D96CCA1232FA91C003CB59F /* ReplayKit.framework */,
 			);
 			path = Frameworks;
@@ -282,8 +275,6 @@
 				3D6573F72334777D008E4902 /* RotateNavigationController.m */,
 				3D27B54C2322075A00B9F46D /* RootViewController.h */,
 				3D27B54D2322075A00B9F46D /* RootViewController.m */,
-				3D27B54F23220A3200B9F46D /* MediaPlayerViewController.h */,
-				3D27B55023220A3200B9F46D /* MediaPlayerViewController.m */,
 				3DEF3E6B2335F93300612376 /* VLCMediaPlayerViewController.h */,
 				3DEF3E6C2335F93300612376 /* VLCMediaPlayerViewController.m */,
 				3DEF3E6D2335F93300612376 /* VLCMediaPlayerViewController.xib */,
@@ -649,7 +640,6 @@
 				3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */,
 				3D9DEFD52324B52900B652D6 /* ACEDrawingToolState.m in Sources */,
 				3D9DEFD82324B52900B652D6 /* ACEDrawingView.m in Sources */,
-				3D27B55123220A3200B9F46D /* MediaPlayerViewController.m in Sources */,
 				3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
