@@ -10,6 +10,7 @@
 #import "ScanViewController.h"
 #import <ReplayKit/ReplayKit.h>
 #import "RootViewController.h"
+#import "SocketManager.h"
 @interface ScreeningViewController ()<UITextFieldDelegate,RPBroadcastActivityViewControllerDelegate, RPBroadcastControllerDelegate>
 {
     NSString *_code;
@@ -36,6 +37,8 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedStartPrjScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedStopPrjScreenNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -45,6 +48,10 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         [self changeText];
     }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connect:) name:SocketdidReceivedStartPrjScreenNotification object:nil] ;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop:) name:SocketdidReceivedStopPrjScreenNotification object:nil] ;
+
 }
 
 - (void)setGroupInfo:(NSDictionary *)groupInfo{
@@ -55,29 +62,22 @@
     _memberLabel.text = [NSString stringWithFormat:@"成员：%@/%@",groupInfo[@"connectUser"],groupInfo[@"maxUser"]];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)openScanning:(id)sender {
     ScanViewController *vc = [[ScanViewController alloc] init];
     [self addChildViewController:vc];
+    vc.view.frame = self.view.bounds;
     [self.view addSubview:vc.view];
     
-    typeof(self) weakSelf = self;
-    vc.callback = ^(NSString * qrcode){
-        [weakSelf connect:qrcode];
+//    typeof(self) weakSelf = self;
+    vc.callback = ^(NSString * ip){
+        [[RootViewController sharedRootViewController] connetHost:ip];
+//        [weakSelf connect:qrcode];
     };
 }
 
 - (IBAction)startTouping:(id)sender {
-    [self connect:self.textField.text];
+    [[RootViewController sharedRootViewController] getScreenIP:self.textField.text];
 }
 
 - (IBAction)groupSendToupingAction:(id)sender {
@@ -138,25 +138,24 @@
 
 
 // 请求投屏。。。
-- (void)connect:(NSString *)code{
+- (void)connect:(NSNotification *)note{
     
-    [[RootViewController sharedRootViewController] getScreenIP:code];
-    
+//    [self.boradcastViewController ]
     [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetupSetupUI" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-        //
-                self.boradcastViewController = broadcastActivityViewController;
-                self.boradcastViewController.delegate = self;
-                [self presentViewController:self.boradcastViewController animated:YES completion:nil];
+            self.boradcastViewController = broadcastActivityViewController;
+            self.boradcastViewController.delegate = self;
+            [self presentViewController:self.boradcastViewController animated:YES completion:nil];
     }];
-//    [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-//
-//        self.boradcastViewController = broadcastActivityViewController;
-//        self.boradcastViewController.delegate = self;
-//        [self presentViewController:self.boradcastViewController animated:YES completion:nil];
-//    }];
-   
+}
+
+- (void)stop:(NSNotification *)note{
+    
+    [self.broadcastController finishBroadcastWithHandler:^(NSError * _Nullable error) {
+        NSLog(@"Finish:%@",error);
+    }];
     
 }
+
 
 - (void)broadcastActivityViewController:(RPBroadcastActivityViewController *)broadcastActivityViewController didFinishWithBroadcastController:(nullable RPBroadcastController *)broadcastController error:(nullable NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{

@@ -47,7 +47,7 @@
     VTEncodeInfoFlags flags;
     
     VTCompressionSessionEncodeFrameWithOutputHandler(encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
-        
+        NSLog(@"status:%d",status);
         if (status != noErr) {
             NSLog(@"JPEG: VTCompressionSessionEncodeFrame failed with %d", (int)status);
             
@@ -71,6 +71,7 @@
         if(statusCodeRet == kCMBlockBufferNoErr)
         {
             f.jpegData = [[NSData alloc] initWithBytes:dataPointer length:totalLength];
+            NSLog(@"jpegData:%@\n",f.jpegData);
             //UIImage *image = [UIImage imageWithData:jpegData];
             if(![senderBuffer isFull])
                 [senderBuffer enQueue:f];

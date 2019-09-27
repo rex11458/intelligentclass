@@ -91,7 +91,7 @@ int bufferSize = 30;
 }
 
 - (void)processSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType {
-    NSLog(@"sampleBuffer:%@",sampleBuffer);
+//    NSLog(@"sampleBuffer:%@",sampleBuffer);
     switch (sampleBufferType) {
         case RPSampleBufferTypeVideo:
             // Handle video sample buffer

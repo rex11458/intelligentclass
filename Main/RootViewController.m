@@ -15,9 +15,11 @@
 #import "UUWebView.h"
 #import "Utils.h"
 #import "RotateNavigationController.h"
+#import "SocketManager.h"
 @interface RootViewController ()<WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
-  
+    
+    SocketHandler *_socketManager;
     UIView *_headView;
     WMDragView *_dragView;
     
@@ -29,7 +31,6 @@
 
 @property(nonatomic) NSDictionary *ips;
 
-@property (nonatomic) NSString *currentUserName;
 
 @property (nonatomic) NSDictionary *groupInfo;
 
@@ -64,7 +65,8 @@ static RootViewController  *g_rootViewController = nil;
     
     _drawingViewController = [DrawingViewController new];
     _playerViewController = [VLCMediaPlayerViewController new];
-    
+ 
+    _socketManager = [SocketHandler new];
 }
 
 
@@ -94,7 +96,9 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.imageView.contentMode = UIViewContentModeCenter;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
-            [weakSelf openCanvas];
+//            [weakSelf sendPrjScreenIP:@"192.168.5.56"];
+            [weakSelf openPrjScreen:nil];
+
         };
 
         [self.view addSubview:_dragView];
@@ -329,7 +333,16 @@ static RootViewController  *g_rootViewController = nil;
 }
 
 - (void)sendPrjScreenIP:(NSString *)ip{
+    
+    [self connetHost:ip];
+    
     NSLog(@"%@,%@",NSStringFromSelector(_cmd) , ip);
+}
+
+
+- (void)connetHost:(NSString *)host{
+    
+    [_socketManager connetHost:@"192.168.7.56" port:9112];
 }
 
 - (void)openMultiPointPrj:(NSString *)ips{

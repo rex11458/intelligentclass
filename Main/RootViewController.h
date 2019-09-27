@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) VLCMediaPlayerViewController *playerViewController;
 @property (nonatomic, strong) DrawingViewController *drawingViewController;
 
+@property (nonatomic,copy) NSString *currentUserName;
+
 @property (nonatomic, assign) BOOL isPlaying;
 
 + (RootViewController *)sharedRootViewController;
@@ -28,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getScreenIP:(NSString *)code;
 
 - (void)rotation:(UIInterfaceOrientation)orientation;
+
+- (void)connetHost:(NSString *)host;
 
 @end
 
