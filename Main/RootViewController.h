@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "VLCMediaPlayerViewController.h"
 #import "DrawingViewController.h"
+#import "ScreeningViewController.h"
 #import <WebKit/WebKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) VLCMediaPlayerViewController *playerViewController;
 @property (nonatomic, strong) DrawingViewController *drawingViewController;
-
+@property (nonatomic, strong) ScreeningViewController *screeningViewController;
 @property (nonatomic,copy) NSString *currentUserName;
 
 @property (nonatomic, assign) BOOL isPlaying;
@@ -32,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rotation:(UIInterfaceOrientation)orientation;
 
 - (void)connetHost:(NSString *)host;
+
+- (void)sendSteam:(NSData *)data;
 
 @end
 

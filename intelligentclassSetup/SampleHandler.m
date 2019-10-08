@@ -8,94 +8,130 @@
 
 
 #import "SampleHandler.h"
-#import "Encoder.h"
-#import "SenderBuffer.h"
-#import "Streamer.h"
-#import "TimeManager.h"
+#include <stdio.h>
+#import <VideoToolbox/VideoToolbox.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+
 @interface SampleHandler()
 {
-    Encoder *encoder;
-    int screenWidth, screenHeight;
-    SenderBuffer *senderBuffer;
-    NSThread *streamerThread;
-    Streamer *streamer;
-    TimeManager *timeManager;
+    int _client_sockfd;
+    VTCompressionSessionRef _encodingSession;
 }
 @end
-char *ip = "172.20.10.14";
-int port = 32000;
-int bufferSize = 30;
+char *ip = "127.0.0.1";
+//char *ip = "192.168.5.37";
+int port = 9999;
+
+
+
 @implementation SampleHandler
 
 - (void)broadcastStartedWithSetupInfo:(NSDictionary<NSString *,NSObject *> *)setupInfo {
-    // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
-    
-    [self createSenderBufferWithSize:bufferSize];
-    [self initializeEncoder];
-    [self createStreamer];
-    [self createStreamerThread];
-    [self startStreamingThread];
-    [self createTimeManager];
+  
+    [self connectToHost];
+    [self initEncoder];
+
 }
 
--(void)createStreamer
-{
-    streamer = [[Streamer new] createStreamerWithWatcherIP:ip port:port senderBuffer:senderBuffer];
-}
-
--(void)createStreamerThread
-{
-    streamerThread = [[NSThread alloc] initWithTarget:self selector:@selector(startStreaming) object:nil];
-}
-
--(void)startStreamingThread
-{
-    [streamerThread start];
-}
-
--(void)startStreaming
-{
-    [streamer stream];
-}
-
-
--(void)initializeEncoder
-{
-    encoder = [Encoder new];
-    
-    screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    screenHeight = [[UIScreen mainScreen] bounds].size.height;
-    
-    [encoder initEncoder:screenWidth height:screenHeight senderBuffer:senderBuffer];
-}
-
--(void)createSenderBufferWithSize:(int)size
-{
-    senderBuffer = [[SenderBuffer new] initWithSize:size];
-}
-
-- (void)createTimeManager{
-    timeManager = [TimeManager sharedManager];
-}
-
-- (void)broadcastPaused {
-    // User has requested to pause the broadcast. Samples will stop being delivered.
-}
-
-- (void)broadcastResumed {
-    // User has requested to resume the broadcast. Samples delivery will resume.
-}
 
 - (void)broadcastFinished {
-    // User has requested to finish the broadcast.
+    close(_client_sockfd);
+}
+
+
+- (void)initEncoder{
+    
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    
+    OSStatus status = VTCompressionSessionCreate(NULL, CGRectGetWidth(bounds),  CGRectGetHeight(bounds), kCMVideoCodecType_JPEG, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
+    NSLog(@"H264: VTCompressionSessionCreate %d", (int)status);
+    if (status != 0)
+    {
+        NSLog(@"H264: Unable to create a H264 session");
+        return ;
+    }
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_RealTime, kCFBooleanTrue);
+    
+}
+
+- (void)connectToHost{
+
+    struct sockaddr_in remote_addr;
+
+    memset(&remote_addr, 0, sizeof(remote_addr));
+    remote_addr.sin_family = AF_INET;
+    remote_addr.sin_addr.s_addr = inet_addr(ip);
+    remote_addr.sin_port = htons(port);
+    
+    _client_sockfd = socket(PF_INET, SOCK_STREAM, 0);
+    
+    if(_client_sockfd < 0){
+        
+        perror("socket error");
+        return;
+    }
+    
+    if(connect(_client_sockfd,(struct sockaddr *)&remote_addr, sizeof(struct sockaddr)) < 0){
+        perror("connect error");
+        return;
+    }
+    
+    printf("connect to server success");
+}
+
+
+- (void)sendBuffer:(CMSampleBufferRef)sampleBuffer{
+    
+    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    
+    CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+   
+    VTEncodeInfoFlags flags;
+    
+    VTCompressionSessionEncodeFrameWithOutputHandler(_encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
+        NSLog(@"status:%d",status);
+        if (status != noErr) {
+            NSLog(@"JPEG: VTCompressionSessionEncodeFrame failed with %d", (int)status);
+            
+            // End the session
+            VTCompressionSessionInvalidate(self->_encodingSession);
+            CFRelease(self->_encodingSession);
+            self->_encodingSession = NULL;
+            return;
+        }
+        
+        if (!CMSampleBufferDataIsReady(sampleBuffer))
+        {
+            NSLog(@"jpeg data is not ready ");
+            return;
+        }
+        
+        CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+        size_t length, totalLength;
+        char *dataPointer;
+        OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
+        if(statusCodeRet == kCMBlockBufferNoErr)
+        {
+            NSData *data  = [[NSData alloc] initWithBytes:dataPointer length:totalLength];
+            
+            send(self->_client_sockfd, data.bytes, data.length, 0);
+
+        }
+    });
+    
 }
 
 - (void)processSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType {
-//    NSLog(@"sampleBuffer:%@",sampleBuffer);
     switch (sampleBufferType) {
         case RPSampleBufferTypeVideo:
             // Handle video sample buffer
-            [encoder encode:sampleBuffer];
+            [self sendBuffer:sampleBuffer];
+//            [encoder encode:sampleBuffer];
             break;
         case RPSampleBufferTypeAudioApp:
             // Handle audio sample buffer for app audio

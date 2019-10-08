@@ -13,7 +13,7 @@ NSString * const SocketdidReceivedStartPrjScreenNotification = @"SocketdidReceiv
 NSString *const SocketdidReceivedStopPrjScreenNotification = @"SocketdidReceivedStopPrjScreenNotification";
 
 static NSTimeInterval heartbeat_interval = 3;
-static NSTimeInterval time_out = -1;
+static NSTimeInterval time_out = 3;
 
 @implementation SocketManager
 
@@ -43,6 +43,7 @@ static NSTimeInterval time_out = -1;
 - (instancetype)init{
     if(self = [super init]){
         self.mClientId = 0;
+        self.streamHandler = [StreamHander new];
     }
     return self;
 }
@@ -58,13 +59,23 @@ static NSTimeInterval time_out = -1;
 - (void)connetHost:(NSString *)host port:(UInt16)port{
     _host = host;
     _port = port;
+    
+    [self connetionToHost];
+}
+
+
+
+- (void)connetionToHost
+{
+    if([_socket isConnected]){
+        [self disconnect];
+    }
     NSError *error = nil;
     
     _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    if(![self.socket connectToHost:host onPort:port error:&error]){
-        NSLog(@"connect %@ %@", host, error);
-    }
-}
+    if(![self.socket connectToHost:_host onPort:_port error:&error]){
+        NSLog(@"connect %@ %@", _host, error);
+    }}
 
 
 - (BOOL)isConnected{
@@ -72,8 +83,11 @@ static NSTimeInterval time_out = -1;
 }
 
 - (void)disconnect{
+    self.socket.userData = @(SocketOfflineByUser);
+
     [_socket disconnect];
     _socket = nil;
+    
 }
 
 
@@ -110,11 +124,14 @@ static NSTimeInterval time_out = -1;
     
 }
 
+- (void)sendSteam:(NSData *)data{
+    [self.streamHandler sendStream:data];
+}
 
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
-    NSLog(@"[Client] Connected to Host:%@, Port:%d", host, port);
-    [sock readDataWithTimeout:time_out tag:0];
+    NSLog(@"[JSON Client] Connected to Host:%@, Port:%d", host, port);
+    [sock readDataWithTimeout:-1 tag:0];
     
     //每3s向服务器发送心跳包
     self.connectTimer = [NSTimer scheduledTimerWithTimeInterval:heartbeat_interval target:self selector:@selector(sendHeartbeat) userInfo:nil repeats:YES];
@@ -122,19 +139,27 @@ static NSTimeInterval time_out = -1;
 }
 
 
+
+
 - (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)error;
 {
-    NSLog(@"[Client] Closed connection: %@", error);
     [self.connectTimer invalidate];
+
+    NSLog(@"[JSON Client] Closed connection: %@", error);
+    
+    SocketOfflineType type = [socket.userData unsignedIntegerValue] ;
+    
+    if (type == SocketOfflineByServer) {
+        
+//        [self connetionToHost];
+    }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag;
 {
-   
     UUCommAttribute *attribute = (UUCommAttribute *)data.bytes;
-    
     [self dealResponse:attribute];
-    [sock readDataWithTimeout:time_out tag:0];
+    [sock readDataWithTimeout:-1 tag:0];
 }
 
 
@@ -156,6 +181,7 @@ static NSTimeInterval time_out = -1;
 //    NSLog(@"jsonObject:%@",jsonObject);
     switch (dataType) {
         case UUMessageServerHeartbeatType:
+//            NSLog(@"服务端心跳...");
             break;
         case UUMessageRequestBaseInfoType:
             [self sendBaseInfo];
@@ -165,14 +191,97 @@ static NSTimeInterval time_out = -1;
             NSString * sPort =  [NSString stringWithFormat:@"%@",jsonObject[@"Port"]];
             NSDictionary *data = @{@"ip":self.host,@"port":sPort};
             [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedStartPrjScreenNotification object:data userInfo:nil];
+            
+            [self.streamHandler connetHost:_host port:[sPort integerValue]];
         }
             break;
         case UUMessageStopPrjScreenType:{
             NSDictionary *data = @{@"ip":self.host};
             [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedStopPrjScreenNotification object:data userInfo:nil];
+            [self.streamHandler disconnect];
         }
             break;
     }
+}
+
+@end
+
+@implementation StreamHander
+
+- (GCDAsyncSocket *)socket{
+    if(!_socket){
+        _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(0, 0)];
+    }
+    
+    return  _socket;
+}
+
+- (void)connetHost:(NSString *)host port:(UInt16)port{
+    _host = host;
+    _port = port;
+    [self connetionToHost];
+}
+
+
+
+- (void)connetionToHost
+{
+    if([_socket isConnected]){
+        [self disconnect];
+    }
+    NSError *error = nil;
+    
+    _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    if(![self.socket connectToHost:_host onPort:_port error:&error]){
+        NSLog(@"[Stream Client] socket connect %d %@", _port, error);
+    }}
+
+
+- (BOOL)isConnected{
+    return _socket.isConnected;
+}
+
+- (void)disconnect{
+    
+    [_socket disconnect];
+    _socket = nil;
+    
+}
+
+
+/** 推流 */
+- (void)sendStream:(NSData *)data{
+    
+    
+    FramePacket *packet = sendPacket(data);
+    
+    NSData *sendData = [NSData dataWithBytes:packet length:packet_length(packet)];
+
+    [self.socket writeData:sendData withTimeout:-1 tag:0];
+
+    NSLog(@"[Stream Client] sendData.length = %ld", sendData.length);
+
+}
+
+
+#pragma mark - GCDAsyncSocketDelegate
+- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
+ 
+    NSLog(@"[Stream Client] Connected to Host:%@, Port:%d Success", host, port);
+    [sock readDataWithTimeout:-1 tag:0];
+
+}
+
+- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err{
+    NSLog(@"[Stream Client] socketDidDisconnect %@", err);
+
+}
+
+- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
+
+    
+    NSLog(@"[Stream Client] didWriteDataWithTag");
+
 }
 
 @end

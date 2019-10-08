@@ -65,7 +65,7 @@ static RootViewController  *g_rootViewController = nil;
     
     _drawingViewController = [DrawingViewController new];
     _playerViewController = [VLCMediaPlayerViewController new];
- 
+    _screeningViewController = [ScreeningViewController new];
     _socketManager = [SocketHandler new];
 }
 
@@ -97,7 +97,8 @@ static RootViewController  *g_rootViewController = nil;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
 //            [weakSelf sendPrjScreenIP:@"192.168.5.56"];
-            [weakSelf openPrjScreen:nil];
+//            [weakSelf openPrjScreen:nil];
+            [weakSelf openCanvas];
 
         };
 
@@ -311,13 +312,12 @@ static RootViewController  *g_rootViewController = nil;
 
 - (void)openSendScreen{
     
-    ScreeningViewController *vc = [ScreeningViewController new];
-    [self addChildViewController:vc];
-    vc.view.frame = self.view.bounds;
-    [self.view addSubview:vc.view];
+    [self addChildViewController:_screeningViewController];
+    _screeningViewController.view.frame = self.view.bounds;
+    [self.view addSubview:_screeningViewController.view];
     
     if(self.groupInfo){
-        vc.groupInfo = self.groupInfo;
+        _screeningViewController.groupInfo = self.groupInfo;
     }
 }
 
@@ -342,7 +342,15 @@ static RootViewController  *g_rootViewController = nil;
 
 - (void)connetHost:(NSString *)host{
     
-    [_socketManager connetHost:@"192.168.7.56" port:9112];
+    if(!host){
+        return ;
+    }
+    [_socketManager connetHost:host port:9112];
+}
+
+
+- (void)sendSteam:(NSData *)data{
+    [_socketManager sendSteam:data];
 }
 
 - (void)openMultiPointPrj:(NSString *)ips{

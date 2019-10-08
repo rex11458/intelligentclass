@@ -121,3 +121,54 @@ NSDictionary *responseJsonObject(UUCommResponse *response){
 
     return [jsonString mj_JSONObject];
 }
+
+
+
+
+//typedef struct packet_header{
+//    int mark1;  // 0x10111213
+//    short mark2;  // 0x1415
+//    char mark3;  // 0x16
+//    char mark4;  // 0x17 ????
+//
+//}PacketHeader;
+//
+//typedef struct packet_tail{
+//    int tail; //0x1819;
+//}PacketTail;
+//
+//
+//typedef struct frame_packet{
+//    PacketHeader header;
+//    int curTimeBuf;  // 0 自增
+//    int p_length;   // 帧长度
+//    int data[0];
+//    PacketTail tail;
+//}FramePacket;
+
+
+int curTimeBuf = 0;
+FramePacket *sendPacket(NSData *data){
+    PacketHeader *header = malloc(sizeof(PacketHeader));
+//    header->mark1 = 0x17161514;
+//    header->mark2 = 0x1312;
+//    header->mark3 = 0x11;
+//    header->mark4 = 0x10;
+    header->mark = 0x16151413121110;
+    unsigned int p_length = (unsigned int)data.length + 2;
+//    char d[p_length] = (char *)data.bytes;
+    FramePacket *packet = malloc(sizeof(FramePacket) + p_length - 1);
+    memcpy(&packet->header, header, sizeof(PacketHeader));
+    packet->curTimeBuf = curTimeBuf;
+    packet->p_length = p_length;
+    memcpy(&packet->data, data.bytes,p_length);
+    short tail = 0x1918;
+    memcpy(&packet->data + p_length - 2 , &tail, 2);
+    curTimeBuf++;
+    return packet;
+}
+
+int packet_length(FramePacket *packet){
+
+    return sizeof(FramePacket) + packet->p_length - 1;
+}

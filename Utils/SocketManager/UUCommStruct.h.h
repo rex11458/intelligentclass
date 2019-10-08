@@ -69,3 +69,31 @@ NSDictionary *responseJsonObject(UUCommResponse *response);
 
 
 
+/**steam packet*/
+
+typedef struct packet_header{
+//    int mark1;  // 0x10111213
+//    short mark2;  // 0x1415
+//    char mark3;  // 0x16
+//    char mark4;  // 0x17 ????
+//    char
+    long mark;
+    
+}PacketHeader;
+
+typedef struct packet_tail{
+    int tail; //0x1819;
+}PacketTail;
+
+
+typedef struct frame_packet{
+    PacketHeader header;
+    int curTimeBuf;  // 0 自增
+    unsigned int p_length;   // 帧长度
+    char data[1];
+//    short tail;
+}FramePacket;
+
+
+FramePacket *sendPacket(NSData *data);
+int packet_length(FramePacket *packet);
