@@ -234,7 +234,9 @@ static NSTimeInterval time_out = 3;
     _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     if(![self.socket connectToHost:_host onPort:_port error:&error]){
         NSLog(@"[Stream Client] socket connect %d %@", _port, error);
-    }}
+    }
+    
+}
 
 
 - (BOOL)isConnected{
@@ -260,6 +262,7 @@ static NSTimeInterval time_out = 3;
     [self.socket writeData:sendData withTimeout:-1 tag:0];
 
     NSLog(@"[Stream Client] sendData.length = %ld", sendData.length);
+//    NSLog(@"[Stream Client] sendData = %@", sendData);
 
 }
 

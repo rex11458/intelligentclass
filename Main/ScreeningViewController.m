@@ -33,7 +33,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *toupingmaButton;
 @property (strong, nonatomic) IBOutlet UIButton *startToupingAction;
 
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray<UILabel *> *textLabel;
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *textLabel;
 
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 
@@ -104,7 +104,8 @@
     [super viewDidLoad];
     
     [self startTcpServer];
-    
+    self.textField.keyboardType = UIKeyboardTypeASCIICapable;
+    self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
     self.groupView.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
@@ -174,6 +175,20 @@
     [self.view removeFromSuperview];
 }
 
+
+- (UILabel *)getCurrentLabel:(NSInteger)tag{
+   __block UILabel *label = nil;
+    [self.textLabel enumerateObjectsUsingBlock:^(UILabel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if (obj.tag == tag) {
+            label = obj;
+        }
+        
+    }];
+    
+    return label;
+}
+
 - (void)changeText{
     self.startToupingAction.enabled = [self.textField.text length];
     [self.textLabel enumerateObjectsUsingBlock:^(UILabel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -182,8 +197,8 @@
     for(int i =0; i < [self.textField.text length]; i++){
         
         NSString *text = [self.textField.text substringWithRange:NSMakeRange(i, 1)];
-        self.textLabel[i].text = text;
-
+        UILabel *label = [self getCurrentLabel:i];
+        label.text = text;
     }
 }
 
@@ -209,13 +224,13 @@
     NSLog(@"%@",note.object);
 //    [self.boradcastViewController ]
     NSLog(@"isBroadcasting:%d",self.broadcastController.isBroadcasting);
-//    if(!self.broadcastController.isBroadcasting){
-//        [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetupSetupUI" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-//            self.boradcastViewController = broadcastActivityViewController;
-//            self.boradcastViewController.delegate = self;
-//            [[RootViewController sharedRootViewController] presentViewController:self.boradcastViewController animated:YES completion:nil];
-//        }];
-//    }
+    if(!self.broadcastController.isBroadcasting){
+        [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetupSetupUI" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
+            self.boradcastViewController = broadcastActivityViewController;
+            self.boradcastViewController.delegate = self;
+            [[RootViewController sharedRootViewController] presentViewController:self.boradcastViewController animated:YES completion:nil];
+        }];
+    }
 }
 
 - (void)stop:(NSNotification *)note{

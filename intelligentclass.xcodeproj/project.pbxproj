@@ -33,6 +33,7 @@
 		3D7FDC10233B5324000295B8 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D339411233B16160022EB38 /* CocoaAsyncSocket.framework */; };
 		3D7FDC11233B5324000295B8 /* CocoaAsyncSocket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3D339411233B16160022EB38 /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3D7FDC15233B7E65000295B8 /* UUCommStruct.cpp.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FDC14233B7E65000295B8 /* UUCommStruct.cpp.m */; };
+		3D8EC6A2234C5B02001BA109 /* H264HwEncoderImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EC6A1234C5B02001BA109 /* H264HwEncoderImpl.m */; };
 		3D96CCA2232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
 		3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCA5232FA91C003CB59F /* SampleHandler.m */; };
 		3D96CCAD232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
@@ -163,6 +164,8 @@
 		3D6573FE23347EE5008E4902 /* UUWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUWebView.m; sourceTree = "<group>"; };
 		3D7FDC13233B7E65000295B8 /* UUCommStruct.h.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUCommStruct.h.h; sourceTree = "<group>"; };
 		3D7FDC14233B7E65000295B8 /* UUCommStruct.cpp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUCommStruct.cpp.m; sourceTree = "<group>"; };
+		3D8EC6A0234C5B02001BA109 /* H264HwEncoderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264HwEncoderImpl.h; sourceTree = "<group>"; };
+		3D8EC6A1234C5B02001BA109 /* H264HwEncoderImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264HwEncoderImpl.m; sourceTree = "<group>"; };
 		3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = intelligentclassSetup.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D96CCA1232FA91C003CB59F /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		3D96CCA4232FA91C003CB59F /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
@@ -395,6 +398,8 @@
 			children = (
 				3D96CCA4232FA91C003CB59F /* SampleHandler.h */,
 				3D96CCA5232FA91C003CB59F /* SampleHandler.m */,
+				3D8EC6A0234C5B02001BA109 /* H264HwEncoderImpl.h */,
+				3D8EC6A1234C5B02001BA109 /* H264HwEncoderImpl.m */,
 				3D96CCC1232FAD9D003CB59F /* Encoder.h */,
 				3D96CCC2232FAD9D003CB59F /* Encoder.m */,
 				3D96CCCA232FAD9E003CB59F /* Frame.h */,
@@ -702,6 +707,7 @@
 				3D96CCCC232FAD9E003CB59F /* TimeManager.m in Sources */,
 				3D96CCCF232FAD9E003CB59F /* Frame.m in Sources */,
 				3D96CCCE232FAD9E003CB59F /* SenderBuffer.m in Sources */,
+				3D8EC6A2234C5B02001BA109 /* H264HwEncoderImpl.m in Sources */,
 				3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

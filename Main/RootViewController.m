@@ -341,7 +341,7 @@ static RootViewController  *g_rootViewController = nil;
 
 
 - (void)connetHost:(NSString *)host{
-    
+//    host = @"192.168.7.50";
     if(!host){
         return ;
     }

@@ -22,10 +22,10 @@
                 <outlet property="toupingmaButton" destination="D0v-vG-t49" id="jy0-lU-yoa"/>
                 <outlet property="toupingmaView" destination="2iV-DO-y0l" id="kTx-rI-jWV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outletCollection property="textLabel" destination="S26-Dy-dcd" id="odk-v6-spG"/>
-                <outletCollection property="textLabel" destination="K1m-KS-5UC" id="1Hb-Ay-pXS"/>
-                <outletCollection property="textLabel" destination="YnU-Xh-vct" id="H0p-ha-yHh"/>
-                <outletCollection property="textLabel" destination="DcR-Np-6rn" id="aoN-dk-Cfg"/>
+                <outletCollection property="textLabel" destination="S26-Dy-dcd" id="X1w-ds-DDz"/>
+                <outletCollection property="textLabel" destination="K1m-KS-5UC" id="B5C-yH-E9o"/>
+                <outletCollection property="textLabel" destination="YnU-Xh-vct" id="FKd-rj-bau"/>
+                <outletCollection property="textLabel" destination="DcR-Np-6rn" id="YU8-aK-3Dz"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -123,7 +123,7 @@
                                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="textColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                            <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <outlet property="delegate" destination="-1" id="iTd-3b-Nj2"/>
                                             </connections>
@@ -145,7 +145,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1m-KS-5UC" userLabel="2">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1m-KS-5UC" userLabel="2">
                                             <rect key="frame" x="90" y="15" width="50" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -162,7 +162,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-Xh-vct" userLabel="3">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnU-Xh-vct" userLabel="3">
                                             <rect key="frame" x="180" y="15" width="50" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -179,7 +179,7 @@
                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                             </userDefinedRuntimeAttributes>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcR-Np-6rn" userLabel="4">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcR-Np-6rn" userLabel="4">
                                             <rect key="frame" x="270" y="15" width="50" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>

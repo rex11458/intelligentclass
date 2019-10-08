@@ -48,7 +48,7 @@ int port = 9999;
     
     CGRect bounds = [[UIScreen mainScreen] bounds];
     
-    OSStatus status = VTCompressionSessionCreate(NULL, CGRectGetWidth(bounds),  CGRectGetHeight(bounds), kCMVideoCodecType_JPEG, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
+    OSStatus status = VTCompressionSessionCreate(NULL, CGRectGetWidth(bounds),  CGRectGetHeight(bounds), kCMVideoCodecType_H264, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
     NSLog(@"H264: VTCompressionSessionCreate %d", (int)status);
     if (status != 0)
     {
@@ -87,49 +87,116 @@ int port = 9999;
 
 - (void)sendBuffer:(CMSampleBufferRef)sampleBuffer{
     
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    
-    CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-   
-    VTEncodeInfoFlags flags;
-    
-    VTCompressionSessionEncodeFrameWithOutputHandler(_encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
-        NSLog(@"status:%d",status);
-        if (status != noErr) {
-            NSLog(@"JPEG: VTCompressionSessionEncodeFrame failed with %d", (int)status);
-            
-            // End the session
-            VTCompressionSessionInvalidate(self->_encodingSession);
-            CFRelease(self->_encodingSession);
-            self->_encodingSession = NULL;
-            return;
-        }
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        if (!CMSampleBufferDataIsReady(sampleBuffer))
-        {
-            NSLog(@"jpeg data is not ready ");
-            return;
-        }
         
-        CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
-        size_t length, totalLength;
-        char *dataPointer;
-        OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
-        if(statusCodeRet == kCMBlockBufferNoErr)
-        {
-            NSData *data  = [[NSData alloc] initWithBytes:dataPointer length:totalLength];
+        
+        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        
+        CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+        
+        VTEncodeInfoFlags flags;
+        
+        
+        const char bytes[] = "\x00\x00\x00\x01";
+        size_t length = (sizeof bytes) - 1; //string literals have implicit trailing '\0'
+        NSData *byteHeader = [NSData dataWithBytes:bytes length:length];
+        
+        
+        VTCompressionSessionEncodeFrameWithOutputHandler(self->_encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
+            NSLog(@"status:%d",status);
+            if (status != noErr) {
+                NSLog(@"JPEG: VTCompressionSessionEncodeFrame failed with %d", (int)status);
+                
+                // End the session
+                VTCompressionSessionInvalidate(self->_encodingSession);
+                CFRelease(self->_encodingSession);
+                self->_encodingSession = NULL;
+                return;
+            }
             
-            send(self->_client_sockfd, data.bytes, data.length, 0);
-
-        }
+            if (!CMSampleBufferDataIsReady(sampleBuffer))
+            {
+                NSLog(@"jpeg data is not ready ");
+                return;
+            }
+            
+            NSMutableData *mData = [NSMutableData data];
+//            bool keyframe = !CFDictionaryContainsKey( (CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
+//
+            CMFormatDescriptionRef format = CMSampleBufferGetFormatDescription(sampleBuffer);
+            
+            size_t sparameterSetSize, sparameterSetCount;
+            const uint8_t *sparameterSet;
+            OSStatus statusCode = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(format, 0, &sparameterSet, &sparameterSetSize, &sparameterSetCount, 0 );
+            if (statusCode == noErr)
+            {
+                // Found sps and now check for pps
+                size_t pparameterSetSize, pparameterSetCount;
+                const uint8_t *pparameterSet;
+                OSStatus statusCode = CMVideoFormatDescriptionGetH264ParameterSetAtIndex(format, 1, &pparameterSet, &pparameterSetSize, &pparameterSetCount, 0 );
+                if (statusCode == noErr)
+                {
+                    // Found pps
+                    [mData appendData:byteHeader];
+                    NSData *sps = [NSData dataWithBytes:sparameterSet length:sparameterSetSize];
+                    [mData appendData:sps];
+                    [mData appendData:byteHeader];
+                    NSData *pps = [NSData dataWithBytes:pparameterSet length:pparameterSetSize];
+                    [mData appendData:pps];
+                }
+            }
+            
+            
+            CMBlockBufferRef dataBuffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+            size_t length, totalLength;
+            char *dataPointer;
+            OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
+            if(statusCodeRet == kCMBlockBufferNoErr)
+            {
+                //            NSData *data  = [[NSData alloc] initWithBytes:dataPointer length:totalLength];
+                
+                //            send(self->_client_sockfd, data.bytes, data.length, 0);
+                
+                
+                size_t bufferOffset = 0;
+                static const int AVCCHeaderLength = 4;
+                while (bufferOffset < totalLength - AVCCHeaderLength) {
+                    
+                    // Read the NAL unit length
+                    uint32_t NALUnitLength = 0;
+                    memcpy(&NALUnitLength, dataPointer + bufferOffset, AVCCHeaderLength);
+                    
+                    // Convert the length value from Big-endian to Little-endian
+                    NALUnitLength = CFSwapInt32BigToHost(NALUnitLength);
+                    
+                    NSData* data = [[NSData alloc] initWithBytes:(dataPointer + bufferOffset + AVCCHeaderLength) length:NALUnitLength];
+                    [mData appendData:byteHeader];
+                    [mData appendData:data];
+                    
+                    //                [encoder->_delegate gotEncodedData:data isKeyFrame:keyframe];
+                    
+                    // Move to the next NAL unit in the block buffer
+                    bufferOffset += AVCCHeaderLength + NALUnitLength;
+                }
+                
+            }
+            
+//            NSLog(@"mdata:%@",mData);
+//            NSLog(@"last mData.length:%ld",mData.length);
+            send(self->_client_sockfd, mData.bytes, mData.length, 0);
+            
+        });
+        
     });
-    
+
 }
 
 - (void)processSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType {
     switch (sampleBufferType) {
         case RPSampleBufferTypeVideo:
             // Handle video sample buffer
+            NSLog(@"processSampleBuffer");
             [self sendBuffer:sampleBuffer];
 //            [encoder encode:sampleBuffer];
             break;
