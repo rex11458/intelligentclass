@@ -72,6 +72,7 @@ static RootViewController  *g_rootViewController = nil;
 
 - (void)__configSubViews{
     NSString *root = [[NSBundle mainBundle] pathForResource:@"dist/index" ofType:@"html"];
+
     NSURL *url = [[NSURL alloc] initFileURLWithPath:root];
 //  NSURL *url = [NSURL URLWithString:@"http://pb.fjrh.cn:85/h5/index.html"];
 
@@ -296,6 +297,13 @@ static RootViewController  *g_rootViewController = nil;
 
 // 打开投屏界面
 - (BOOL)openPrjScreen:(id)sender{
+    
+    //获取登录用户信息
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getStudentName()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+        self.currentUserName = response;
+        NSLog(@"\ncurrentUserName=%@\n",self.currentUserName);
+    }];
+    
     [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getScreenStatus()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
         //JS 返回结果
         
@@ -341,7 +349,6 @@ static RootViewController  *g_rootViewController = nil;
 
 
 - (void)connetHost:(NSString *)host{
-    host = @"192.168.7.50";
     if(!host){
         return ;
     }

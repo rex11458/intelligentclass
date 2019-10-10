@@ -21,6 +21,7 @@
 {
     int _client_sockfd;
     VTCompressionSessionRef _encodingSession;
+    int _frameNO;
 }
 @end
 char *ip = "127.0.0.1";
@@ -40,11 +41,24 @@ int port = 9999;
 
 - (void)broadcastFinished {
     close(_client_sockfd);
+    [self stopEncode];
 }
 
 
+
+- (void)stopEncode
+{
+    if (_encodingSession) {
+        VTCompressionSessionCompleteFrames(_encodingSession, kCMTimeInvalid);
+        VTCompressionSessionInvalidate(_encodingSession);
+        CFRelease(_encodingSession);
+        _encodingSession = NULL;
+        _frameNO = 0;
+    }
+}
+
 - (void)initEncoder{
-    
+    _frameNO = 0;
     CGRect bounds = [[UIScreen mainScreen] bounds];
     CGFloat width =  CGRectGetWidth(bounds);
     CGFloat height =  CGRectGetHeight(bounds);
@@ -119,8 +133,9 @@ int port = 9999;
         
         CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         
-        CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-        
+//        CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+        CMTime presentationTimeStamp = CMTimeMake(_frameNO++, 1000);
+
         VTEncodeInfoFlags flags;
         
         

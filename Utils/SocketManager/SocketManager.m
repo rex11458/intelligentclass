@@ -12,6 +12,8 @@
 NSString * const SocketdidReceivedStartPrjScreenNotification = @"SocketdidReceivedStartPrjScreenNotification";
 NSString *const SocketdidReceivedStopPrjScreenNotification = @"SocketdidReceivedStopPrjScreenNotification";
 
+#define MAX_STREAM_BUFFER_LENGTH 1480
+
 static NSTimeInterval heartbeat_interval = 3;
 static NSTimeInterval time_out = 3;
 
@@ -128,6 +130,13 @@ static NSTimeInterval time_out = 3;
     [self.streamHandler sendStream:data];
 }
 
+- (void)stopStream{
+    NSDictionary *data = @{@"ip":self.host};
+    [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedStopPrjScreenNotification object:data userInfo:nil];
+    [self.streamHandler disconnect];
+}
+
+
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
     NSLog(@"[JSON Client] Connected to Host:%@, Port:%d", host, port);
@@ -153,6 +162,7 @@ static NSTimeInterval time_out = 3;
         
 //        [self connetionToHost];
     }
+    [self stopStream];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag;
@@ -196,9 +206,7 @@ static NSTimeInterval time_out = 3;
         }
             break;
         case UUMessageStopPrjScreenType:{
-            NSDictionary *data = @{@"ip":self.host};
-            [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedStopPrjScreenNotification object:data userInfo:nil];
-            [self.streamHandler disconnect];
+            [self stopStream];
         }
             break;
     }
@@ -258,12 +266,32 @@ static NSTimeInterval time_out = 3;
     FramePacket *packet = sendPacket(data);
     
     NSData *sendData = [NSData dataWithBytes:packet length:packet_length(packet)];
-
-    [self.socket writeData:sendData withTimeout:-1 tag:0];
-
     NSLog(@"[Stream Client] sendData.length = %ld", sendData.length);
-//    NSLog(@"[Stream Client] sendData = %@", sendData);
 
+//    NSUInteger totalLength = sendData.length;
+//
+//    if(sendData.length > MAX_STREAM_BUFFER_LENGTH){
+//
+//        int postion = 0;
+//
+//        while ((totalLength - postion) >= MAX_STREAM_BUFFER_LENGTH ) {
+//            NSData *subData = [sendData subdataWithRange:NSMakeRange(postion, MAX_STREAM_BUFFER_LENGTH)];
+//
+//            NSLog(@" subData.length = %ld", subData.length);
+//            [self.socket writeData:subData withTimeout:-1 tag:0];
+//            postion += MAX_STREAM_BUFFER_LENGTH;
+//        }
+//
+//        NSUInteger tailLength = totalLength - postion;
+//        if(tailLength > 0){
+//            NSData *subData = [sendData subdataWithRange:NSMakeRange(postion, tailLength)];
+//            [self.socket writeData:subData withTimeout:-1 tag:0];
+//            NSLog(@" subData.length = %ld", subData.length);
+//
+//        }
+//    }else{
+        [self.socket writeData:sendData withTimeout:-1 tag:0];
+//    }
 }
 
 
