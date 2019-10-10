@@ -74,7 +74,7 @@ static NSTimeInterval time_out = 3;
     
     _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     if(![self.socket connectToHost:_host onPort:_port error:&error]){
-        NSLog(@"connect %@ %@", _host, error);
+        NSLog(@"[JSON Client] connect %@ %@", _host, error);
     }}
 
 
@@ -95,10 +95,10 @@ static NSTimeInterval time_out = 3;
 - (void)sendHeartbeat{
     
     NSString *username = [RootViewController sharedRootViewController].currentUserName;
-    if(!username){
-        username = @"张三";
-    }
-    
+   if(!username){
+       username = @"";
+   }
+
     UUCommRequest *request = sendHeartbeatRequest(self.mClientId,username);
     
 //    NSData *data = [NSData dataWithBytes:request->body.cAttributes length:request->body.length];
@@ -115,7 +115,7 @@ static NSTimeInterval time_out = 3;
     if(!username){
         username = @"";
     }
-    
+
     UUCommRequest *request = sendBaseInfoRequest(self.mClientId, username);
     
     NSData *data = [NSData dataWithBytes:request length:UUCommAttribute_getTotalLength(request)];
@@ -230,7 +230,7 @@ static NSTimeInterval time_out = 3;
         [self disconnect];
     }
     NSError *error = nil;
-    
+
     _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     if(![self.socket connectToHost:_host onPort:_port error:&error]){
         NSLog(@"[Stream Client] socket connect %d %@", _port, error);
@@ -283,7 +283,7 @@ static NSTimeInterval time_out = 3;
 - (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag{
 
     
-    NSLog(@"[Stream Client] didWriteDataWithTag");
+//    NSLog(@"[Stream Client] didWriteDataWithTag");
 
 }
 

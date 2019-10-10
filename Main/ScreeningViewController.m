@@ -257,7 +257,7 @@
     self.broadcastController = broadcastController;
     [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
         if (!error) {
-            NSLog(@"");
+            NSLog(@"屏幕录制开始...");
         }
         else {
             NSLog(@"startBroadcast %@",error.localizedDescription);

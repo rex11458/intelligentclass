@@ -24,7 +24,6 @@
 }
 @end
 char *ip = "127.0.0.1";
-//char *ip = "192.168.5.37";
 int port = 9999;
 
 
@@ -47,16 +46,43 @@ int port = 9999;
 - (void)initEncoder{
     
     CGRect bounds = [[UIScreen mainScreen] bounds];
-    
-    OSStatus status = VTCompressionSessionCreate(NULL, CGRectGetWidth(bounds),  CGRectGetHeight(bounds), kCMVideoCodecType_H264, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
+    CGFloat width =  CGRectGetWidth(bounds);
+    CGFloat height =  CGRectGetHeight(bounds);
+    OSStatus status = VTCompressionSessionCreate(NULL,width, height, kCMVideoCodecType_H264, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
     NSLog(@"H264: VTCompressionSessionCreate %d", (int)status);
     if (status != 0)
     {
         NSLog(@"H264: Unable to create a H264 session");
         return ;
     }
-    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_RealTime, kCFBooleanTrue);
     
+    // 设置实时编码输出（避免延迟）
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_RealTime, kCFBooleanTrue);
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_ProfileLevel, kVTProfileLevel_H264_Baseline_AutoLevel);
+    
+    // 设置关键帧（GOPsize)间隔
+    int frameInterval = 24;
+    CFNumberRef  frameIntervalRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &frameInterval);
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_MaxKeyFrameInterval, frameIntervalRef);
+    
+    //设置期望帧率
+    int fps = 24;
+    CFNumberRef  fpsRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &fps);
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_ExpectedFrameRate, fpsRef);
+    
+    
+    //设置码率，均值，单位是byte
+    int bitRate = width * height * 3 * 4 * 8;
+    CFNumberRef bitRateRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &bitRate);
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_AverageBitRate, bitRateRef);
+    
+    //设置码率，上限，单位是bps
+    int bitRateLimit = width * height * 3 * 4;
+    CFNumberRef bitRateLimitRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &bitRateLimit);
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_DataRateLimits, bitRateLimitRef);
+    
+    // 7. 准备开始编码
+//    VTCompressionSessionPrepareToEncodeFrames(_encodingSession);
 }
 
 - (void)connectToHost{
@@ -106,7 +132,7 @@ int port = 9999;
         VTCompressionSessionEncodeFrameWithOutputHandler(self->_encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
             NSLog(@"status:%d",status);
             if (status != noErr) {
-                NSLog(@"JPEG: VTCompressionSessionEncodeFrame failed with %d", (int)status);
+                NSLog(@"H264: VTCompressionSessionEncodeFrame failed with %d", (int)status);
                 
                 // End the session
                 VTCompressionSessionInvalidate(self->_encodingSession);
@@ -117,13 +143,14 @@ int port = 9999;
             
             if (!CMSampleBufferDataIsReady(sampleBuffer))
             {
-                NSLog(@"jpeg data is not ready ");
+                NSLog(@"H264 data is not ready ");
                 return;
             }
             
             NSMutableData *mData = [NSMutableData data];
-//            bool keyframe = !CFDictionaryContainsKey( (CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
+            bool keyframe = !CFDictionaryContainsKey( (CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
 //
+            NSLog(@"isKeyFrame:%d",keyframe);
             CMFormatDescriptionRef format = CMSampleBufferGetFormatDescription(sampleBuffer);
             
             size_t sparameterSetSize, sparameterSetCount;
@@ -138,11 +165,12 @@ int port = 9999;
                 if (statusCode == noErr)
                 {
                     // Found pps
-                    [mData appendData:byteHeader];
                     NSData *sps = [NSData dataWithBytes:sparameterSet length:sparameterSetSize];
-                    [mData appendData:sps];
                     [mData appendData:byteHeader];
+                    [mData appendData:sps];
                     NSData *pps = [NSData dataWithBytes:pparameterSet length:pparameterSetSize];
+                  
+                    [mData appendData:byteHeader];
                     [mData appendData:pps];
                 }
             }
@@ -154,11 +182,6 @@ int port = 9999;
             OSStatus statusCodeRet = CMBlockBufferGetDataPointer(dataBuffer, 0, &length, &totalLength, &dataPointer);
             if(statusCodeRet == kCMBlockBufferNoErr)
             {
-                //            NSData *data  = [[NSData alloc] initWithBytes:dataPointer length:totalLength];
-                
-                //            send(self->_client_sockfd, data.bytes, data.length, 0);
-                
-                
                 size_t bufferOffset = 0;
                 static const int AVCCHeaderLength = 4;
                 while (bufferOffset < totalLength - AVCCHeaderLength) {

@@ -72,12 +72,12 @@ NSDictionary *responseJsonObject(UUCommResponse *response);
 /**steam packet*/
 
 typedef struct packet_header{
-//    int mark1;  // 0x10111213
-//    short mark2;  // 0x1415
-//    char mark3;  // 0x16
-//    char mark4;  // 0x17 ????
-//    char
-    long mark;
+    int   mark1;  // 0x13121110
+    short mark2;  //  0x1514
+    char mark3; //  0x16
+    char mark4;   // 0x1514
+    //    char
+//    long mark;
     
 }PacketHeader;
 

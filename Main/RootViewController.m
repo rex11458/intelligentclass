@@ -97,8 +97,8 @@ static RootViewController  *g_rootViewController = nil;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
 //            [weakSelf sendPrjScreenIP:@"192.168.5.56"];
-//            [weakSelf openPrjScreen:nil];
-            [weakSelf openCanvas];
+            // [weakSelf openPrjScreen:nil];
+           [weakSelf openCanvas];
 
         };
 
@@ -341,7 +341,7 @@ static RootViewController  *g_rootViewController = nil;
 
 
 - (void)connetHost:(NSString *)host{
-//    host = @"192.168.7.50";
+    host = @"192.168.7.50";
     if(!host){
         return ;
     }
