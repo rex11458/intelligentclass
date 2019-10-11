@@ -348,10 +348,10 @@
 				3D9DEFDB2324B93200B652D6 /* DrawingViewController.xib */,
 				3D3006FC232E12090058D230 /* ScreeningViewController.h */,
 				3D3006FD232E12090058D230 /* ScreeningViewController.m */,
+				3D3006FE232E12090058D230 /* ScreeningViewController.xib */,
 				3DB444B4234F25EA006D0F32 /* ScreeningDetailViewController.h */,
 				3DB444B5234F25EA006D0F32 /* ScreeningDetailViewController.m */,
 				3DB444B6234F25EA006D0F32 /* ScreeningDetailViewController.xib */,
-				3D3006FE232E12090058D230 /* ScreeningViewController.xib */,
 			);
 			path = Main;
 			sourceTree = "<group>";

@@ -137,8 +137,13 @@
     [self.view addSubview:vc.view];
     
 //    typeof(self) weakSelf = self;
-    vc.callback = ^(NSString * ip){
-        [[RootViewController sharedRootViewController] connetHost:ip];
+    vc.callback = ^(NSString * value){
+        
+       NSArray *ips = [value componentsSeparatedByString:@"|"];
+        
+        
+        
+        [[RootViewController sharedRootViewController] connetHost:ips.firstObject];
 //        [weakSelf connect:qrcode];
     };
 }
