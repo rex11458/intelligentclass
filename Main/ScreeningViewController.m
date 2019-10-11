@@ -11,7 +11,7 @@
 #import <ReplayKit/ReplayKit.h>
 #import "RootViewController.h"
 #import "SocketManager.h"
-
+#import "ScreeningDetailViewController.h"
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -22,6 +22,7 @@
 @interface ScreeningViewController ()<UITextFieldDelegate,GCDAsyncSocketDelegate>
 {
     NSString *_code;
+    ScreeningDetailViewController *_detailViewController;
 }
 
 @property (nonatomic, strong) GCDAsyncSocket *socket;
@@ -55,6 +56,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenCapturedDidChangeNotification object:nil];
 
 }
+
 
 - (void)startTcpServer{
     _connectedSockets = [NSMutableSet new];
@@ -106,6 +108,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _detailViewController = [ScreeningDetailViewController new];
+    _detailViewController.screeningViewController = self;
     [self startTcpServer];
     self.textField.keyboardType = UIKeyboardTypeASCIICapable;
     self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -118,6 +122,24 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connect:) name:SocketdidReceivedStartPrjScreenNotification object:nil] ;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop:) name:SocketdidReceivedStopPrjScreenNotification object:nil] ;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(captureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
+}
+
+- (void)setIsScreening:(BOOL)isScreening{
+    _isScreening = isScreening;
+    
+    if(_isScreening){
+        [self addChildViewController:_detailViewController];
+        _detailViewController.view.frame = self.view.bounds;
+        [self.view addSubview:_detailViewController.view];
+    }else{
+        [_detailViewController removeFromParentViewController];
+        [_detailViewController.view removeFromSuperview];
+    }
+}
+
+- (void)setUserName:(NSString *)userName{
+    _userName = [userName copy];
+    _detailViewController.userName = _userName;
 }
 
 
@@ -229,8 +251,9 @@
 
 #pragma mark - 请求投屏
 - (void)connect:(NSNotification *)note{
-
-    RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    BOOL isCaptured = [UIScreen mainScreen].isCaptured;
+    if(!isCaptured){
+        RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         pickView.center = self.view.center;
         pickView.preferredExtension = @"com.fjrh.intelligentclass.intelligentclassSetup";
         pickView.showsMicrophoneButton = false;
@@ -244,18 +267,19 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if(@available(iOS 13, *)){
                 [self->_actionButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-
+                
             }else{
                 [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
-
+                
             }
             [pickView removeFromSuperview];
         });
-    
+    }
 }
 
+
 - (void)stop:(NSNotification *)note{
-    
+    [self sendStopScreening];
 }
 
 - (void)captureStatusChanged:(NSNotification *)note{
@@ -264,8 +288,42 @@
 
     if(!isCaptured){
         [[RootViewController sharedRootViewController] cutOff];
+        [_detailViewController resetTimer];
     }
     
+    [self setIsScreening:isCaptured];
+}
+
+- (void)sendStopScreening{
+    
+    RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    pickView.center = self.view.center;
+    pickView.preferredExtension = @"com.fjrh.intelligentclass.intelligentclassSetup";
+    pickView.showsMicrophoneButton = false;
+    [self.view addSubview:pickView];
+    
+    for (UIView *item in pickView.subviews) {
+        if ([item isKindOfClass:UIButton.class] == YES) {
+            _actionButton = (UIButton*)item;
+        }
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(@available(iOS 13, *)){
+            [self->_actionButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+            
+        }else{
+            [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
+            
+        }
+        [pickView removeFromSuperview];
+    });
+        
+//    NSString *key = @"kStopScreenNotification";
+//    CFNotificationCenterRef const center = CFNotificationCenterGetDarwinNotifyCenter();
+//    CFDictionaryRef const userInfo = NULL;
+//    BOOL const deliverImmediately = YES;
+//    CFNotificationCenterPostNotification(center,
+//                                         (CFStringRef)key, NULL, userInfo, deliverImmediately);
 }
 
 @end

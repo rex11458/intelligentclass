@@ -7,16 +7,40 @@
 //
 
 #import "ScreeningDetailViewController.h"
-
+#import "ScreeningViewController.h"
+#import "Utils.h"
 @interface ScreeningDetailViewController ()
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *ipLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
 @end
 
 @implementation ScreeningDetailViewController
 
+- (void)setUserName:(NSString *)userName{
+    _userName = [userName copy];
+    self.nameLabel.text = _userName;
+}
+
+- (IBAction)back:(id)sender {
+    [self.view.superview removeFromSuperview];
+    [self.parentViewController removeFromParentViewController];
+}
+
+- (IBAction)stopScreening:(id)sender {
+    [_screeningViewController sendStopScreening];
+}
+
+- (void)resetTimer{
+
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.ipLabel.text = [Utils getIPAddress];
 }
 
 /*

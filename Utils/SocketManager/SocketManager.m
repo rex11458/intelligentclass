@@ -221,7 +221,8 @@ static NSTimeInterval time_out = 3;
         }
             break;
         case UUMessageStopPrjScreenType:{
-            [self stopStream];
+//            [self stopStream];
+            [self.streamHandler disconnect];
         }
             break;
     }

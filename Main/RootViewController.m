@@ -324,6 +324,8 @@ static RootViewController  *g_rootViewController = nil;
     _screeningViewController.view.frame = self.view.bounds;
     [self.view addSubview:_screeningViewController.view];
     
+    _screeningViewController.isScreening = _socketManager.isStreaming;
+    _screeningViewController.userName = self.currentUserName;
     if(self.groupInfo){
         _screeningViewController.groupInfo = self.groupInfo;
     }

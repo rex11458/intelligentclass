@@ -13,7 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ScreeningViewController : UIViewController
 
 @property (nonatomic, strong) NSDictionary *groupInfo;
+@property (nonatomic, copy) NSString *userName;
+@property (nonatomic, assign) BOOL isScreening;
 
+- (void)sendStopScreening;
 
 @end
 

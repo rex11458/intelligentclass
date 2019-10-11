@@ -34,6 +34,9 @@ int port = 9999;
 - (void)broadcastStartedWithSetupInfo:(NSDictionary<NSString *,NSObject *> *)setupInfo {
   
     [self connectToHost];
+    
+//    [self registerNotification];
+    
     [self initEncoder];
 
 }
@@ -42,11 +45,20 @@ int port = 9999;
 - (void)broadcastFinished {
     close(_client_sockfd);
     [self stopEncode];
+//    [self removeNotification];
 }
 
 - (void)stopBroadcast{
-    NSError *error = nil;
-    [self finishBroadcastWithError:error];
+//    NSDictionary *userInfo = @{
+//                               NSLocalizedDescriptionKey: NSLocalizedString(@"用户手动关闭", nil),
+//                               NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The operation timed out.", nil),
+//                               NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Have you tried turning it off and on again?", nil)
+//                               };
+//    NSError *error = [NSError errorWithDomain:NSCocoaErrorDomain code:-1 userInfo:@{}];
+//
+//
+ 
+//    [self finishBroadcastWithError:error];
     
 }
 
@@ -137,6 +149,31 @@ int port = 9999;
     }
     
     printf("connect to server success");
+}
+
+
+void observerMethod (CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+
+    NSObject *obj = (__bridge NSObject *)observer;
+    if([obj respondsToSelector:@selector(stopBroadcast)]){
+        [obj performSelector:@selector(stopBroadcast) withObject:nil afterDelay:0];
+    }
+}
+
+
+- (void)registerNotification{
+    
+    CFNotificationCenterRef notification = CFNotificationCenterGetDarwinNotifyCenter ();
+    CFNotificationCenterAddObserver(notification, (__bridge const void *)(self), observerMethod,CFSTR("kStopScreenNotification"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+
+}
+
+// 移除通知
+- (void)removeNotification
+{
+    CFNotificationCenterRef notification = CFNotificationCenterGetDarwinNotifyCenter ();
+    CFNotificationCenterRemoveObserver(notification, (__bridge const void *)(self), CFSTR("kStopScreenNotification"), NULL);
 }
 
 
