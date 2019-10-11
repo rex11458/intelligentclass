@@ -242,10 +242,16 @@
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
+            if(@available(iOS 13, *)){
+                [self->_actionButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+            }else{
+                [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
+
+            }
             [pickView removeFromSuperview];
         });
-     
+    
 }
 
 - (void)stop:(NSNotification *)note{

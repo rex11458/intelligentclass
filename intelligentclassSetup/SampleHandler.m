@@ -44,7 +44,11 @@ int port = 9999;
     [self stopEncode];
 }
 
-
+- (void)stopBroadcast{
+    NSError *error = nil;
+    [self finishBroadcastWithError:error];
+    
+}
 
 - (void)stopEncode
 {
