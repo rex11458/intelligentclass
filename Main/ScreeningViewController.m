@@ -19,7 +19,7 @@
 #include <arpa/inet.h>
 
 
-@interface ScreeningViewController ()<UITextFieldDelegate,GCDAsyncSocketDelegate,RPBroadcastActivityViewControllerDelegate, RPBroadcastControllerDelegate>
+@interface ScreeningViewController ()<UITextFieldDelegate,GCDAsyncSocketDelegate>
 {
     NSString *_code;
 }
@@ -37,8 +37,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 
-@property (nonatomic, strong) RPBroadcastActivityViewController *boradcastViewController;
-@property (nonatomic, strong) RPBroadcastController *broadcastController;
+
 @property (strong, nonatomic) IBOutlet UILabel *groupNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *memberLabel;
 @property (strong, nonatomic) IBOutlet UIView *groupView;
@@ -46,12 +45,15 @@
 @end
 
 @implementation ScreeningViewController
-
+{
+    UIButton * _actionButton;
+}
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedStartPrjScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedStopPrjScreenNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenCapturedDidChangeNotification object:nil];
+
 }
 
 - (void)startTcpServer{
@@ -80,12 +82,13 @@
 {
     [self.connectedSockets addObject:newSocket];
 
-    NSLog(@"[Server] New connection.");
+    NSLog(@"[Server] didAcceptNewSocket. socket = %@",sock);
     [newSocket readDataWithTimeout:-1 tag:0];
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)error;
 {
+    NSLog(@"[Server] socketDidDisconnect. socket:%@",socket);
     [self.connectedSockets removeObject:socket];
 }
 
@@ -114,7 +117,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connect:) name:SocketdidReceivedStartPrjScreenNotification object:nil] ;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop:) name:SocketdidReceivedStopPrjScreenNotification object:nil] ;
-
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(captureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
 }
 
 
@@ -219,50 +222,39 @@
 }
 
 
-// 请求投屏。。。
+#pragma mark - 请求投屏
 - (void)connect:(NSNotification *)note{
-    NSLog(@"%@",note.object);
-//    [self.boradcastViewController ]
-    NSLog(@"isBroadcasting:%d",self.broadcastController.isBroadcasting);
-    if(!self.broadcastController.isBroadcasting){
-        [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithPreferredExtension:@"com.fjrh.intelligentclass.intelligentclassSetupSetupUI" handler:^(RPBroadcastActivityViewController * _Nullable broadcastActivityViewController, NSError * _Nullable error) {
-            self.boradcastViewController = broadcastActivityViewController;
-            self.boradcastViewController.delegate = self;
-            [[RootViewController sharedRootViewController] presentViewController:self.boradcastViewController animated:YES completion:nil];
-        }];
-    }
+
+    RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        pickView.center = self.view.center;
+        pickView.preferredExtension = @"com.fjrh.intelligentclass.intelligentclassSetup";
+        pickView.showsMicrophoneButton = false;
+        [self.view addSubview:pickView];
+        
+        for (UIView *item in pickView.subviews) {
+            if ([item isKindOfClass:UIButton.class] == YES) {
+                _actionButton = (UIButton*)item;
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
+            [pickView removeFromSuperview];
+        });
+     
 }
 
 - (void)stop:(NSNotification *)note{
-
-    [self.broadcastController finishBroadcastWithHandler:^(NSError * _Nullable error) {
-        NSLog(@"Finish:%@",error);
-    }];
     
 }
 
+- (void)captureStatusChanged:(NSNotification *)note{
 
-- (void)broadcastActivityViewController:(RPBroadcastActivityViewController *)broadcastActivityViewController didFinishWithBroadcastController:(nullable RPBroadcastController *)broadcastController error:(nullable NSError *)error {
-    [broadcastController.serviceInfo setValue:@"abc" forKey:@"ip"];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [broadcastActivityViewController dismissViewControllerAnimated:YES completion:nil];
-    });
-    
-    if (error) {
-        NSLog(@"BAC: %@ didFinishWBC: %@, err: %@",
-              broadcastActivityViewController,
-              broadcastController,
-              error);
+    BOOL isCaptured = [UIScreen mainScreen].isCaptured;
+
+    if(!isCaptured){
+        [[RootViewController sharedRootViewController] cutOff];
     }
-    self.broadcastController = broadcastController;
-    [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
-        if (!error) {
-            NSLog(@"屏幕录制开始...");
-        }
-        else {
-            NSLog(@"startBroadcast %@",error.localizedDescription);
-        }
-    }];
+    
 }
 
 @end

@@ -53,12 +53,14 @@ typedef void (^Success)(GCDAsyncSocket *socket);
 
 @property (nonatomic, strong) StreamHander *streamHandler;
 
+@property (nonatomic, assign, readonly) BOOL isStreaming;
 
 - (void)connetHost:(NSString *)host port:(UInt16)port;
 
 - (void)disconnect;
 
 - (void)sendSteam:(NSData *)data;
+
 
 @end
 

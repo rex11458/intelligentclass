@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)sendSteam:(NSData *)data;
 
+- (void)cutOff;
+
 @end
 
 NS_ASSUME_NONNULL_END

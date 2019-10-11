@@ -89,7 +89,13 @@ static NSTimeInterval time_out = 3;
 
     [_socket disconnect];
     _socket = nil;
+
+    [self.streamHandler disconnect];
     
+}
+
+- (BOOL)isStreaming{
+    return self.streamHandler.isConnected;
 }
 
 
@@ -109,6 +115,8 @@ static NSTimeInterval time_out = 3;
     
     
     [self.socket writeData:data withTimeout:time_out tag:0];
+    
+    NSLog(@"[JSON Client] sendHeartbeat...");
 }
 
 - (void)sendBaseInfo{
@@ -127,7 +135,9 @@ static NSTimeInterval time_out = 3;
 }
 
 - (void)sendSteam:(NSData *)data{
-    [self.streamHandler sendStream:data];
+    if(self.streamHandler.isConnected){
+        [self.streamHandler sendStream:data];
+    }
 }
 
 - (void)stopStream{
@@ -139,6 +149,11 @@ static NSTimeInterval time_out = 3;
 
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
+//   
+//    [_socket performBlock:^{
+//        [self->_socket enableBackgroundingOnSocket];
+//    }];
+//    
     NSLog(@"[JSON Client] Connected to Host:%@, Port:%d", host, port);
     [sock readDataWithTimeout:-1 tag:0];
     
@@ -266,6 +281,8 @@ static NSTimeInterval time_out = 3;
     FramePacket *packet = sendPacket(data);
     
     NSData *sendData = [NSData dataWithBytes:packet length:packet_length(packet)];
+    [self.socket writeData:sendData withTimeout:-1 tag:0];
+
     NSLog(@"[Stream Client] sendData.length = %ld", sendData.length);
 
 //    NSUInteger totalLength = sendData.length;
@@ -290,7 +307,6 @@ static NSTimeInterval time_out = 3;
 //
 //        }
 //    }else{
-        [self.socket writeData:sendData withTimeout:-1 tag:0];
 //    }
 }
 

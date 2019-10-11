@@ -98,8 +98,8 @@ static RootViewController  *g_rootViewController = nil;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
 //            [weakSelf sendPrjScreenIP:@"192.168.5.56"];
-            // [weakSelf openPrjScreen:nil];
-           [weakSelf openCanvas];
+            //  [weakSelf openPrjScreen:nil];
+          [weakSelf openCanvas];
 
         };
 
@@ -358,6 +358,11 @@ static RootViewController  *g_rootViewController = nil;
 
 - (void)sendSteam:(NSData *)data{
     [_socketManager sendSteam:data];
+}
+
+
+- (void)cutOff{
+    [_socketManager disconnect];
 }
 
 - (void)openMultiPointPrj:(NSString *)ips{

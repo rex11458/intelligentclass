@@ -150,11 +150,15 @@ NSDictionary *responseJsonObject(UUCommResponse *response){
 int curTimeBuf = 0;
 FramePacket *sendPacket(NSData *data){
     PacketHeader *header = malloc(sizeof(PacketHeader));
-    
+    char byte0 = (curTimeBuf & 0xFF000000) >> 24;
+    char byte1 = (curTimeBuf & 0xFF0000) >> 16;
+    char byte2 = (curTimeBuf & 0xFF00) >> 8;
+    char byte3 = (curTimeBuf & 0xFF);
+
     header->mark1 = 0x13121110;
     header->mark2= 0x1514;
     header->mark3= 0x16;
-    header->mark4 = curTimeBuf;
+    header->mark4 = byte0 + byte1 + byte2 + byte3;
 
 //    header->mark = 0x16151413121110;
     unsigned int p_length = (unsigned int)data.length + 2;

@@ -72,31 +72,42 @@ int port = 9999;
     
     // 设置实时编码输出（避免延迟）
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_RealTime, kCFBooleanTrue);
-    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_ProfileLevel, kVTProfileLevel_H264_Baseline_AutoLevel);
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_ProfileLevel, kVTProfileLevel_H264_Main_AutoLevel);
     
     // 设置关键帧（GOPsize)间隔
-    int frameInterval = 24;
+    int frameInterval = 30;
     CFNumberRef  frameIntervalRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &frameInterval);
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_MaxKeyFrameInterval, frameIntervalRef);
-    
+
     //设置期望帧率
-    int fps = 24;
+    int fps = 60;
     CFNumberRef  fpsRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &fps);
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_ExpectedFrameRate, fpsRef);
     
     
     //设置码率，均值，单位是byte
-    int bitRate = width * height * 3 * 4 * 8;
+    int bitRate = [self getResolution];
     CFNumberRef bitRateRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &bitRate);
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_AverageBitRate, bitRateRef);
     
-    //设置码率，上限，单位是bps
-    int bitRateLimit = width * height * 3 * 4;
-    CFNumberRef bitRateLimitRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &bitRateLimit);
-    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_DataRateLimits, bitRateLimitRef);
     
+    // 码率上限 接收数组类型CFArray[CFNumber] [bytes,seconds,bytes,seconds...] 单位是bps
+    VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_DataRateLimits, (__bridge CFArrayRef _Nullable)@[@(bitRate*1.5/8), @1]);
+
     // 7. 准备开始编码
 //    VTCompressionSessionPrepareToEncodeFrames(_encodingSession);
+}
+
+/**
+ 获取屏幕分辨率
+ */
+- (int)getResolution{
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGSize screenSize = screenRect.size;
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat screenX = screenSize.width * scale;
+    CGFloat screenY = screenSize.height * scale;
+    return screenX * screenY;
 }
 
 - (void)connectToHost{
@@ -134,7 +145,7 @@ int port = 9999;
         CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         
 //        CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-        CMTime presentationTimeStamp = CMTimeMake(_frameNO++, 1000);
+        CMTime presentationTimeStamp = CMTimeMake(self->_frameNO++, 1000);
 
         VTEncodeInfoFlags flags;
         
@@ -163,9 +174,9 @@ int port = 9999;
             }
             
             NSMutableData *mData = [NSMutableData data];
-            bool keyframe = !CFDictionaryContainsKey( (CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
+//            bool keyframe = !CFDictionaryContainsKey( (CFArrayGetValueAtIndex(CMSampleBufferGetSampleAttachmentsArray(sampleBuffer, true), 0)), kCMSampleAttachmentKey_NotSync);
 //
-            NSLog(@"isKeyFrame:%d",keyframe);
+//            NSLog(@"isKeyFrame:%d",keyframe);
             CMFormatDescriptionRef format = CMSampleBufferGetFormatDescription(sampleBuffer);
             
             size_t sparameterSetSize, sparameterSetCount;
@@ -219,8 +230,8 @@ int port = 9999;
                 }
                 
             }
-            
-//            NSLog(@"mdata:%@",mData);
+//
+////            NSLog(@"mdata:%@",mData);
 //            NSLog(@"last mData.length:%ld",mData.length);
             send(self->_client_sockfd, mData.bytes, mData.length, 0);
             
@@ -236,7 +247,7 @@ int port = 9999;
             // Handle video sample buffer
             NSLog(@"processSampleBuffer");
             [self sendBuffer:sampleBuffer];
-//            [encoder encode:sampleBuffer];
+
             break;
         case RPSampleBufferTypeAudioApp:
             // Handle audio sample buffer for app audio
