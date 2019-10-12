@@ -33,7 +33,6 @@
 		3D7FDC10233B5324000295B8 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D339411233B16160022EB38 /* CocoaAsyncSocket.framework */; };
 		3D7FDC11233B5324000295B8 /* CocoaAsyncSocket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3D339411233B16160022EB38 /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3D7FDC15233B7E65000295B8 /* UUCommStruct.cpp.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D7FDC14233B7E65000295B8 /* UUCommStruct.cpp.m */; };
-		3D8EC6A2234C5B02001BA109 /* H264HwEncoderImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D8EC6A1234C5B02001BA109 /* H264HwEncoderImpl.m */; };
 		3D96CCA2232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
 		3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCA5232FA91C003CB59F /* SampleHandler.m */; };
 		3D96CCAD232FA91C003CB59F /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D96CCA1232FA91C003CB59F /* ReplayKit.framework */; };
@@ -41,11 +40,6 @@
 		3D96CCB2232FA91C003CB59F /* BroadcastSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCB1232FA91C003CB59F /* BroadcastSetupViewController.m */; };
 		3D96CCB6232FA91C003CB59F /* intelligentclassSetupSetupUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D96CCAC232FA91C003CB59F /* intelligentclassSetupSetupUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3D96CCB9232FA91C003CB59F /* intelligentclassSetup.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		3D96CCCB232FAD9E003CB59F /* Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC2232FAD9D003CB59F /* Encoder.m */; };
-		3D96CCCC232FAD9E003CB59F /* TimeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC6232FAD9D003CB59F /* TimeManager.m */; };
-		3D96CCCD232FAD9E003CB59F /* Streamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC7232FAD9D003CB59F /* Streamer.m */; };
-		3D96CCCE232FAD9E003CB59F /* SenderBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC8232FAD9E003CB59F /* SenderBuffer.m */; };
-		3D96CCCF232FAD9E003CB59F /* Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D96CCC9232FAD9E003CB59F /* Frame.m */; };
 		3D9DEFCF2324B52900B652D6 /* sticker_resize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */; };
 		3D9DEFD02324B52900B652D6 /* sticker_resize@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */; };
 		3D9DEFD12324B52900B652D6 /* sticker_resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D9DEFC42324B52900B652D6 /* sticker_resize.png */; };
@@ -82,6 +76,8 @@
 		3DEBFFFB232121F500110D0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEBFFF9232121F500110D0B /* LaunchScreen.storyboard */; };
 		3DEBFFFE232121F500110D0B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFFD232121F500110D0B /* main.m */; };
 		3DEE10682351C87500B2D0FB /* slience.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3DEE10672351C87500B2D0FB /* slience.mp3 */; };
+		3DEE10692351D64D00B2D0FB /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D339411233B16160022EB38 /* CocoaAsyncSocket.framework */; };
+		3DEE10702351DD7B00B2D0FB /* H264Encoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEE106F2351DD7B00B2D0FB /* H264Encoder.m */; };
 		3DEF3E602335E22F00612376 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E5F2335E22F00612376 /* MobileVLCKit.framework */; };
 		3DEF3E622335E29200612376 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E612335E29200612376 /* CoreAudio.framework */; };
 		3DEF3E682335E33700612376 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEF3E672335E33700612376 /* libiconv.tbd */; };
@@ -167,8 +163,6 @@
 		3D6573FE23347EE5008E4902 /* UUWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUWebView.m; sourceTree = "<group>"; };
 		3D7FDC13233B7E65000295B8 /* UUCommStruct.h.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUCommStruct.h.h; sourceTree = "<group>"; };
 		3D7FDC14233B7E65000295B8 /* UUCommStruct.cpp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UUCommStruct.cpp.m; sourceTree = "<group>"; };
-		3D8EC6A0234C5B02001BA109 /* H264HwEncoderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = H264HwEncoderImpl.h; sourceTree = "<group>"; };
-		3D8EC6A1234C5B02001BA109 /* H264HwEncoderImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = H264HwEncoderImpl.m; sourceTree = "<group>"; };
 		3D96CCA0232FA91C003CB59F /* intelligentclassSetup.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = intelligentclassSetup.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D96CCA1232FA91C003CB59F /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		3D96CCA4232FA91C003CB59F /* SampleHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SampleHandler.h; sourceTree = "<group>"; };
@@ -178,16 +172,6 @@
 		3D96CCB0232FA91C003CB59F /* BroadcastSetupViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BroadcastSetupViewController.h; sourceTree = "<group>"; };
 		3D96CCB1232FA91C003CB59F /* BroadcastSetupViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BroadcastSetupViewController.m; sourceTree = "<group>"; };
 		3D96CCB3232FA91C003CB59F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D96CCC1232FAD9D003CB59F /* Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encoder.h; sourceTree = "<group>"; };
-		3D96CCC2232FAD9D003CB59F /* Encoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Encoder.m; sourceTree = "<group>"; };
-		3D96CCC3232FAD9D003CB59F /* TimeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeManager.h; sourceTree = "<group>"; };
-		3D96CCC4232FAD9D003CB59F /* Streamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Streamer.h; sourceTree = "<group>"; };
-		3D96CCC5232FAD9D003CB59F /* SenderBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SenderBuffer.h; sourceTree = "<group>"; };
-		3D96CCC6232FAD9D003CB59F /* TimeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeManager.m; sourceTree = "<group>"; };
-		3D96CCC7232FAD9D003CB59F /* Streamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Streamer.m; sourceTree = "<group>"; };
-		3D96CCC8232FAD9E003CB59F /* SenderBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SenderBuffer.m; sourceTree = "<group>"; };
-		3D96CCC9232FAD9E003CB59F /* Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Frame.m; sourceTree = "<group>"; };
-		3D96CCCA232FAD9E003CB59F /* Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Frame.h; sourceTree = "<group>"; };
 		3D9DEFC02324B52900B652D6 /* ACEDrawingTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEDrawingTools.h; sourceTree = "<group>"; };
 		3D9DEFC22324B52900B652D6 /* sticker_resize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@2x.png"; sourceTree = "<group>"; };
 		3D9DEFC32324B52900B652D6 /* sticker_resize@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sticker_resize@3x.png"; sourceTree = "<group>"; };
@@ -249,6 +233,8 @@
 		3DEBFFFC232121F500110D0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DEBFFFD232121F500110D0B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3DEE10672351C87500B2D0FB /* slience.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slience.mp3; sourceTree = "<group>"; };
+		3DEE106E2351DD7B00B2D0FB /* H264Encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = H264Encoder.h; sourceTree = "<group>"; };
+		3DEE106F2351DD7B00B2D0FB /* H264Encoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = H264Encoder.m; sourceTree = "<group>"; };
 		3DEF3E5F2335E22F00612376 /* MobileVLCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = "<group>"; };
 		3DEF3E612335E29200612376 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		3DEF3E632335E31A00612376 /* libiconv.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.tbd; path = usr/lib/libiconv.2.tbd; sourceTree = SDKROOT; };
@@ -265,6 +251,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DEE10692351D64D00B2D0FB /* CocoaAsyncSocket.framework in Frameworks */,
 				3D96CCA2232FA91C003CB59F /* ReplayKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,18 +395,8 @@
 			children = (
 				3D96CCA4232FA91C003CB59F /* SampleHandler.h */,
 				3D96CCA5232FA91C003CB59F /* SampleHandler.m */,
-				3D8EC6A0234C5B02001BA109 /* H264HwEncoderImpl.h */,
-				3D8EC6A1234C5B02001BA109 /* H264HwEncoderImpl.m */,
-				3D96CCC1232FAD9D003CB59F /* Encoder.h */,
-				3D96CCC2232FAD9D003CB59F /* Encoder.m */,
-				3D96CCCA232FAD9E003CB59F /* Frame.h */,
-				3D96CCC9232FAD9E003CB59F /* Frame.m */,
-				3D96CCC5232FAD9D003CB59F /* SenderBuffer.h */,
-				3D96CCC8232FAD9E003CB59F /* SenderBuffer.m */,
-				3D96CCC4232FAD9D003CB59F /* Streamer.h */,
-				3D96CCC7232FAD9D003CB59F /* Streamer.m */,
-				3D96CCC3232FAD9D003CB59F /* TimeManager.h */,
-				3D96CCC6232FAD9D003CB59F /* TimeManager.m */,
+				3DEE106E2351DD7B00B2D0FB /* H264Encoder.h */,
+				3DEE106F2351DD7B00B2D0FB /* H264Encoder.m */,
 				3D96CCA7232FA91C003CB59F /* Info.plist */,
 			);
 			path = intelligentclassSetup;
@@ -720,12 +697,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D96CCCD232FAD9E003CB59F /* Streamer.m in Sources */,
-				3D96CCCB232FAD9E003CB59F /* Encoder.m in Sources */,
-				3D96CCCC232FAD9E003CB59F /* TimeManager.m in Sources */,
-				3D96CCCF232FAD9E003CB59F /* Frame.m in Sources */,
-				3D96CCCE232FAD9E003CB59F /* SenderBuffer.m in Sources */,
-				3D8EC6A2234C5B02001BA109 /* H264HwEncoderImpl.m in Sources */,
+				3DEE10702351DD7B00B2D0FB /* H264Encoder.m in Sources */,
 				3D96CCA6232FA91C003CB59F /* SampleHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,6 +790,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D6AA2HP7B2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = intelligentclassSetup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -837,6 +813,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D6AA2HP7B2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = intelligentclassSetup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (

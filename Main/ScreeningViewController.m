@@ -160,9 +160,10 @@
 
 
 - (IBAction)openScanning:(id)sender {
-    [[RootViewController sharedRootViewController] connetHost:@"192.168.7.50"];
-
-    return ;
+    
+//    [[RootViewController sharedRootViewController] connetHost:@"192.168.7.50"];
+//
+//    return ;
     ScanViewController *vc = [[ScanViewController alloc] init];
     [self addChildViewController:vc];
     vc.view.frame = self.view.bounds;

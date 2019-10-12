@@ -97,10 +97,10 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.imageView.contentMode = UIViewContentModeCenter;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
-//            [weakSelf sendPrjScreenIP:@"192.168.5.56"];
-              [weakSelf openPrjScreen:nil];
+
+//     [weakSelf openPrjScreen:nil];
             //TODO:
-//          [weakSelf openCanvas];
+          [weakSelf openCanvas];
 
         };
 
