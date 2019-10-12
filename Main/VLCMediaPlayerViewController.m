@@ -110,7 +110,7 @@
 #pragma mark - 打开画布
 - (void)openCanvas {
     _dragView.hidden = YES;
-    _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
+//    _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
     _dragView.hidden = NO;
     [self addChildViewController:_drawingViewController];
     _drawingViewController.view.frame = [UIScreen mainScreen].bounds;
