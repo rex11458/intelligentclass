@@ -7,11 +7,17 @@
 //
 
 #import "AppDelegate.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
 
 
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
+
+@property (nonatomic) NSTimer *taskTimer;
+
+@property (nonatomic) NSURL *musicUrl;
+
 @end
 
 @implementation AppDelegate
@@ -19,7 +25,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-   
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"slience" ofType:@"mp3"];
+    self.musicUrl = [NSURL URLWithString:path];
     return YES;
 }
 
@@ -39,6 +47,18 @@
         weakSelf.taskIdentifier = UIBackgroundTaskInvalid;
     }];
     
+    self.taskTimer = [NSTimer scheduledTimerWithTimeInterval:20.0f repeats:YES block:^(NSTimer * _Nonnull timer) {
+        if ([[UIApplication sharedApplication] backgroundTimeRemaining] < 61.f) {
+            //创建播放器
+            AVAudioSession *session = [AVAudioSession sharedInstance];
+            [session setActive:YES error:nil];
+            [session setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
+            AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:weakSelf.musicUrl error:nil];
+            [audioPlayer prepareToPlay];
+            [audioPlayer play];
+            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+        }
+    }];
 
 }
 
@@ -50,6 +70,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [self.taskTimer invalidate];
 }
 
 
