@@ -10,6 +10,7 @@
 #import "UUCommStruct.h.h"
 #import "RootViewController.h"
 NSString * const SocketdidReceivedStartPrjScreenNotification = @"SocketdidReceivedStartPrjScreenNotification";
+NSString * const SocketdidReceivedPausePrjScreenNotification = @"SocketdidReceivedPausePrjScreenNotification";
 NSString *const SocketdidReceivedStopPrjScreenNotification = @"SocketdidReceivedStopPrjScreenNotification";
 
 #define MAX_STREAM_BUFFER_LENGTH 1480
@@ -222,6 +223,9 @@ static NSTimeInterval time_out = 3;
             break;
         case UUMessageStopPrjScreenType:{
 //            [self stopStream];
+            NSDictionary *data = @{@"ip":self.host};
+            [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedPausePrjScreenNotification object:data userInfo:nil];
+
             [self.streamHandler disconnect];
         }
             break;

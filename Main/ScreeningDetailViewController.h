@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) ScreeningViewController *screeningViewController;
 
+
+- (void)startTimer;
+
+- (void)pauseTimer;
+
 - (void)resetTimer;
 
 @end

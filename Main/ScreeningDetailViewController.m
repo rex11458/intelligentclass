@@ -14,6 +14,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *ipLabel;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
+@property (strong, nonatomic) NSTimer *timer;
+@property (assign, nonatomic) int interval;
 @end
 
 @implementation ScreeningDetailViewController
@@ -32,10 +34,50 @@
     [_screeningViewController sendStopScreening];
 }
 
-- (void)resetTimer{
+
+- (void)startTimer{
+    if(!self.timer){
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(startCount) userInfo:nil repeats:YES];
+    }
+    [self.timer setFireDate:[NSDate date]];
+    [self.timer fire];
 
 }
 
+- (void)startCount{
+
+    
+    NSString *time = [self timeFormatted:self.interval];
+    
+    self.timeLabel.text = time;
+    
+    self.interval++;
+
+}
+
+
+- (NSString *)timeFormatted:(int)totalSeconds
+{
+    
+    int seconds = totalSeconds % 60;
+    int minutes = (totalSeconds / 60) % 60;
+    int hours = totalSeconds / 3600;
+    
+    return [NSString stringWithFormat:@"%02d:%02d:%02d",hours, minutes, seconds];
+}
+
+
+- (void)pauseTimer{
+    
+    [self.timer setFireDate:[NSDate distantFuture]];
+
+}
+
+- (void)resetTimer{
+    [self.timer invalidate];
+    self.timer = nil;
+    self.interval = 0;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

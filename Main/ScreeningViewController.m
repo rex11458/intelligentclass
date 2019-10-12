@@ -52,6 +52,8 @@
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedStartPrjScreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedPausePrjScreenNotification object:nil];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SocketdidReceivedStopPrjScreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIScreenCapturedDidChangeNotification object:nil];
 
@@ -120,7 +122,9 @@
     }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connect:) name:SocketdidReceivedStartPrjScreenNotification object:nil] ;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause:) name:SocketdidReceivedPausePrjScreenNotification object:nil] ;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop:) name:SocketdidReceivedStopPrjScreenNotification object:nil] ;
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(captureStatusChanged:) name:UIScreenCapturedDidChangeNotification object:nil];
 }
 
@@ -131,9 +135,12 @@
         [self addChildViewController:_detailViewController];
         _detailViewController.view.frame = self.view.bounds;
         [self.view addSubview:_detailViewController.view];
+        [_detailViewController startTimer];
+
     }else{
         [_detailViewController removeFromParentViewController];
         [_detailViewController.view removeFromSuperview];
+        [_detailViewController resetTimer];
     }
 }
 
@@ -153,6 +160,9 @@
 
 
 - (IBAction)openScanning:(id)sender {
+    [[RootViewController sharedRootViewController] connetHost:@"192.168.7.50"];
+
+    return ;
     ScanViewController *vc = [[ScanViewController alloc] init];
     [self addChildViewController:vc];
     vc.view.frame = self.view.bounds;
@@ -274,12 +284,18 @@
             }
             [pickView removeFromSuperview];
         });
+    }else{
+        self.isScreening = true;
     }
 }
 
+- (void)pause:(NSNotification *)note{
+    [_detailViewController pauseTimer];
+}
 
 - (void)stop:(NSNotification *)note{
-    [self sendStopScreening];
+    self.isScreening = false;
+
 }
 
 - (void)captureStatusChanged:(NSNotification *)note{
@@ -288,10 +304,10 @@
 
     if(!isCaptured){
         [[RootViewController sharedRootViewController] cutOff];
-        [_detailViewController resetTimer];
     }
     
     [self setIsScreening:isCaptured];
+    
 }
 
 - (void)sendStopScreening{
@@ -317,7 +333,8 @@
         }
         [pickView removeFromSuperview];
     });
-        
+    
+    
 //    NSString *key = @"kStopScreenNotification";
 //    CFNotificationCenterRef const center = CFNotificationCenterGetDarwinNotifyCenter();
 //    CFDictionaryRef const userInfo = NULL;

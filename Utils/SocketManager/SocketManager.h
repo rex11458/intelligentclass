@@ -11,6 +11,7 @@
 @class SocketHandler;
 @class StreamHander;
 extern NSString * _Nonnull const SocketdidReceivedStartPrjScreenNotification;
+extern NSString * _Nonnull const SocketdidReceivedPausePrjScreenNotification;
 extern NSString * _Nonnull const SocketdidReceivedStopPrjScreenNotification;
 
 typedef enum : NSUInteger {
