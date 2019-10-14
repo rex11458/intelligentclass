@@ -100,7 +100,8 @@ static RootViewController  *g_rootViewController = nil;
 
 //     [weakSelf openPrjScreen:nil];
             //TODO:
-          [weakSelf openCanvas];
+//            [weakSelf sendStartBroadcast:nil];
+            [weakSelf openCanvas];
 
         };
 
@@ -207,7 +208,7 @@ static RootViewController  *g_rootViewController = nil;
     }
 
   
-//    ip = @"rtsp://pb.fjrh.cn/0";
+    ip = @"rtsp://pb.fjrh.cn/0";
 
     if(!ip) return NO;
     
@@ -497,5 +498,18 @@ static RootViewController  *g_rootViewController = nil;
     return UIInterfaceOrientationPortrait;
 }
 
+
+
+
+- (void)startPlay{
+    if(self.view.subviews.lastObject == _playerViewController.view){
+        [_playerViewController play];
+    }
+}
+- (void)stopPlay{
+    if(self.view.subviews.lastObject == _playerViewController.view){
+        [_playerViewController shutdown];
+    }
+}
 
 @end
