@@ -67,13 +67,15 @@
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_MaxKeyFrameInterval, frameIntervalRef);
     
     //设置期望帧率
-    int fps = 60;
+    int fps = 15;
     CFNumberRef  fpsRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &fps);
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_ExpectedFrameRate, fpsRef);
     
     
     //设置码率，均值，单位是byte
     int bitRate = [self getResolution];
+    NSLog(@"bitRate = %d",bitRate);
+    
     CFNumberRef bitRateRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &bitRate);
     VTSessionSetProperty(_encodingSession, kVTCompressionPropertyKey_AverageBitRate, bitRateRef);
     
@@ -200,7 +202,7 @@
 
 
 - (int)getResolution{
-    
+    return 1500000;
     CGSize screenSize = CGSizeMake(_width, _height);
     
     CGFloat scale = [UIScreen mainScreen].scale;
@@ -209,6 +211,7 @@
     CGFloat screenY = screenSize.height * scale;
     
     return screenX * screenY;
+    
 }
 
 @end
