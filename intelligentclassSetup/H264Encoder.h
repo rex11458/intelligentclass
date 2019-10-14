@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithWidth:(float)width height:(float)height;
 
+- (void)changeResolutionWithWidth:(float)width height:(float)height;
+
 - (void)encodeBuffer:(CMSampleBufferRef)sampleBuffer;
 
 - (void)stopEncode;

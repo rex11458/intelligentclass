@@ -37,6 +37,10 @@ int const port = 9999;
     [self connectToHost];
     
     [self initH264Encoder];
+    
+    //通过通知监听屏幕旋转
+//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:)name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+  
 }
 
 
@@ -60,10 +64,13 @@ int const port = 9999;
 
 - (void)initH264Encoder{
     CGRect bounds = [[UIScreen mainScreen] bounds];
+    CGFloat scale = [UIScreen mainScreen].scale;
     
-    _h264Encoder = [[H264Encoder alloc] initWithWidth:CGRectGetWidth(bounds) height:CGRectGetHeight(bounds)];
+    _h264Encoder = [[H264Encoder alloc] initWithWidth:CGRectGetWidth(bounds) * scale height:CGRectGetHeight(bounds) * scale];
+    
     _h264Encoder.delegate = self;
 }
+
 
 
 - (void)processSampleBuffer:(CMSampleBufferRef)sampleBuffer withType:(RPSampleBufferType)sampleBufferType {
@@ -90,6 +97,7 @@ int const port = 9999;
 - (void)broadcastFinished {
     [_socket disconnect];
     [_h264Encoder stopEncode];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 
 
@@ -101,4 +109,14 @@ int const port = 9999;
     [_socket writeData:data withTimeout:-1 tag:0];
 }
 
+
+//#pragma mark - 横竖屏切换
+//-(void)orientationDidChange:(NSNotification *)note{
+//    NSLog(@"note:%@",note);
+//    CGRect bounds = [[UIScreen mainScreen] bounds];
+//    CGFloat scale = [UIScreen mainScreen].scale;
+//
+//    [_h264Encoder changeResolutionWithWidth:CGRectGetWidth(bounds) * scale height:CGRectGetHeight(bounds) * scale];
+//
+//}
 @end

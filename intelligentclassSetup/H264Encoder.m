@@ -26,23 +26,31 @@
 - (instancetype)initWithWidth:(float)width height:(float)height {
     
     if(self = [super init]){
-
-        _width = width * 2;
-        _height = height * 2;
+        
+        _width = width;
+        _height = height;
         _frameNo = 0;
         _encodeQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
-        [self config];
+        [self initEncodeConfig];
     }
     
     return self;
 }
 
-- (void)config{
+- (void)changeResolutionWithWidth:(float)width height:(float)height{
+    [self stopEncode];
+    _width = width;
+    _height = height;
+    
+    [self initEncodeConfig];
+}
+
+- (void)initEncodeConfig{
     _frameNo = 0;
     
     OSStatus status = VTCompressionSessionCreate(NULL,_width, _height, kCMVideoCodecType_H264, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
-    NSLog(@"H264: VTCompressionSessionCreate %d", (int)status);
+//    NSLog(@"H264: VTCompressionSessionCreate %d", (int)status);
     if (status != 0)
     {
         NSLog(@"H264: Unable to create a H264 session");
@@ -94,7 +102,7 @@
         
         
         VTCompressionSessionEncodeFrameWithOutputHandler(self->_encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
-                        NSLog(@"status:%d",status);
+//                        NSLog(@"status:%d",status);
             if (status != noErr) {
                 NSLog(@"H264: VTCompressionSessionEncodeFrame failed with %d", (int)status);
                 
