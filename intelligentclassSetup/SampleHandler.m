@@ -64,7 +64,9 @@ int const port = 9999;
 
 - (void)initH264Encoder{
     CGRect bounds = [[UIScreen mainScreen] bounds];
-    CGFloat scale = [UIScreen mainScreen].scale;
+    CGFloat scale =  1.6 ;// [UIScreen mainScreen].scale;
+    
+    
     
     _h264Encoder = [[H264Encoder alloc] initWithWidth:CGRectGetWidth(bounds) * scale height:CGRectGetHeight(bounds) * scale];
     

@@ -48,7 +48,7 @@
 
 - (void)initEncodeConfig{
     _frameNo = 0;
-    
+    NSLog(@"width:%f,height:%f",_width,_height);
     OSStatus status = VTCompressionSessionCreate(NULL,_width, _height, kCMVideoCodecType_H264, NULL, NULL, NULL, NULL, NULL,  &_encodingSession);
 //    NSLog(@"H264: VTCompressionSessionCreate %d", (int)status);
     if (status != 0)
