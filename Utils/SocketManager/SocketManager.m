@@ -288,7 +288,7 @@ static NSTimeInterval time_out = 3;
     NSData *sendData = [NSData dataWithBytes:packet length:packet_length(packet)];
     [self.socket writeData:sendData withTimeout:-1 tag:0];
 
-    NSLog(@"[Stream Client] sendData.length = %ld", sendData.length);
+//    NSLog(@"[Stream Client] sendData.length = %ld", sendData.length);
 
 //    NSUInteger totalLength = sendData.length;
 //

@@ -39,8 +39,8 @@ int const port = 9999;
     [self initH264Encoder];
     
     //通过通知监听屏幕旋转
-//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChange:)name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-  
+    // [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDeviceOrientationDidChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 
@@ -63,12 +63,13 @@ int const port = 9999;
 
 
 - (void)initH264Encoder{
-    CGRect bounds = [[UIScreen mainScreen] bounds];
-    CGFloat scale =  2 ;// [UIScreen mainScreen].scale;
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    CGFloat width = 720;
+    CGFloat height = 720 * screenSize.height / screenSize.width;
     
     
-    
-    _h264Encoder = [[H264Encoder alloc] initWithWidth:CGRectGetWidth(bounds) * scale height:CGRectGetHeight(bounds) * scale];
+    _h264Encoder = [[H264Encoder alloc] initWithWidth:width height:height];
     
     _h264Encoder.delegate = self;
 }
@@ -99,7 +100,8 @@ int const port = 9999;
 - (void)broadcastFinished {
     [_socket disconnect];
     [_h264Encoder stopEncode];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    // [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // [[UIDevice currentDevice]endGeneratingDeviceOrientationNotifications];
 }
 
 
@@ -111,6 +113,48 @@ int const port = 9999;
     [_socket writeData:data withTimeout:-1 tag:0];
 }
 
+
+#pragma mark - 屏幕旋转
+- (void)handleDeviceOrientationDidChange:   (UIInterfaceOrientation)interfaceOrientation {
+    UIDevice *device = [UIDevice currentDevice] ;
+    switch (device.orientation) {
+        case UIDeviceOrientationFaceUp:
+            NSLog(@"屏幕朝上平躺");
+            break;
+        case UIDeviceOrientationFaceDown:
+            NSLog(@"屏幕朝下平躺");
+            break;
+        case UIDeviceOrientationUnknown:
+            NSLog(@"未知方向");
+            break;
+        case UIDeviceOrientationLandscapeLeft: {
+            NSLog(@"屏幕向左横置");
+//            // 横屏推流
+//            [self destroySession];     // 销毁推流
+//            // 建议加一个loading  因为销毁推流在重新推流会关闭在重新开启摄像头采集
+//            _isScreenHorizontal = YES;  // 全局变量  横屏置为YES
+//            [self testPushCapture];    // 重新推流
+        }
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            NSLog(@"屏幕向右橫置");
+            break;
+        case UIDeviceOrientationPortrait: {
+            NSLog(@"屏幕直立");
+//            // 竖屏推流
+//            [self destroySession];     // 销毁推流
+//            _isScreenHorizontal = NO;  // 全局变量  横屏设置为NO
+//            [self testPushCapture];    // 重新推流
+        }
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            NSLog(@"屏幕直立，上下顛倒");
+            break;
+        default:
+            NSLog(@"无法辨识");
+            break;
+    }
+}
 
 //#pragma mark - 横竖屏切换
 //-(void)orientationDidChange:(NSNotification *)note{
