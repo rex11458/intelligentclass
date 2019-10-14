@@ -18,6 +18,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+static NSString *const H264FilePath = @"test.h264";
 
 @interface ScreeningViewController ()<UITextFieldDelegate,GCDAsyncSocketDelegate>
 {
@@ -42,6 +43,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *groupNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *memberLabel;
 @property (strong, nonatomic) IBOutlet UIView *groupView;
+
+@property (nonatomic,strong)NSFileHandle *h264FileHandle; //句柄
 
 @end
 
@@ -94,22 +97,46 @@
 {
     NSLog(@"[Server] socketDidDisconnect. socket:%@",socket);
     [self.connectedSockets removeObject:socket];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:H264FilePath];
+//        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
+//
+//        UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[fileURL] applicationActivities:nil];
+//
+//        [[RootViewController sharedRootViewController] presentViewController:vc animated:YES completion:nil];
+//    });
 }
 
 
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag;
 {
-    
+//    [self.h264FileHandle writeData:data];
     [[RootViewController sharedRootViewController] sendSteam:data];
     
     [sock readDataWithTimeout:-1 tag:0];
 }
 
+#pragma mark - private Methods
+- (void)configFileHandle{
+    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:H264FilePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //文件存在的话先删除文件
+    if ([fileManager fileExistsAtPath:filePath]) {
+        [fileManager removeItemAtPath:filePath error:nil];
+    }
+    [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+    self.h264FileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+    
+    if (!self.h264FileHandle) {
+        NSLog(@"创建H264文件句柄失败");
+    }
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+//    [self configFileHandle];
     _detailViewController = [ScreeningDetailViewController new];
     _detailViewController.screeningViewController = self;
     [self startTcpServer];

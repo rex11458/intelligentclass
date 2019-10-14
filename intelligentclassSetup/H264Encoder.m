@@ -26,8 +26,9 @@
 - (instancetype)initWithWidth:(float)width height:(float)height {
     
     if(self = [super init]){
-        _width = width;
-        _height = height;
+
+        _width = width * 2;
+        _height = height * 2;
         _frameNo = 0;
         _encodeQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         

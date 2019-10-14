@@ -98,10 +98,10 @@ static RootViewController  *g_rootViewController = nil;
         __weak typeof(self) weakSelf = self;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
 
-//     [weakSelf openPrjScreen:nil];
             //TODO:
+            [weakSelf openPrjScreen:nil];
 //            [weakSelf sendStartBroadcast:nil];
-            [weakSelf openCanvas];
+//            [weakSelf openCanvas];
 
         };
 
