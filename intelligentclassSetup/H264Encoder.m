@@ -19,7 +19,11 @@
     
     VTCompressionSessionRef _encodingSession;
     
+    CIContext *_ciContext;
 }
+
+@property (nonatomic) CGImagePropertyOrientation orientation;
+
 @end
 @implementation H264Encoder
 
@@ -32,6 +36,8 @@
         _frameNo = 0;
         _encodeQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         
+        _ciContext = [CIContext context];
+        self.orientation = kCGImagePropertyOrientationUp;
         [self initEncodeConfig];
     }
     
@@ -89,8 +95,54 @@
 - (void)encodeBuffer:(CMSampleBufferRef)sampleBuffer{
     
     dispatch_sync(_encodeQueue, ^{
+        CGImagePropertyOrientation oritation = ((__bridge NSNumber*)CMGetAttachment(sampleBuffer, (__bridge CFStringRef)RPVideoSampleOrientationKey , NULL)).unsignedIntValue;
+
+        if(self.orientation != oritation){
+            [self changeResolutionWithWidth:self->_height height:self->_width];
+            self.orientation = oritation;
+            return;
+        }
+        
+        
+//        CMSampleBufferRef sampleBuffer = [self rotateBuffer:buffer];
         
         CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+
+        CIImage *sourceImage = [CIImage imageWithCVPixelBuffer:imageBuffer];
+        CIImage *outputImage = [sourceImage imageByApplyingOrientation:oritation];
+        if(oritation == kCGImagePropertyOrientationLeft){
+            outputImage = [sourceImage imageByApplyingOrientation:kCGImagePropertyOrientationRight];
+        }
+        if(oritation == kCGImagePropertyOrientationRight){
+                outputImage = [sourceImage imageByApplyingOrientation:kCGImagePropertyOrientationLeft];
+            }
+     
+        CGFloat outputWidth  = self->_width;
+        CGFloat outputHeight = self->_height;
+        CGFloat inputWidth = outputImage.extent.size.width;
+        CGFloat inputHeight = outputImage.extent.size.height;
+
+        CGAffineTransform tranfrom = CGAffineTransformMakeScale(outputWidth/inputWidth, outputHeight/inputHeight);
+        outputImage = [outputImage imageByApplyingTransform:tranfrom];
+
+
+        CVImageBufferRef outputPixelBuffer = nil;
+
+        NSDictionary* pixelBufferOptions = @{
+                                             (NSString*) kCVPixelBufferWidthKey : @(self->_width),
+                                             (NSString*) kCVPixelBufferHeightKey : @(self->_height),
+                                             (NSString*) kCVPixelBufferOpenGLESCompatibilityKey : @YES,
+                                             (NSString*) kCVPixelBufferIOSurfacePropertiesKey : @{}
+                                             };
+     
+        CVReturn ret = CVPixelBufferCreate(kCFAllocatorDefault, self->_width, self->_height, kCVPixelFormatType_32BGRA, (__bridge CFDictionaryRef)pixelBufferOptions, &outputPixelBuffer);
+        [self->_ciContext render:outputImage toCVPixelBuffer:outputPixelBuffer bounds:outputImage.extent colorSpace:CGColorSpaceCreateDeviceRGB()];
+        
+        
+        if (ret!= noErr) {
+            NSLog(@"创建streamer buffer失败");
+            outputPixelBuffer = nil;
+        }
         
         //        CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
         CMTime presentationTimeStamp = CMTimeMake(self->_frameNo++, 1000);
@@ -103,7 +155,7 @@
         NSData *byteHeader = [NSData dataWithBytes:bytes length:length];
         
         
-        VTCompressionSessionEncodeFrameWithOutputHandler(self->_encodingSession, imageBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
+        VTCompressionSessionEncodeFrameWithOutputHandler(self->_encodingSession, outputPixelBuffer, presentationTimeStamp, kCMTimeInvalid, NULL, &flags, ^(OSStatus status, VTEncodeInfoFlags infoFlags, CMSampleBufferRef  _Nullable sampleBuffer) {
 //                        NSLog(@"status:%d",status);
             if (status != noErr) {
                 NSLog(@"H264: VTCompressionSessionEncodeFrame failed with %d", (int)status);
@@ -182,10 +234,165 @@
                 [self.delegate h264encoder:self processedData:mData];
             }
         });
-        
+        CVPixelBufferRelease(outputPixelBuffer);
+
     });
     
 }
+
+//
+//- (CVPixelBufferRef)resizeAndRotatePixelBuffer:(CVPixelBufferRef)sourcePixelBuffer {
+//
+//    CGImagePropertyOrientation oritation = ((__bridge NSNumber*)CMGetAttachment(sampleBuffer, (__bridge CFStringRef)RPVideoSampleOrientationKey , NULL)).unsignedIntValue;
+//
+//    CIImage *outputImage;
+//    if (self.privacyMode) {
+//        outputImage = self.privacyImage;
+//    } else {
+//        //11.1以上支持自动旋转
+//#ifdef __IPHONE_11_1
+//        if (UIDevice.currentDevice.systemVersion.floatValue > 11.1) {
+//            CGImagePropertyOrientation oritation = ((__bridge NSNumber*)CMGetAttachment(sampleBuffer, (__bridge CFStringRef)RPVideoSampleOrientationKey , NULL)).unsignedIntValue;
+//            if (oritation != self.lastOritation) {
+//                self.lastOritation = oritation;
+//                if (oritation == kCGImagePropertyOrientationLeft) {
+//                    [kit setVideoOrientation:UIDeviceOrientationLandscapeLeft];
+//                } else if (oritation == kCGImagePropertyOrientationRight) {
+//                    [kit setVideoOrientation:UIDeviceOrientationLandscapeRight];
+//                }
+//            }
+//        }
+//#endif
+//        CIImage *sourceImage = [CIImage imageWithCVPixelBuffer:sourcePixelBuffer];
+//        sourceImage = [sourceImage imageByApplyingOrientation:cvMobileRotate];
+//        CGFloat outputWidth  = self.videoSize.width;
+//        CGFloat outputHeight = self.videoSize.height;
+//        CGFloat inputWidth = sourceImage.extent.size.width;
+//        CGFloat inputHeight = sourceImage.extent.size.height;
+//        //    float scale = MIN(outputWidth/inputWidth, outputHeight/inputHeight);
+//        CGAffineTransform tranfrom = CGAffineTransformMakeScale(outputWidth/inputWidth, outputHeight/inputHeight);
+//        outputImage = [sourceImage imageByApplyingTransform:tranfrom];
+//    }
+//    if (!outputPixelBuffer) {
+//        //推流
+//        NSDictionary* pixelBufferOptions = @{
+//                                             (NSString*) kCVPixelBufferWidthKey : @(self.videoSize.width),
+//                                             (NSString*) kCVPixelBufferHeightKey : @(self.videoSize.height),
+//                                             (NSString*) kCVPixelBufferOpenGLESCompatibilityKey : @YES,
+//                                             (NSString*) kCVPixelBufferIOSurfacePropertiesKey : @{}
+//                                             };
+//        CVReturn ret = CVPixelBufferCreate(kCFAllocatorDefault, self.videoSize.width, self.videoSize.height, kCVPixelFormatType_32BGRA, (__bridge CFDictionaryRef)pixelBufferOptions, &outputPixelBuffer);
+//
+//        if (ret!= noErr) {
+//            NSLog(@"创建streamer buffer失败");
+//            outputPixelBuffer = nil;
+//            return outputPixelBuffer;
+//        }
+//    }
+//    if (cicontext) {
+//        [cicontext render:outputImage toCVPixelBuffer:outputPixelBuffer bounds:outputImage.extent colorSpace:CGColorSpaceCreateDeviceRGB()];
+//    }
+//    return outputPixelBuffer;
+//}
+
+//-(CGFloat)getRotateByBuffer:(CMSampleBufferRef)sampleBuffer{
+//    CGFloat rotate = 270;
+//
+//    CFStringRef RPVideoSampleOrientationKeyRef = (__bridge CFStringRef)RPVideoSampleOrientationKey;
+//    NSNumber *orientation = (NSNumber *)CMGetAttachment(sampleBuffer, RPVideoSampleOrientationKeyRef,NULL);
+//
+//    switch ([orientation integerValue]) {
+//            //竖屏时候
+//            //SDK内部会做图像大小自适配(不会变形) 所以上层只要控制横屏时候的影像旋转的问题
+//        case kCGImagePropertyOrientationUp:{
+//            rotate = 0;
+//        }
+//            break;
+//        case kCGImagePropertyOrientationDown:{
+//            rotate = 180;
+//            break;
+//        }
+//        case kCGImagePropertyOrientationLeft: {
+//            //静音键那边向上 所需转90度
+//            rotate = 90;
+//        }
+//            break;
+//        case kCGImagePropertyOrientationRight:{
+//            //关机键那边向上 所需转270
+//            rotate = 270;
+//        }
+//            break;
+//        default:
+//            break;
+//    }
+//    return rotate;
+//}
+//
+///* rotationConstant:
+// *  0 -- rotate 0 degrees (simply copy the data from src to dest)
+// *  1 -- rotate 90 degrees counterclockwise
+// *  2 -- rotate 180 degress
+// *  3 -- rotate 270 degrees counterclockwise
+// */
+//- (CMSampleBufferRef )rotateBuffer:(CMSampleBufferRef)buffer  {
+//    NSLog(@"oldSampleBuffer:%@",buffer);
+//
+//    CFStringRef RPVideoSampleOrientationKeyRef = (__bridge CFStringRef)RPVideoSampleOrientationKey;
+//    NSNumber *attachment = (NSNumber *)CMGetAttachment(buffer, RPVideoSampleOrientationKeyRef,NULL);
+//    CGImagePropertyOrientation orientation = (CGImagePropertyOrientation)[attachment integerValue];
+//   
+////    if(orientation == self.orientation){
+////        return buffer;
+////    }
+//    self.orientation = orientation;
+//
+//    NSLog(@"orientation: %d",orientation);
+//
+//    //
+//    CVPixelBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(buffer);
+////
+//    CIImage *ciimage = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+//    size_t width                        = CVPixelBufferGetWidth(pixelBuffer);
+//    size_t height                       = CVPixelBufferGetHeight(pixelBuffer);
+//
+//    //    // 旋转的方法
+////    CIImage *wImage = [ciimage imageByApplyingCGOrientation:kCGImagePropertyOrientationLeft];
+////
+////    CGFloat angle = [self getRotateByBuffer:buffer];
+//    
+////    CGFloat radian = angle / 180 * M_PI;
+////    CGAffineTransform rotatedTransform = CGAffineTransformMakeRotation(radian);
+////    CIImage *newImage = [vImage imageByApplyingTransform:rotatedTransform];
+////    CIImage *newImage = [wImage imageByApplyingTransform:CGAffineTransformMakeScale(0.5, 0.5)];
+////
+//    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+//    CVPixelBufferRef newPixcelBuffer = nil;
+//    CVPixelBufferCreate(kCFAllocatorDefault, height , width, kCVPixelFormatType_32BGRA, nil, &newPixcelBuffer);
+////
+//    [_ciContext render:ciimage toCVPixelBuffer:newPixcelBuffer];
+//    
+//    
+//    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+//    CMVideoFormatDescriptionRef videoInfo = nil;
+//    CMVideoFormatDescriptionCreateForImageBuffer(kCFAllocatorDefault, newPixcelBuffer, &videoInfo);
+//    CMTime duration = CMSampleBufferGetDuration(buffer);
+//    CMTime presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(buffer);
+//    CMTime decodeTimeStamp = CMSampleBufferGetDecodeTimeStamp(buffer);
+//    CMSampleTimingInfo sampleTimingInfo;
+//    sampleTimingInfo.duration = duration;
+//    sampleTimingInfo.presentationTimeStamp = presentationTimeStamp;
+//    sampleTimingInfo.decodeTimeStamp = decodeTimeStamp;
+////    //
+//    CMSampleBufferRef newSampleBuffer = nil;
+//    CMSampleBufferCreateForImageBuffer(kCFAllocatorMalloc, newPixcelBuffer, true, nil, nil, videoInfo, &sampleTimingInfo, &newSampleBuffer);
+//    
+//    CFRelease(videoInfo);
+//    CVPixelBufferRelease(newPixcelBuffer);
+//    NSLog(@"newSampleBuffer:%@",newSampleBuffer);
+//    return newSampleBuffer;
+//
+//}
+
 
 
 - (void)stopEncode{

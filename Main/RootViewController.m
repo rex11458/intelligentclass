@@ -99,9 +99,9 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
 
             //TODO:
-//            [weakSelf openPrjScreen:nil];
+            // [weakSelf openPrjScreen:nil];
 //            [weakSelf sendStartBroadcast:nil];
-            [weakSelf openCanvas];
+           [weakSelf openCanvas];
 
         };
 
