@@ -208,7 +208,7 @@ static RootViewController  *g_rootViewController = nil;
     }
 
   
-    ip = @"rtsp://pb.fjrh.cn/0";
+//    ip = @"rtsp://pb.fjrh.cn/0";
 
     if(!ip) return NO;
     
