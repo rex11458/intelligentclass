@@ -32,6 +32,93 @@ static NSTimeInterval time_out = 3;
     return sharedInstace;
 }
 
+- (instancetype)init{
+    if (self=[super init]) {
+        _mgrs = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
+- (BOOL)isConnected{
+    
+    return self.mgrs.count > 0;
+}
+
+- (BOOL)isStreaming{
+    
+    __block BOOL isStreaming = NO;
+
+    [self.mgrs enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, SocketHandler * _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        if(obj.isStreaming){
+            isStreaming = YES;
+            
+            *stop = YES;
+        }
+        
+    }];
+    return isStreaming;
+}
+
+- (void)connetHosts:(NSArray<NSString *>  *)ips port:(UInt16)port{
+    
+    [self disconnect];
+    
+    [ips enumerateObjectsUsingBlock:^(NSString * _Nonnull ip, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+        SocketHandler *handler = [SocketHandler new];
+        [handler connetHost:ip port:port];
+        [self.mgrs setObject:handler forKey:ip];
+        
+    }];
+    
+}
+
+
+- (void)disconnect{
+    
+    [self.mgrs enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, SocketHandler * _Nonnull obj, BOOL * _Nonnull stop) {
+       
+        [obj disconnect];
+    }];
+    
+}
+
+
+- (void)sendSteam:(NSData *)data{
+    [self.mgrs enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, SocketHandler * _Nonnull obj, BOOL * _Nonnull stop) {
+        
+        [obj sendSteam:data];
+    }];
+}
+
+- (void)cutOff:(NSString *)ip{
+    
+    if(!ip){
+        return;
+    }
+    [self.mgrs removeObjectForKey:ip];
+    
+    
+    if(!self.isConnected){
+        NSDictionary *data = @{@"ip":ip};
+        [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedStopPrjScreenNotification object:data userInfo:nil];
+    }
+}
+
+- (void)stopSteam:(NSString *)ip{
+    
+    if(!ip){
+        return;
+    }
+    
+    if(!self.isStreaming){
+        NSDictionary *data = @{@"ip":ip};
+        [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedPausePrjScreenNotification object:data userInfo:nil];
+
+    }
+}
+
 @end
 
 
@@ -117,7 +204,7 @@ static NSTimeInterval time_out = 3;
     
     [self.socket writeData:data withTimeout:time_out tag:0];
     
-    NSLog(@"[JSON Client] sendHeartbeat...");
+    NSLog(@"[JSON Client] sendHeartbeatTo->[%@]",_host);
 }
 
 - (void)sendBaseInfo{
@@ -142,9 +229,9 @@ static NSTimeInterval time_out = 3;
 }
 
 - (void)stopStream{
-    NSDictionary *data = @{@"ip":self.host};
-    [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedStopPrjScreenNotification object:data userInfo:nil];
     [self.streamHandler disconnect];
+    
+    [[SocketManager manager] cutOff:self.host];
 }
 
 
@@ -222,11 +309,9 @@ static NSTimeInterval time_out = 3;
         }
             break;
         case UUMessageStopPrjScreenType:{
-//            [self stopStream];
-            NSDictionary *data = @{@"ip":self.host};
-            [[NSNotificationCenter defaultCenter] postNotificationName:SocketdidReceivedPausePrjScreenNotification object:data userInfo:nil];
-
             [self.streamHandler disconnect];
+            [[SocketManager manager] stopSteam:self.host];
+
         }
             break;
     }

@@ -19,7 +19,7 @@
 @interface RootViewController ()<WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     
-    SocketHandler *_socketManager;
+    SocketManager *_socketManager;
     UIView *_headView;
     WMDragView *_dragView;
     
@@ -66,7 +66,7 @@ static RootViewController  *g_rootViewController = nil;
     _drawingViewController = [DrawingViewController new];
     _playerViewController = [VLCMediaPlayerViewController new];
     _screeningViewController = [ScreeningViewController new];
-    _socketManager = [SocketHandler new];
+    _socketManager = [SocketManager manager];
 }
 
 
@@ -99,9 +99,10 @@ static RootViewController  *g_rootViewController = nil;
         _dragView.clickDragViewBlock = ^(WMDragView *dragView) {
 
             //TODO:
-            // [weakSelf openPrjScreen:nil];
+//             [weakSelf openPrjScreen:nil];
 //            [weakSelf sendStartBroadcast:nil];
            [weakSelf openCanvas];
+//            [weakSelf openMultiPointPrj:@"192.168.7.50,192.168.5.62"];
 
         };
 
@@ -310,7 +311,7 @@ static RootViewController  *g_rootViewController = nil;
         //JS 返回结果
         
         if([response boolValue]){
-            [self openSendScreen];
+            [self openSendScreenWithUIHidden:NO];
         }
         
     }];
@@ -320,8 +321,8 @@ static RootViewController  *g_rootViewController = nil;
 }
 
 
-- (void)openSendScreen{
-    
+- (void)openSendScreenWithUIHidden:(BOOL)hidden{
+    _screeningViewController.view.hidden = hidden;
     [self addChildViewController:_screeningViewController];
     _screeningViewController.view.frame = self.view.bounds;
     [self.view addSubview:_screeningViewController.view];
@@ -332,6 +333,8 @@ static RootViewController  *g_rootViewController = nil;
         _screeningViewController.groupInfo = self.groupInfo;
     }
 }
+
+
 
 
 - (void)getScreenIP:(NSString *)code{
@@ -356,7 +359,7 @@ static RootViewController  *g_rootViewController = nil;
     if(!host){
         return ;
     }
-    [_socketManager connetHost:host port:9112];
+    [_socketManager connetHosts:@[host] port:9112];
 }
 
 
@@ -370,11 +373,16 @@ static RootViewController  *g_rootViewController = nil;
 }
 
 - (void)openMultiPointPrj:(NSString *)ips{
-    
+    [self openSendScreenWithUIHidden:YES];
+    [_socketManager connetHosts:[ips componentsSeparatedByString:@","] port:9112];
+
 }
 
 - (void)closeMultiPointPrj:(NSString *)ips{
+    [_socketManager disconnect];
     
+    [_screeningViewController.view removeFromSuperview];
+    [_screeningViewController removeFromParentViewController];
 }
 
 #pragma mark - 调用JS事件
@@ -506,6 +514,7 @@ static RootViewController  *g_rootViewController = nil;
         [_playerViewController play];
     }
 }
+
 - (void)stopPlay{
     if(self.view.subviews.lastObject == _playerViewController.view){
         [_playerViewController shutdown];

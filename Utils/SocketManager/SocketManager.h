@@ -30,12 +30,25 @@ typedef void (^Success)(GCDAsyncSocket *socket);
 
 @interface SocketManager : NSObject
 
-@property (nonatomic, strong) NSDictionary<NSString *, SocketHandler *> *mgrs;
+@property (nonatomic, strong, readonly) NSMutableDictionary<NSString *, SocketHandler *> *mgrs;
 
 @property (nonatomic, copy) NSArray<NSString *> *ips;
 
+@property (nonatomic, assign, readonly) BOOL isConnected;
+
+@property (nonatomic, assign, readonly) BOOL isStreaming;
+
+
 + (SocketManager *)manager;
 
+- (void)connetHosts:(NSArray<NSString *>  *)ips port:(UInt16)port;
+
+- (void)disconnect;
+
+- (void)sendSteam:(NSData *)data;
+
+- (void)stopSteam:(NSString *)ip;
+- (void)cutOff:(NSString *)ip;
 
 @end
 
