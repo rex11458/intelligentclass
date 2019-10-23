@@ -160,16 +160,28 @@ static RootViewController  *g_rootViewController = nil;
         NSLog(@"\ncurrentUserName=%@\n",self.currentUserName);
     }];
     
+    [self sendIpAddress];
     return YES;
 }
 
 
 // 获取用户IP
 - (NSString *)GetIPAdress:(id)sender{
+    [self sendIpAddress];
+
     NSString *ip = [Utils getIPAddress];
     NSLog(@"\nlocal ip=%@\n",ip);
 
     return ip;
+}
+
+- (void)sendIpAddress{
+    NSString *ip = [Utils getIPAddress];
+
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"receiveIP('%@')",ip] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+        NSLog(@"endIpAddress:%@\n",error);
+
+    }];
 }
 
 
@@ -209,7 +221,7 @@ static RootViewController  *g_rootViewController = nil;
     }
 
   
-//    ip = @"rtsp://pb.fjrh.cn/0";
+    // ip = @"rtsp://pb.fjrh.cn/0";
 
     if(!ip) return NO;
     
@@ -229,9 +241,19 @@ static RootViewController  *g_rootViewController = nil;
 // 发送停止广播
 - (BOOL)sendStopBroadcast:(NSString *)type{
     [_playerViewController close];
+    _broadcastType = @"1";
+
     return YES;
 }
 
+
+- (void)sendToPath:(NSString *)path{
+    [self.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.playerViewController close];
+        [self.drawingViewController close];
+        [self.screeningViewController close];
+    }];
+}
 
 //选择相册
 - (void)openPick:(id)sender{
@@ -300,7 +322,7 @@ static RootViewController  *g_rootViewController = nil;
 
 // 打开投屏界面
 - (BOOL)openPrjScreen:(id)sender{
-    
+  
     //获取登录用户信息
     [self.webView evaluateJavaScript:[NSString stringWithFormat:@"getStudentName()"] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
         self.currentUserName = response;
