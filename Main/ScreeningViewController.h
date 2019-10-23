@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isScreening;
 
 - (void)sendStopScreening;
-
+- (void)close;
 @end
 
 NS_ASSUME_NONNULL_END

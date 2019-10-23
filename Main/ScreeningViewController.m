@@ -243,6 +243,11 @@ static NSString *const H264FilePath = @"test.h264";
     [self.view removeFromSuperview];
 }
 
+- (void)close{
+    [self removeFromParentViewController];
+    [self.view removeFromSuperview];
+
+}
 
 - (UILabel *)getCurrentLabel:(NSInteger)tag{
    __block UILabel *label = nil;

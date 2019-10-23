@@ -80,6 +80,9 @@
     if(!self.url){
         return ;
     }
+    if(self.player.isPlaying){
+        return;
+    }
     [self shutdown];
     self.player.drawable = self.playView;
     self.player.media = [VLCMedia mediaWithURL:[NSURL URLWithString:self.url]];

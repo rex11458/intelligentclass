@@ -163,6 +163,10 @@
     
 }
 
+- (void)close{
+    [self dismiss];
+}
+
 - (void)switching{
     
     _toolsView.hidden = !_toolsView.isHidden;
