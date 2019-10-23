@@ -203,6 +203,7 @@ static RootViewController  *g_rootViewController = nil;
 
  // 发送开始广播
 - (BOOL)sendStartBroadcast:(NSString *)type{
+    [self sendToPath:nil];
     NSLog(@"self.ips:%@",self.ips);
     NSLog(@"type:%@",type);
     NSString *ip = nil;
@@ -221,7 +222,7 @@ static RootViewController  *g_rootViewController = nil;
     }
 
   
-    // ip = @"rtsp://pb.fjrh.cn/0";
+     ip = @"rtsp://pb.fjrh.cn/0";
 
     if(!ip) return NO;
     
@@ -395,6 +396,7 @@ static RootViewController  *g_rootViewController = nil;
 }
 
 - (void)openMultiPointPrj:(NSString *)ips{
+     [self sendToPath:nil];
     [self openSendScreenWithUIHidden:YES];
     [_socketManager connetHosts:[ips componentsSeparatedByString:@","] port:9112];
 

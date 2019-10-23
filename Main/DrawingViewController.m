@@ -152,6 +152,7 @@
 }
 
 - (void)send{
+   
     [[RootViewController sharedRootViewController] updateImage:[self takeSnapshot]];
     [self dismiss];
 }
@@ -187,6 +188,7 @@
     self.toolsView.hidden = YES;
     self.extendButton.hidden = YES;
     // 判断是否为retina屏, 即retina屏绘图时有放大因子
+    
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]){
         
         UIGraphicsBeginImageContextWithOptions(self.view.window.bounds.size, NO, [UIScreen mainScreen].scale);
@@ -197,7 +199,9 @@
         
     }
     
-    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+    [self.view.window drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
+    
+    //    [self.view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     
@@ -207,6 +211,9 @@
     self.extendButton.hidden = NO;
     return image;
 }
+
+
+
 
 #pragma mark - DrawingManagerViewDelegate
 - (void)drawingManagerView:(DrawingManagerView *)view del:(NSInteger)index{
