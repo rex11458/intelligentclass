@@ -249,11 +249,9 @@ static RootViewController  *g_rootViewController = nil;
 
 
 - (void)sendToPath:(NSString *)path{
-    [self.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.playerViewController close];
-        [self.drawingViewController close];
-        [self.screeningViewController close];
-    }];
+    [self.playerViewController close];
+    [self.drawingViewController close];
+    [self.screeningViewController close];
 }
 
 //选择相册

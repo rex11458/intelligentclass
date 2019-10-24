@@ -155,6 +155,8 @@
    
     [[RootViewController sharedRootViewController] updateImage:[self takeSnapshot]];
     [self dismiss];
+    
+    [RootViewController sharedRootViewController].playerViewController.dragView.hidden = NO;
 }
 
 - (void)dismiss {
@@ -162,6 +164,8 @@
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
     
+    [RootViewController sharedRootViewController].playerViewController.dragView.hidden = NO;
+
 }
 
 - (void)close{

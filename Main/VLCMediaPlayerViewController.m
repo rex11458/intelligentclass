@@ -8,11 +8,9 @@
 
 #import "VLCMediaPlayerViewController.h"
 #import <MobileVLCKit/MobileVLCKit.h>
-#import "WMDragView.h"
 #import "RootViewController.h"
 @interface VLCMediaPlayerViewController ()<VLCMediaPlayerDelegate>
 {
-    WMDragView *_dragView;
     DrawingViewController * _drawingViewController;
 }
 
@@ -114,7 +112,7 @@
 - (void)openCanvas {
     _dragView.hidden = YES;
 //    _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
-    _dragView.hidden = NO;
+//    _dragView.hidden = NO;
     [self addChildViewController:_drawingViewController];
     _drawingViewController.view.frame = [UIScreen mainScreen].bounds;
     [self.view addSubview:_drawingViewController.view];

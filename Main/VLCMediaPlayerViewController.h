@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WMDragView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *url;
 
 @property(nonatomic, assign, readonly) BOOL isPlaying;
+
+@property (nonatomic, strong) WMDragView *dragView;
 
 - (void)play;
 
