@@ -248,6 +248,7 @@ static RootViewController  *g_rootViewController = nil;
 }
 
 
+//关闭自己打开的页面
 - (void)sendToPath:(NSString *)path{
     [self.playerViewController close];
     [self.drawingViewController close];

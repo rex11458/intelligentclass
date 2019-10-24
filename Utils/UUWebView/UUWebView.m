@@ -8,7 +8,7 @@
 
 #import "UUWebView.h"
 #import "RootViewController.h"
-static NSString *LOGIN = @"login";                     // 开启拍照，并上传图片，单张
+static NSString *LOGIN = @"login";                     // 登录后调用
 static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍照，并上传图片，单张
 static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
 static NSString *OPEN_QRCODE = @"OpenQRcode";                      // 打开扫码识别界面
@@ -20,6 +20,16 @@ static NSString *SEND_SYS_INFO = @"sendSystemInfo";                //  发送屏
 static NSString *SEND_GROUP_MESSAGE = @"sendGroupMsg";            // 发送当前学生的最新小组信息
 
 static NSString *DOWNLOAD_FILE = @"downloadFile";           // 文件下载
+
+static NSString *SEND_TO_PATH = @"sendToPath";
+
+
+static NSString *GET_IP_ADDRESS = @"GetIPAdress";
+
+static NSString *OPEN_MULTI_POINT_PRJ = @"openMultiPointPrj";
+
+
+static NSString *CLOSE_MULTI_POINT_PRJ = @"closeMultiPointPrj";
 
 
 @implementation UUWebView
@@ -45,6 +55,12 @@ static NSString *DOWNLOAD_FILE = @"downloadFile";           // 文件下载
     
     WKUserContentController *userContent = [[WKUserContentController alloc] init];
     //JS调用OC 添加处理脚本
+    //登录后触发
+    [userContent addScriptMessageHandler:delegate name:LOGIN];
+    
+    //获取IP
+    [userContent addScriptMessageHandler:delegate name:GET_IP_ADDRESS];
+
     // 开启拍照，并上传图片，单张
     [userContent addScriptMessageHandler:delegate name:OPEN_CAMERA];
     //打开相册，并选择 1 张图片上传
@@ -66,7 +82,14 @@ static NSString *DOWNLOAD_FILE = @"downloadFile";           // 文件下载
     //文件下载
     
     [userContent addScriptMessageHandler:delegate name:DOWNLOAD_FILE];
+    
+    [userContent addScriptMessageHandler:delegate name:SEND_TO_PATH];
 
+    [userContent addScriptMessageHandler:delegate name:OPEN_MULTI_POINT_PRJ];
+    
+    [userContent addScriptMessageHandler:delegate name:CLOSE_MULTI_POINT_PRJ];
+
+    
     return userContent;
 }
 
