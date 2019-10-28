@@ -289,29 +289,30 @@ static RootViewController  *g_rootViewController = nil;
 - (BOOL)downloadFile:(NSString *)urlString{
     
     NSLog(@"fileURL:%@",urlString);
-    
+    if(!urlString) return NO;
     NSURLSession *session=[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error){
-        NSHTTPURLResponse *res = (NSHTTPURLResponse *) response;
-        
-        NSDictionary *headerFiles = res.allHeaderFields;
-        NSString *disposition = headerFiles[@"Content-Disposition"];
-        
-//        NSLog(@"fileName=%@",fileName);
-        NSString *fileName = nil;
-        NSRange range = [disposition rangeOfString:@"\"(.+)\"" options:NSRegularExpressionSearch];
-        if (range.location != NSNotFound) {
-           fileName = [disposition substringWithRange:NSMakeRange(range.location + 1, range.length - 2)];
+        if(!error){
+            NSHTTPURLResponse *res = (NSHTTPURLResponse *) response;
+            
+            NSDictionary *headerFiles = res.allHeaderFields;
+            NSString *disposition = headerFiles[@"Content-Disposition"];
+            
+            //        NSLog(@"fileName=%@",fileName);
+            NSString *fileName = nil;
+            NSRange range = [disposition rangeOfString:@"\"(.+)\"" options:NSRegularExpressionSearch];
+            if (range.location != NSNotFound) {
+                fileName = [disposition substringWithRange:NSMakeRange(range.location + 1, range.length - 2)];
+            }
+            
+            NSString *filePath = [ [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[fileName stringByRemovingPercentEncoding]];
+            [data writeToFile:filePath atomically:YES];
+            NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
+            
+            UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[fileURL] applicationActivities:nil];
+            
+            [self presentViewController:vc animated:YES completion:nil];
         }
-        
-        NSString *filePath = [ [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[fileName stringByRemovingPercentEncoding]];
-        [data writeToFile:filePath atomically:YES];
-        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
-        
-        UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[fileURL] applicationActivities:nil];
-    
-        [self presentViewController:vc animated:YES completion:nil];
-    
     }];
     
     //4.执行任务
