@@ -214,7 +214,13 @@ static NSTimeInterval time_out = 3;
         username = @"";
     }
 
-    UUCommRequest *request = sendBaseInfoRequest(self.mClientId, username);
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    CGFloat width = 720;
+    CGFloat height = 720 * screenSize.height / screenSize.width;
+    
+    
+    UUCommRequest *request = sendBaseInfoRequest(self.mClientId, username,width,height);
     
     NSData *data = [NSData dataWithBytes:request length:UUCommAttribute_getTotalLength(request)];
     

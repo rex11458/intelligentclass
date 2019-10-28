@@ -80,9 +80,11 @@ UUCommRequest *sendHeartbeatRequest(short mClientId, NSString *stuName){
     return sendRequest(mClientId, jsonObject,dataType);
 }
 
-UUCommRequest *sendBaseInfoRequest(short mClientId, NSString *stuName){
+UUCommRequest *sendBaseInfoRequest(short mClientId, NSString *stuName,float width, float height){
   
-    NSDictionary *jsonObject = @{@"StudentNumber":@"",@"StudentName":stuName,@"Version":@"",@"IsApple":@(1)};
+    
+    
+    NSDictionary *jsonObject = @{@"StudentNumber":@"",@"StudentName":stuName,@"Version":@"",@"IsApple":@(1),@"Width":@(width),@"Height":@(height)};
     
     UUMessageDataType dataType = UUMessageSendBaseInfoType;
     

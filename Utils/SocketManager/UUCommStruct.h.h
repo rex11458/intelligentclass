@@ -62,7 +62,7 @@ BOOL UUCommAttribute_isValidResponse(UUCommResponse *response);
 UUCommRequest* UUMarket__CreateRequest(UUCommBody *body, UUCommHead *head);
 
 UUCommRequest *sendHeartbeatRequest(short mClientId, NSString *stuName);
-UUCommRequest *sendBaseInfoRequest(short mClientId, NSString *stuName);
+UUCommRequest *sendBaseInfoRequest(short mClientId, NSString *stuName,float width, float height);
 
 
 NSDictionary *responseJsonObject(UUCommResponse *response);
