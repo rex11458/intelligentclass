@@ -134,6 +134,11 @@
     self.pureDrawingView.hidden = !self.sketchPadButton.isSelected;
     self.drawingManagerView.hidden = !(self.addButton.isSelected && self.sketchPadButton.isSelected);
 
+    for (UIView *v in self.drawingViews) {
+        v.hidden =  !self.sketchPadButton.isSelected;
+    }
+    
+    
     [ self updateButtonStatus];
 }
 

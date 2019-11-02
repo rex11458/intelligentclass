@@ -112,7 +112,7 @@ static RootViewController  *g_rootViewController = nil;
 
 #pragma mark - 打开画布
 - (void)openCanvas {
-    _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
+//    _drawingViewController.backgroundImage = [self snapshotCurrentFullScreen];
     [self addChildViewController:_drawingViewController];
     _drawingViewController.view.frame = self.view.bounds;
     [self.view addSubview:_drawingViewController.view];
@@ -349,7 +349,7 @@ static RootViewController  *g_rootViewController = nil;
     [self addChildViewController:_screeningViewController];
     _screeningViewController.view.frame = self.view.bounds;
     [self.view addSubview:_screeningViewController.view];
-    
+    [self.view bringSubviewToFront:_dragView];
     _screeningViewController.isScreening = _socketManager.isStreaming;
     _screeningViewController.userName = self.currentUserName;
     if(self.groupInfo){
