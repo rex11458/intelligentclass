@@ -310,8 +310,10 @@ static RootViewController  *g_rootViewController = nil;
             NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
             
             UIActivityViewController *vc = [[UIActivityViewController alloc] initWithActivityItems:@[fileURL] applicationActivities:nil];
-            
-            [self presentViewController:vc animated:YES completion:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentViewController:vc animated:YES completion:nil];
+
+            });
         }
     }];
     
