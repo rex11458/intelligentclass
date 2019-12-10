@@ -384,7 +384,7 @@ static RootViewController  *g_rootViewController = nil;
     if(!host){
         return ;
     }
-    [_socketManager connetHosts:@[host] port:9112];
+    [_socketManager connetHosts:@[host] port:9111];
 }
 
 
@@ -400,7 +400,7 @@ static RootViewController  *g_rootViewController = nil;
 - (void)openMultiPointPrj:(NSString *)ips{
      [self sendToPath:nil];
     [self openSendScreenWithUIHidden:YES];
-    [_socketManager connetHosts:[ips componentsSeparatedByString:@","] port:9112];
+    [_socketManager connetHosts:[ips componentsSeparatedByString:@","] port:9111];
 
 }
 
