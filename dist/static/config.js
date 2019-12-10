@@ -4,7 +4,7 @@ var appConfig = {
   mainSignalRPort: "50114",
   gatewaySignalRPort: "50118",
   errorLog: "development",
-  showLog: false,
+  showLog: true,
   isTest: false,
   editorPictureMaxNum: 3
 };
