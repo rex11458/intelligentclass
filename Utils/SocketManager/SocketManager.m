@@ -60,6 +60,21 @@ static NSTimeInterval time_out = 3;
     return isStreaming;
 }
 
+- (NSArray<NSString *> *)streamingIps{
+    
+    NSMutableArray *array = [NSMutableArray array];
+    
+    [self.mgrs enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, SocketHandler * _Nonnull obj, BOOL * _Nonnull stop) {
+          
+          if(obj.isStreaming){
+              [array addObject:key];
+          }
+      }];
+    
+    return array;
+}
+
+
 - (void)connetHosts:(NSArray<NSString *>  *)ips port:(UInt16)port{
     
     [self disconnect];

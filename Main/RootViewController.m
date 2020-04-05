@@ -201,11 +201,30 @@ static RootViewController  *g_rootViewController = nil;
     return YES;
 }
 
+//通过url来播放rtsp流
+- (BOOL)sendStartBroadcastByUrl:(NSString *)url{
+    NSLog(@"sendStartBroadcastByUrl = %@",url);
+        [self sendToPath:nil];
+         NSString *ip = url;
+    
+         if(!ip) return NO;
+         
+         [self rotation:UIInterfaceOrientationLandscapeRight];
+         
+         _playerViewController.url = ip;
+         
+         [self addChildViewController:_playerViewController];
+         _playerViewController.view.frame = self.view.bounds;
+         [self.view addSubview:_playerViewController.view];
+         
+         [_playerViewController play];
+         
+         return YES;
+    
+}
+
  // 发送开始广播
 - (BOOL)sendStartBroadcast:(NSString *)type{
-    [self sendToPath:nil];
-    NSLog(@"self.ips:%@",self.ips);
-    NSLog(@"type:%@",type);
     NSString *ip = nil;
     if([type isEqualToString:@"0"]){
         _broadcastType = @"0";
@@ -221,22 +240,7 @@ static RootViewController  *g_rootViewController = nil;
         }
     }
 
-  
-//     ip = @"rtsp://pb.fjrh.cn/0";
-
-    if(!ip) return NO;
-    
-    [self rotation:UIInterfaceOrientationLandscapeRight];
-    
-    _playerViewController.url = ip;
-    
-    [self addChildViewController:_playerViewController];
-    _playerViewController.view.frame = self.view.bounds;
-    [self.view addSubview:_playerViewController.view];
-    
-    [_playerViewController play];
-    
-    return YES;
+    return [self sendStartBroadcastByUrl:ip];
 }
 
 // 发送停止广播
@@ -384,7 +388,7 @@ static RootViewController  *g_rootViewController = nil;
     if(!host){
         return ;
     }
-    [_socketManager connetHosts:@[host] port:9111];
+    [_socketManager connetHosts:@[host] port:9112];
 }
 
 
@@ -400,7 +404,7 @@ static RootViewController  *g_rootViewController = nil;
 - (void)openMultiPointPrj:(NSString *)ips{
      [self sendToPath:nil];
     [self openSendScreenWithUIHidden:YES];
-    [_socketManager connetHosts:[ips componentsSeparatedByString:@","] port:9111];
+    [_socketManager connetHosts:[ips componentsSeparatedByString:@","] port:9112];
 
 }
 
@@ -410,6 +414,23 @@ static RootViewController  *g_rootViewController = nil;
     [_screeningViewController.view removeFromSuperview];
     [_screeningViewController removeFromParentViewController];
 }
+
+
+/*记录主动投屏IP,告诉h5*/
+- (void)setActiveScreenIp{
+    
+    NSString *ips = [_socketManager.streamingIps componentsJoinedByString:@","];
+    
+        
+      [self.webView evaluateJavaScript:[NSString stringWithFormat:@"setActiveScreenIp(`%@`)",ips] completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+          //JS 返回结果
+          NSLog(@"%@ %@",response,error);
+
+      }];
+    
+}
+
+
 
 #pragma mark - 调用JS事件
 - (void)updateImage:(UIImage *)image{

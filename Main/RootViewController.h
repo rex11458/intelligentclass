@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)startPlay;
 - (void)stopPlay;
 
+- (void)setActiveScreenIp;
+
 @end
 
 NS_ASSUME_NONNULL_END

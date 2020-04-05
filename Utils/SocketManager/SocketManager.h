@@ -38,6 +38,7 @@ typedef void (^Success)(GCDAsyncSocket *socket);
 
 @property (nonatomic, assign, readonly) BOOL isStreaming;
 
+@property (nonatomic, assign, readonly) NSArray<NSString *> *streamingIps;
 
 + (SocketManager *)manager;
 

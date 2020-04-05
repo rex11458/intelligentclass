@@ -13,6 +13,7 @@ static NSString *OPEN_CAMERA = @"OpenCamera";                     // 开启拍�
 static NSString *OPEN_PICK = @"openPick";                          //打开相册，并选择 1 张图片上传
 static NSString *OPEN_QRCODE = @"OpenQRcode";                      // 打开扫码识别界面
 static NSString *SEND_PRJ_SCREEN_IP = @"sendPrjScreenIP";           //  发送查询到的网关 IP，调用 window.getScreenIP(code)触发
+static NSString *SEND_START_BROADCAST_BY_URL = @"sendStartBroadcastByUrl";
 static NSString *SEND_START_BROADCAST = @"sendStartBroadcast";     //    发送开始广播
 static NSString *SEND_STOP_BRODCAST = @"sendStopBroadcast";          // 发送停止广播
 static NSString *OPEN_PRJ_SCREEN = @"openPrjScreen";                 //打开投屏界面
@@ -71,6 +72,8 @@ static NSString *CLOSE_MULTI_POINT_PRJ = @"closeMultiPointPrj";
     [userContent addScriptMessageHandler:delegate name:SEND_PRJ_SCREEN_IP];
     //    发送开始广播
     [userContent addScriptMessageHandler:delegate name:SEND_START_BROADCAST];
+    [userContent addScriptMessageHandler:delegate name:SEND_START_BROADCAST_BY_URL];
+
     // 发送停止广播
     [userContent addScriptMessageHandler:delegate name:SEND_STOP_BRODCAST];
     //打开投屏界面

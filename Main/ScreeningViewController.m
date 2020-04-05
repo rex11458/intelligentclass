@@ -296,6 +296,13 @@ static NSString *const H264FilePath = @"test.h264";
 - (void)connect:(NSNotification *)note{
     BOOL isCaptured = [UIScreen mainScreen].isCaptured;
     if(!isCaptured){
+        
+        for (UIView *v in self.view.subviews) {
+            if([v isKindOfClass:[RPSystemBroadcastPickerView class]]){
+                [v removeFromSuperview];
+            }
+        }
+        
         RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         pickView.center = self.view.center;
         pickView.preferredExtension = @"com.ruihe.student.upload";
@@ -341,6 +348,7 @@ static NSString *const H264FilePath = @"test.h264";
     }
     
     [self setIsScreening:isCaptured];
+    [[RootViewController sharedRootViewController] setActiveScreenIp];
     
 }
 
