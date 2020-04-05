@@ -24,6 +24,8 @@ static NSString *const H264FilePath = @"test.h264";
 {
     NSString *_code;
     ScreeningDetailViewController *_detailViewController;
+    
+    RPSystemBroadcastPickerView *_pickView;
 }
 
 @property (nonatomic, strong) GCDAsyncSocket *socket;
@@ -297,12 +299,6 @@ static NSString *const H264FilePath = @"test.h264";
     BOOL isCaptured = [UIScreen mainScreen].isCaptured;
     if(!isCaptured){
         
-        for (UIView *v in self.view.subviews) {
-            if([v isKindOfClass:[RPSystemBroadcastPickerView class]]){
-                [v removeFromSuperview];
-            }
-        }
-        
         RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         pickView.center = self.view.center;
         pickView.preferredExtension = @"com.ruihe.student.upload";
@@ -312,23 +308,33 @@ static NSString *const H264FilePath = @"test.h264";
         for (UIView *item in pickView.subviews) {
             if ([item isKindOfClass:UIButton.class] == YES) {
                 _actionButton = (UIButton*)item;
+                _actionButton.enabled = NO;
             }
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(@available(iOS 13, *)){
-                [self->_actionButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-                
-            }else{
-                [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
-                
-            }
-            [pickView removeFromSuperview];
-        });
-
+        
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(openCaptureScreen:) object:_pickView];
+        [self performSelector:@selector(openCaptureScreen:) withObject:pickView afterDelay:1];
+        _pickView = pickView;
+//        [self openCaptureScreen:pickView];
     }else{
         self.isScreening = true;
     }
 }
+
+- (void)openCaptureScreen:(RPSystemBroadcastPickerView *)pickView{
+    dispatch_async(dispatch_get_main_queue(), ^{
+              if(@available(iOS 13, *)){
+                  
+                  [self->_actionButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+                  
+              }else{
+                  [self->_actionButton sendActionsForControlEvents:UIControlEventTouchDown];
+                  
+              }
+              [pickView removeFromSuperview];
+          });
+}
+
 
 - (void)pause:(NSNotification *)note{
     [_detailViewController pauseTimer];
