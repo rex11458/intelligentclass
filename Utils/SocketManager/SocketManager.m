@@ -77,7 +77,7 @@ static NSTimeInterval time_out = 3;
 
 - (void)connetHosts:(NSArray<NSString *>  *)ips port:(UInt16)port{
     
-    [self disconnect];
+//    [self disconnect];
     
     [ips enumerateObjectsUsingBlock:^(NSString * _Nonnull ip, NSUInteger idx, BOOL * _Nonnull stop) {
        
@@ -112,8 +112,10 @@ static NSTimeInterval time_out = 3;
     if(!ip){
         return;
     }
-    [self.mgrs removeObjectForKey:ip];
-    
+    if(![self.mgrs objectForKey:ip].isConnected){
+        [self.mgrs removeObjectForKey:ip];
+    }
+  
     
     if(!self.isConnected){
         NSDictionary *data = @{@"ip":ip};
@@ -263,7 +265,7 @@ static NSTimeInterval time_out = 3;
 //        [self->_socket enableBackgroundingOnSocket];
 //    }];
 //    
-    NSLog(@"[JSON Client] Connected to Host:%@, Port:%d", host, port);
+    NSLog(@"[JSON Client] Connected to Sock:%@ Host:%@, Port:%d",sock, host, port);
     [sock readDataWithTimeout:-1 tag:0];
     
     //每3s向服务器发送心跳包
@@ -278,7 +280,7 @@ static NSTimeInterval time_out = 3;
 {
     [self.connectTimer invalidate];
 
-    NSLog(@"[JSON Client] Closed connection: %@", error);
+    NSLog(@"sock:%@, [JSON Client] Closed connection: %@",socket, error);
     
     SocketOfflineType type = [socket.userData unsignedIntegerValue] ;
     
@@ -425,13 +427,13 @@ static NSTimeInterval time_out = 3;
 #pragma mark - GCDAsyncSocketDelegate
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port{
  
-    NSLog(@"[Stream Client] Connected to Host:%@, Port:%d Success", host, port);
+    NSLog(@"[Stream Client] sock:%@, Connected to Host:%@, Port:%d Success",sock, host, port);
     [sock readDataWithTimeout:-1 tag:0];
 
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err{
-    NSLog(@"[Stream Client] socketDidDisconnect %@", err);
+    NSLog(@"[Stream Client] sock:%@, socketDidDisconnect %@",sock, err);
 
 }
 

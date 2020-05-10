@@ -211,6 +211,9 @@ static NSString *const H264FilePath = @"test.h264";
 }
 
 - (IBAction)startTouping:(id)sender {
+    [self.textField resignFirstResponder];
+    self.textField.text = @"";
+    [self changeText];
     [[RootViewController sharedRootViewController] getScreenIP:self.textField.text];
 }
 
