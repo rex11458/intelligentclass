@@ -304,7 +304,7 @@ static NSString *const H264FilePath = @"test.h264";
         
         RPSystemBroadcastPickerView *pickView = [[RPSystemBroadcastPickerView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         pickView.center = self.view.center;
-        pickView.preferredExtension = @"com.ruihe.student.upload";
+        pickView.preferredExtension = @"com.ruihe.teacher.upload";
         pickView.showsMicrophoneButton = false;
         [self.view addSubview:pickView];
         
