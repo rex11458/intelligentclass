@@ -68,6 +68,9 @@
 		3DB95EF3233C6ACC00DC8C34 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB95EE6233C6ACB00DC8C34 /* NSString+MJExtension.m */; };
 		3DB95EF4233C6ACC00DC8C34 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB95EE7233C6ACB00DC8C34 /* MJPropertyKey.m */; };
 		3DB95EF5233C6ACC00DC8C34 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DB95EEB233C6ACB00DC8C34 /* MJFoundation.m */; };
+		3DBA5D9224970E2A0077E48F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBA5D8E24970E2A0077E48F /* SVIndefiniteAnimatedView.m */; };
+		3DBA5D9324970E2A0077E48F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA5D8F24970E2A0077E48F /* SVProgressHUD.bundle */; };
+		3DBA5D9424970E2A0077E48F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DBA5D9124970E2A0077E48F /* SVProgressHUD.m */; };
 		3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DDF1EB4232384FD00B56FBA /* WMDragView.m */; };
 		3DEB00902321285A00110D0B /* dist in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB008F2321285A00110D0B /* dist */; };
 		3DEBFFF0232121F300110D0B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3DEBFFEF232121F300110D0B /* AppDelegate.m */; };
@@ -223,6 +226,11 @@
 		3DB95EE9233C6ACB00DC8C34 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
 		3DB95EEA233C6ACB00DC8C34 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
 		3DB95EEB233C6ACB00DC8C34 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
+		3DBA5D8D24970E2A0077E48F /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		3DBA5D8E24970E2A0077E48F /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		3DBA5D8F24970E2A0077E48F /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		3DBA5D9024970E2A0077E48F /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		3DBA5D9124970E2A0077E48F /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		3DDF1EB4232384FD00B56FBA /* WMDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WMDragView.m; sourceTree = "<group>"; };
 		3DDF1EB5232384FD00B56FBA /* WMDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMDragView.h; sourceTree = "<group>"; };
 		3DEB008F2321285A00110D0B /* dist */ = {isa = PBXFileReference; lastKnownFileType = folder; path = dist; sourceTree = "<group>"; };
@@ -352,6 +360,7 @@
 		3D27B54B2322072D00B9F46D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3DBA5D8C24970E2A0077E48F /* SVProgressHUD */,
 				3D339413233B19260022EB38 /* SocketManager */,
 				3D6573FC23347ED9008E4902 /* UUWebView */,
 				3D2AFC55232B7AB2006F0958 /* UUButton */,
@@ -502,6 +511,18 @@
 				3DB95EDD233C6ACB00DC8C34 /* NSObject+MJKeyValue.m */,
 			);
 			path = MJExtension;
+			sourceTree = "<group>";
+		};
+		3DBA5D8C24970E2A0077E48F /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				3DBA5D8D24970E2A0077E48F /* SVIndefiniteAnimatedView.h */,
+				3DBA5D8E24970E2A0077E48F /* SVIndefiniteAnimatedView.m */,
+				3DBA5D8F24970E2A0077E48F /* SVProgressHUD.bundle */,
+				3DBA5D9024970E2A0077E48F /* SVProgressHUD.h */,
+				3DBA5D9124970E2A0077E48F /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		3DDF1EB3232384FD00B56FBA /* DragView */ = {
@@ -677,6 +698,7 @@
 			files = (
 				3D9DEFCF2324B52900B652D6 /* sticker_resize@2x.png in Resources */,
 				3D9DEFD32324B52900B652D6 /* sticker_close@3x.png in Resources */,
+				3DBA5D9324970E2A0077E48F /* SVProgressHUD.bundle in Resources */,
 				3D300700232E12090058D230 /* ScreeningViewController.xib in Resources */,
 				3DEB00902321285A00110D0B /* dist in Resources */,
 				3D9DEFDD2324B93200B652D6 /* DrawingViewController.xib in Resources */,
@@ -735,12 +757,14 @@
 				3DB95EF0233C6ACC00DC8C34 /* MJExtensionConst.m in Sources */,
 				3D27B54E2322075A00B9F46D /* RootViewController.m in Sources */,
 				3DB91FD4232A3CC70095DA31 /* ScanViewController.m in Sources */,
+				3DBA5D9424970E2A0077E48F /* SVProgressHUD.m in Sources */,
 				3D9DEFDC2324B93200B652D6 /* DrawingViewController.m in Sources */,
 				3D3006FF232E12090058D230 /* ScreeningViewController.m in Sources */,
 				3D300703232E176F0058D230 /* Utils.m in Sources */,
 				3DB91FD8232A3D110095DA31 /* CDZQRScanView.m in Sources */,
 				3DB95EED233C6ACC00DC8C34 /* NSObject+MJKeyValue.m in Sources */,
 				3D9DEFE92324F48E00B652D6 /* DrawingManagerView.m in Sources */,
+				3DBA5D9224970E2A0077E48F /* SVIndefiniteAnimatedView.m in Sources */,
 				3DDF1EB6232384FD00B56FBA /* WMDragView.m in Sources */,
 				3DB95EF5233C6ACC00DC8C34 /* MJFoundation.m in Sources */,
 				3DB91FD1232A33510095DA31 /* UIImage+Extensions.m in Sources */,

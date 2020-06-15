@@ -16,6 +16,7 @@
 #import "Utils.h"
 #import "RotateNavigationController.h"
 #import "SocketManager.h"
+#import "SVProgressHUD.h"
 @interface RootViewController ()<WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     
@@ -294,6 +295,7 @@ static RootViewController  *g_rootViewController = nil;
     
     NSLog(@"fileURL:%@",urlString);
     if(!urlString) return NO;
+    [SVProgressHUD showWithStatus:@"正在下载，请稍后..."];
     NSURLSession *session=[NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:urlString] completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error){
         if(!error){
@@ -319,6 +321,7 @@ static RootViewController  *g_rootViewController = nil;
 
             });
         }
+        [SVProgressHUD dismiss];
     }];
     
     //4.执行任务

@@ -181,9 +181,15 @@ static NSString *const H264FilePath = @"test.h264";
 
 - (void)setGroupInfo:(NSDictionary *)groupInfo{
     _groupInfo = groupInfo;
-    _groupView.hidden = NO;
+  
 //    "isJoin":true,"groupIp":"192.168.0.13","groupName":"1","maxUser":2,"connectUser":1
     _groupNameLabel.text = groupInfo[@"groupName"];
+    
+    NSInteger maxUser = [groupInfo[@"maxUser"] integerValue];
+    
+    _groupView.hidden = (maxUser == 0);
+
+    
     _memberLabel.text = [NSString stringWithFormat:@"成员：%@/%@",groupInfo[@"connectUser"],groupInfo[@"maxUser"]];
 }
 
