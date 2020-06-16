@@ -321,7 +321,10 @@ static RootViewController  *g_rootViewController = nil;
 
             });
         }
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+               [SVProgressHUD dismiss];
+
+        });
     }];
     
     //4.执行任务
