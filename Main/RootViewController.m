@@ -16,7 +16,7 @@
 #import "Utils.h"
 #import "RotateNavigationController.h"
 #import "SocketManager.h"
-@interface RootViewController ()<WKScriptMessageHandler,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface RootViewController ()<WKScriptMessageHandler,WKNavigationDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     
     SocketManager *_socketManager;
@@ -71,14 +71,34 @@ static RootViewController  *g_rootViewController = nil;
 
 
 - (void)__configSubViews{
+    
+    self.webView.navigationDelegate = self;
+    
     NSString *root = [[NSBundle mainBundle] pathForResource:@"dist/index" ofType:@"html"];
 
     NSURL *url = [[NSURL alloc] initFileURLWithPath:root];
-//  NSURL *url = [NSURL URLWithString:@"http://pb.fjrh.cn:85/h5/index.html"];
 
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-
+    
     [ self.webView loadRequest:request];
+}
+
+- (void)reset{
+    
+    NSString *root = [[NSBundle mainBundle] pathForResource:@"dist/index" ofType:@"html"];
+
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:root];
+ 
+    [self reloadWithUrl:url];
+    
+}
+
+- (void)reloadWithUrl:(NSURL *)url{
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+      
+      [ self.webView loadRequest:request];
+    
 }
 
 
@@ -565,6 +585,35 @@ static RootViewController  *g_rootViewController = nil;
 - (void)stopPlay{
     if(self.view.subviews.lastObject == _playerViewController.view){
         [_playerViewController shutdown];
+    }
+}
+
+
+#pragma mark - UINavigationControllerDelegate
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
+    
+    NSString *url = navigationAction.request.URL.absoluteString;
+    
+    if([url containsString:@"http://turn.html/?"]){
+        decisionHandler(WKNavigationActionPolicyCancel);
+        
+       url = [url stringByReplacingOccurrencesOfString:@"http://turn.html/?" withString:@""];
+        [self reloadWithUrl:[NSURL URLWithString:url]];
+        
+    }else if([url containsString:@"http://logout.html/?"]){
+        
+        decisionHandler(WKNavigationActionPolicyCancel);
+        url = [url stringByReplacingOccurrencesOfString:@"http://logout.html/?" withString:@""];
+            
+        [self reloadWithUrl:[NSURL URLWithString:url]];
+        
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self reset];
+        });
+        
+    }else{
+        decisionHandler(WKNavigationActionPolicyAllow);
     }
 }
 
