@@ -4,11 +4,6 @@ const appConfig = {
   mainServerPort: "50113",
   // 主服务signalR端口
   mainSignalRPort: "50114",
-
-  // 教室服务API端口
-  gatewaySeverPort: "50120",
-  // 教室服务signalR端口
-  gatewaySignalRPort: "50118",
   
   errorLog: "development",
   showLog: false,
